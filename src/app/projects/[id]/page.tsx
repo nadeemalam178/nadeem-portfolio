@@ -5,6 +5,8 @@ import { Github } from "@/components/Icons";
 import { projects } from "@/data/projects";
 import AntigravityCard from "@/components/AntigravityCard";
 import FluidBackground from "@/components/FluidBackground";
+import SmoothScroll from "@/components/SmoothScroll";
+import ScrollProgress from "@/components/ScrollProgress";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ id: p.id }));
@@ -28,6 +30,9 @@ export default async function ProjectCaseStudyPage({
 
   return (
     <div className="relative min-h-screen bg-[#07080c] text-zinc-100 overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200">
+      {/* Smooth scrolling & progress bar */}
+      <SmoothScroll />
+      <ScrollProgress />
       <FluidBackground />
 
       {/* Top Floating Glass Navigation Header */}
@@ -61,7 +66,7 @@ export default async function ProjectCaseStudyPage({
       </header>
 
       {/* Main Case Study Article */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-20 relative z-10">
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-10 md:py-20 relative z-10">
         {/* Eyebrow & Title */}
         <div className="mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/[0.08] border border-blue-500/20 text-cyan-300 text-[11px] font-mono uppercase tracking-[0.2em] mb-4">
@@ -69,11 +74,11 @@ export default async function ProjectCaseStudyPage({
             <span>Deep Dive Technical Case Study</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white mb-4">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white mb-4 leading-tight">
             {project.title}
           </h1>
 
-          <p className="text-base sm:text-xl text-zinc-300 font-mono max-w-3xl leading-relaxed">
+          <p className="text-sm sm:text-lg md:text-xl text-zinc-300 font-mono max-w-3xl leading-relaxed">
             {project.tagline}
           </p>
 
@@ -110,7 +115,7 @@ export default async function ProjectCaseStudyPage({
           >
             <div className="flex items-center gap-2 text-rose-400 text-xs font-mono uppercase tracking-wider mb-3">
               <Activity className="w-4 h-4" />
-              <span>The Problem & Engineering Constraints</span>
+              <span>The Problem & Constraints</span>
             </div>
             <h3 className="text-xl font-bold text-white mb-3">What Needed Solving</h3>
             <p className="text-sm text-zinc-300 leading-relaxed">
@@ -149,14 +154,14 @@ export default async function ProjectCaseStudyPage({
             {project.architectureDecisions.map((adr, idx) => (
               <div
                 key={idx}
-                className="p-6 rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-md"
+                className="p-5 sm:p-6 rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-md"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                   <h4 className="text-base font-bold text-white flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-lg bg-blue-500/15 border border-blue-500/30 text-cyan-400 text-xs flex items-center justify-center font-mono">
+                    <span className="w-6 h-6 rounded-lg bg-blue-500/15 border border-blue-500/30 text-cyan-400 text-xs flex items-center justify-center font-mono shrink-0">
                       {idx + 1}
                     </span>
-                    {adr.decision}
+                    <span>{adr.decision}</span>
                   </h4>
                   <span className="text-[11px] font-mono text-emerald-400 bg-emerald-950/40 px-2.5 py-0.5 rounded-full border border-emerald-800/40">
                     Adopted Decision
@@ -222,7 +227,7 @@ export default async function ProjectCaseStudyPage({
                 href={`/projects/${prevProject.id}`}
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-medium text-zinc-400 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] transition-colors"
               >
-                <span>← {prevProject.title.slice(0, 16)}...</span>
+                <span>← {prevProject.title.slice(0, 14)}...</span>
               </Link>
             )}
             {nextProject && (
@@ -230,7 +235,7 @@ export default async function ProjectCaseStudyPage({
                 href={`/projects/${nextProject.id}`}
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-medium text-cyan-400 hover:text-cyan-300 bg-white/[0.04] hover:bg-white/[0.08] border border-cyan-500/20 transition-colors"
               >
-                <span>{nextProject.title.slice(0, 16)}... →</span>
+                <span>{nextProject.title.slice(0, 14)}... →</span>
               </Link>
             )}
           </div>

@@ -13,6 +13,9 @@ import Footer from "@/components/Footer";
 import ProjectModal from "@/components/ProjectModal";
 import CvModal from "@/components/CvModal";
 import CommandPalette from "@/components/CommandPalette";
+import SmoothScroll from "@/components/SmoothScroll";
+import ScrollProgress from "@/components/ScrollProgress";
+import MobileDock from "@/components/MobileDock";
 import { projects } from "@/data/projects";
 
 export default function Home() {
@@ -25,11 +28,17 @@ export default function Home() {
     : null;
 
   return (
-    <div className="relative min-h-screen flex flex-col justify-between overflow-x-hidden">
+    <div className="relative min-h-screen flex flex-col justify-between overflow-x-hidden pb-16 sm:pb-0">
+      {/* Inertial Momentum Scrolling */}
+      <SmoothScroll />
+
+      {/* Top Laser Scroll Progress Bar */}
+      <ScrollProgress />
+
       {/* Dynamic Fluid Glow Mesh */}
       <FluidBackground />
 
-      {/* Navigation */}
+      {/* Top Navigation */}
       <Navbar
         onOpenCv={() => setIsCvOpen(true)}
         onOpenCmd={() => setIsCmdOpen(true)}
@@ -47,6 +56,12 @@ export default function Home() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Floating Bottom Quick Dock (Mobile Only) */}
+      <MobileDock
+        onOpenCmd={() => setIsCmdOpen(true)}
+        onOpenCv={() => setIsCvOpen(true)}
+      />
 
       {/* Interactive Project Case Study Modal */}
       <ProjectModal

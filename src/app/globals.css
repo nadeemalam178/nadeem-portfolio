@@ -2,8 +2,9 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     color-scheme: dark;
+    /* Native touch momentum scroll on mobile */
+    -webkit-overflow-scrolling: touch;
   }
 
   body {
@@ -11,7 +12,25 @@
     color: #f4f4f5;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     overflow-x: hidden;
+    touch-action: pan-y;
   }
+}
+
+/* Lenis Smooth Scrolling Integration */
+html.lenis, html.lenis-smooth {
+  height: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }
 
 /* Antigravity Spatial Depth Utilities */
@@ -37,17 +56,6 @@
   }
 }
 
-@keyframes antigravity-pulse-slow {
-  0%, 100% {
-    opacity: 0.25;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.38;
-    transform: scale(1.05);
-  }
-}
-
 .animate-float {
   animation: antigravity-float 6s ease-in-out infinite;
 }
@@ -59,21 +67,21 @@
 
 /* Custom scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0c12;
+  background: #090b10;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #272a38;
-  border-radius: 4px;
+  background: #1f2333;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3b4055;
+  background: #38bdf8;
 }
 
 /* Print Styles for CV/Resume output */
@@ -87,6 +95,7 @@
   footer,
   #bento,
   #projects,
+  #sandbox,
   #experience,
   #contact {
     display: none !important;
