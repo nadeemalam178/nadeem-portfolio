@@ -7,7 +7,7 @@ import Hero from "@/components/Hero";
 import BentoGrid from "@/components/BentoGrid";
 import ProjectsSection from "@/components/ProjectsSection";
 import LiveSandbox from "@/components/LiveSandbox";
-import ExperienceSection from "@/components/ExperienceSection";
+import ResumeSection from "@/components/ResumeSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import ProjectModal from "@/components/ProjectModal";
@@ -39,18 +39,15 @@ export default function Home() {
       <FluidBackground />
 
       {/* Top Navigation */}
-      <Navbar
-        onOpenCv={() => setIsCvOpen(true)}
-        onOpenCmd={() => setIsCmdOpen(true)}
-      />
+      <Navbar onOpenCmd={() => setIsCmdOpen(true)} />
 
       {/* Main Body Content */}
       <main className="flex-1">
-        <Hero onOpenCv={() => setIsCvOpen(true)} />
+        <Hero />
         <BentoGrid onSelectProject={(id) => setSelectedProjectId(id)} />
         <ProjectsSection onSelectProject={(id) => setSelectedProjectId(id)} />
         <LiveSandbox />
-        <ExperienceSection />
+        <ResumeSection onOpenCvModal={() => setIsCvOpen(true)} />
         <ContactSection />
       </main>
 

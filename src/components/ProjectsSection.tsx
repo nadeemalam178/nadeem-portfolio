@@ -1,20 +1,25 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FolderGit2,
-  ExternalLink,
   Search,
-  Filter,
   Sparkles,
-  Layers,
   ArrowRight,
-  Star,
+  BookOpen,
+  ArrowUpRight,
 } from "lucide-react";
 import { Github } from "@/components/Icons";
 import { projects, Project } from "@/data/projects";
 import AntigravityCard from "@/components/AntigravityCard";
+import {
+  RadiantHmsPreview,
+  KosiVoterPreview,
+  PrepTakePreview,
+  SangathanSearchPreview,
+} from "@/components/ProjectShowcaseMockups";
 
 interface ProjectsSectionProps {
   onSelectProject: (projectId: string) => void;
@@ -41,15 +46,15 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/[0.08] border border-cyan-500/20 text-cyan-400 text-xs font-medium mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/[0.08] border border-cyan-500/20 text-cyan-400 text-xs font-mono mb-3">
             <FolderGit2 className="w-3.5 h-3.5" />
-            <span>Curated Portfolio Repositories</span>
+            <span>Interactive Project Showcase</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Featured Projects & Implementations
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+            Live Software & Systems In Action
           </h2>
-          <p className="text-sm sm:text-base text-zinc-400 max-w-xl mt-2">
-            Explore live production systems, enterprise hospital suites, data pipelines, and educational platforms built from the ground up.
+          <p className="text-sm sm:text-base text-zinc-400 max-w-2xl mt-2 leading-relaxed">
+            Interact with live clinical triage simulations, constituency telemetry filters, and in-browser mock quiz engines built from production codebases.
           </p>
         </div>
 
@@ -85,10 +90,10 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
           </div>
         </div>
 
-        {/* Projects Grid with Antigravity 3D Cards */}
+        {/* Projects Grid with Interactive Visual Showcases */}
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
         >
           <AnimatePresence>
             {filteredProjects.map((project, idx) => (
@@ -99,19 +104,27 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3, delay: idx * 0.05 }}
                 key={project.id}
+                className="w-full"
               >
                 <AntigravityCard
-                  tiltIntensity={10}
-                  glowColor="rgba(56, 189, 248, 0.2)"
-                  className="p-6 bg-white/[0.03] hover:bg-white/[0.05] border-white/[0.08] hover:border-cyan-500/40 h-full flex flex-col justify-between"
+                  tiltIntensity={6}
+                  glowColor="rgba(56, 189, 248, 0.25)"
+                  className="p-6 sm:p-7 bg-white/[0.03] hover:bg-white/[0.05] border-white/[0.08] hover:border-cyan-500/40 h-full flex flex-col justify-between"
                 >
                   <div>
                     {/* Card Header */}
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-white/[0.06] text-zinc-300 border border-white/[0.06]">
+                      <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-blue-500/10 text-cyan-400 border border-blue-500/20">
                         {project.category}
                       </span>
                       <div className="flex items-center gap-2">
+                        <Link
+                          href={`/projects/${project.id}`}
+                          className="inline-flex items-center gap-1 text-[11px] font-mono text-zinc-400 hover:text-cyan-400 transition-colors"
+                        >
+                          <span>Case Study</span>
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </Link>
                         <a
                           href={project.repoUrl}
                           target="_blank"
@@ -125,27 +138,39 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
                     </div>
 
                     {/* Title & Tagline */}
-                    <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors mb-1.5">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors mb-1">
                       {project.title}
                     </h3>
-                    <p className="text-xs text-zinc-400 font-mono mb-3">
+                    <p className="text-xs text-zinc-400 font-mono mb-4">
                       {project.tagline}
                     </p>
 
-                    <p className="text-xs text-zinc-300 leading-relaxed line-clamp-3 mb-4">
-                      {project.description}
-                    </p>
+                    {/* Interactive Visual Showcase Mockup */}
+                    <div className="mb-5">
+                      {project.id === "radiant-hms" && <RadiantHmsPreview />}
+                      {project.id === "kosi-voter-digitalize" && <KosiVoterPreview />}
+                      {project.id === "preptake" && <PrepTakePreview />}
+                      {project.id === "sangathan-search" && <SangathanSearchPreview />}
+                      {project.id !== "radiant-hms" &&
+                        project.id !== "kosi-voter-digitalize" &&
+                        project.id !== "preptake" &&
+                        project.id !== "sangathan-search" && (
+                          <div className="p-4 rounded-2xl bg-black/40 border border-white/[0.06] text-xs text-zinc-300 leading-relaxed font-sans">
+                            {project.description}
+                          </div>
+                        )}
+                    </div>
 
                     {/* Metric Pill if present */}
                     {project.metrics && (
-                      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-500/[0.08] border border-blue-500/20 text-cyan-300 text-[11px] font-mono mb-4">
-                        <Sparkles className="w-3 h-3 text-cyan-400" />
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-blue-500/[0.08] border border-blue-500/20 text-cyan-300 text-[11px] font-mono mb-4">
+                        <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
                         <span>{project.metrics}</span>
                       </div>
                     )}
                   </div>
 
-                  {/* Card Footer: Tags & Button */}
+                  {/* Card Footer: Tags & Action Buttons */}
                   <div>
                     <div className="flex flex-wrap gap-1.5 mb-5 pt-3 border-t border-white/[0.06]">
                       {project.tags.map((tag) => (
@@ -158,13 +183,23 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
                       ))}
                     </div>
 
-                    <button
-                      onClick={() => onSelectProject(project.id)}
-                      className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-semibold text-white bg-white/[0.05] hover:bg-white/[0.12] border border-white/[0.1] group-hover:border-cyan-500/40 transition-all group-hover:scale-[1.01]"
-                    >
-                      <span>View Case Study Details</span>
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Link
+                        href={`/projects/${project.id}`}
+                        className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 shadow-md shadow-blue-600/20 transition-all hover:scale-[1.02]"
+                      >
+                        <BookOpen className="w-3.5 h-3.5" />
+                        <span>Case Study Page</span>
+                      </Link>
+
+                      <button
+                        onClick={() => onSelectProject(project.id)}
+                        className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-medium text-zinc-300 bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] hover:text-white transition-all"
+                      >
+                        <span>Quick Summary</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
                 </AntigravityCard>
               </motion.div>

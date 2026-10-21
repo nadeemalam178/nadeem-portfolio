@@ -2,15 +2,14 @@
 
 import { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
-import { Sparkles, FileText, Menu, X, ArrowUpRight, Search, Command } from "lucide-react";
+import { Sparkles, Menu, X, ArrowUpRight, Search } from "lucide-react";
 import { profile } from "@/data/profile";
 
 interface NavbarProps {
-  onOpenCv: () => void;
   onOpenCmd: () => void;
 }
 
-export default function Navbar({ onOpenCv, onOpenCmd }: NavbarProps) {
+export default function Navbar({ onOpenCmd }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -40,7 +39,7 @@ export default function Navbar({ onOpenCv, onOpenCmd }: NavbarProps) {
     { label: "Overview", href: "#bento" },
     { label: "Projects", href: "#projects" },
     { label: "SQL Sandbox", href: "#sandbox" },
-    { label: "Experience", href: "#experience" },
+    { label: "CV & Impact", href: "#resume-section" },
     { label: "Contact", href: "#contact" },
   ];
 
@@ -54,7 +53,7 @@ export default function Navbar({ onOpenCv, onOpenCmd }: NavbarProps) {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Logo with Doppelrand / Concentric glow */}
+          {/* Logo with Concentric glow */}
           <a
             href="#"
             className="flex items-center gap-3 group focus:outline-none"
@@ -101,15 +100,6 @@ export default function Navbar({ onOpenCv, onOpenCmd }: NavbarProps) {
               <kbd className="px-1.5 py-0.5 text-[10px] rounded bg-white/[0.08] border border-white/[0.1] text-zinc-300">
                 ⌘K
               </kbd>
-            </button>
-
-            {/* Resume / CV Modal Trigger */}
-            <button
-              onClick={onOpenCv}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium text-zinc-200 bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.1] transition-all hover:scale-105"
-            >
-              <FileText className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Resume</span>
             </button>
 
             {/* Hire / Contact Action with nested trailing icon */}
@@ -168,16 +158,6 @@ export default function Navbar({ onOpenCv, onOpenCmd }: NavbarProps) {
               >
                 <Search className="w-4 h-4 text-cyan-400" />
                 Quick Search (Cmd + K)
-              </button>
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenCv();
-                }}
-                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-medium text-zinc-200 bg-white/[0.06] border border-white/[0.1]"
-              >
-                <FileText className="w-4 h-4 text-cyan-400" />
-                View & Print Curriculum Vitae
               </button>
               <button
                 onClick={() => {

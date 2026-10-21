@@ -1,25 +1,28 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, FileText, Sparkles, Layers, Box, Cpu } from "lucide-react";
+import { ArrowRight, Terminal, Box, Sparkles } from "lucide-react";
 import { Github } from "@/components/Icons";
 import { profile } from "@/data/profile";
 import AntigravityCard from "@/components/AntigravityCard";
 
-interface HeroProps {
-  onOpenCv: () => void;
-}
+export default function Hero() {
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
-export default function Hero({ onOpenCv }: HeroProps) {
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-      {/* Floating Spatial Background Element */}
+    <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
+      {/* Floating Spatial Background Elements */}
       <div className="absolute top-24 right-[-5%] w-72 h-72 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none animate-float" />
       <div className="absolute top-48 left-[-5%] w-80 h-80 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none animate-float-delayed" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-          {/* Status & Antigravity Mode Badge */}
+          {/* Status & Mode Badge */}
           <motion.div
             initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -63,34 +66,34 @@ export default function Hero({ onOpenCv }: HeroProps) {
             Hi, I&apos;m <span className="text-white font-semibold">Nadeem Alam</span>. Data Analyst & Full-Stack Automation Engineer with a background in Mathematics & MCA. Specializing in spatial UI, interactive BI dashboards, and enterprise web applications.
           </motion.p>
 
-          {/* Action Buttons */}
+          {/* Streamlined Action Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-wrap items-center justify-center gap-3.5 mb-14"
           >
-            <a
-              href="#projects"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 text-white font-medium text-sm shadow-lg shadow-blue-600/30 hover:shadow-cyan-500/25 transition-all hover:scale-[1.03] active:scale-95"
+            <button
+              onClick={() => scrollTo("projects")}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 text-white font-semibold text-xs shadow-lg shadow-blue-600/30 hover:scale-105 active:scale-95 transition-all"
             >
-              <span>Explore Projects</span>
+              <span>Explore Interactive Demos</span>
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </button>
 
             <button
-              onClick={onOpenCv}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.12] text-zinc-200 hover:text-white font-medium text-sm backdrop-blur-md transition-all hover:scale-[1.03] active:scale-95"
+              onClick={() => scrollTo("sandbox")}
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.12] text-zinc-200 hover:text-white font-medium text-xs backdrop-blur-md transition-all hover:scale-105 active:scale-95"
             >
-              <FileText className="w-4 h-4 text-cyan-400" />
-              <span>Curriculum Vitae</span>
+              <Terminal className="w-4 h-4 text-emerald-400" />
+              <span>Run SQL Sandbox</span>
             </button>
 
             <a
               href={profile.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] text-zinc-300 hover:text-white transition-all hover:scale-105"
+              className="inline-flex items-center gap-2 px-4 py-3 rounded-full bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] text-zinc-300 hover:text-white transition-all hover:scale-105"
               aria-label="GitHub Profile"
             >
               <Github className="w-4 h-4" />
@@ -105,14 +108,14 @@ export default function Hero({ onOpenCv }: HeroProps) {
             transition={{ duration: 0.7, delay: 0.4 }}
             className="w-full grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl"
           >
-            {profile.stats.map((stat, i) => (
+            {profile.stats.map((stat) => (
               <AntigravityCard
                 key={stat.label}
                 glowColor="rgba(56, 189, 248, 0.2)"
                 tiltIntensity={8}
                 className="p-4 bg-white/[0.03] hover:bg-white/[0.06] border-white/[0.08]"
               >
-                <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-br from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent mb-1">
+                <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-br from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent mb-1 font-mono">
                   {stat.value}
                 </div>
                 <div className="text-xs font-medium text-zinc-200">
