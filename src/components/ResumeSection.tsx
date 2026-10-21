@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -47,6 +48,19 @@ export default function ResumeSection({ onOpenCvModal }: ResumeSectionProps) {
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col items-center text-center mb-12"
         >
+          <div className="relative w-16 h-16 rounded-2xl p-0.5 bg-gradient-to-tr from-cyan-400 via-blue-500 to-purple-500 shadow-lg shadow-purple-500/20 mb-4 group">
+            <div className="w-full h-full rounded-[14px] overflow-hidden bg-[#0c0e17]">
+              <Image
+                src="/nadeem-alam.jpg"
+                alt={profile.name}
+                width={64}
+                height={64}
+                className="w-full h-full object-cover object-top filter grayscale group-hover:grayscale-0 transition-all duration-300"
+              />
+            </div>
+            <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[#08090d]" />
+          </div>
+
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono mb-3">
             <FileText className="w-3.5 h-3.5" />
             <span>Verified Credentials & Experience</span>

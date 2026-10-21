@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -113,35 +114,47 @@ export default function CvModal({ isOpen, onClose }: CvModalProps) {
           <div className="overflow-y-auto flex-1 pr-1 custom-scrollbar">
             <div className="bg-white text-zinc-900 p-6 sm:p-10 rounded-xl shadow-xl font-sans max-w-3xl mx-auto print:shadow-none print:p-0 print:m-0 print:max-w-full">
               {/* Header */}
-              <div className="text-center border-b border-zinc-300 pb-4 mb-4">
-                <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-wide text-zinc-900">
-                  {profile.name}
-                </h1>
-                <p className="text-xs sm:text-sm font-semibold text-zinc-700 mt-1">
-                  Data Analyst | Full-Stack Developer | MIS Specialist
-                </p>
-                <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-zinc-600 mt-2">
-                  <span className="flex items-center gap-1">
-                    <MapPin className="w-3 h-3 text-zinc-500" />
-                    {profile.location}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Phone className="w-3 h-3 text-zinc-500" />
-                    {profile.phone}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Mail className="w-3 h-3 text-zinc-500" />
-                    {profile.email}
-                  </span>
+              <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 border-b border-zinc-300 pb-4 mb-4 text-center sm:text-left">
+                <div className="flex-1">
+                  <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-wide text-zinc-900">
+                    {profile.name}
+                  </h1>
+                  <p className="text-xs sm:text-sm font-semibold text-zinc-700 mt-1">
+                    Data Analyst | Full-Stack Developer | MIS Specialist
+                  </p>
+                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-1 text-xs text-zinc-600 mt-2">
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-3 h-3 text-zinc-500" />
+                      {profile.location}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Phone className="w-3 h-3 text-zinc-500" />
+                      {profile.phone}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Mail className="w-3 h-3 text-zinc-500" />
+                      {profile.email}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-center sm:justify-start gap-4 text-xs text-blue-700 mt-1.5 font-medium">
+                    <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                      linkedin.com/in/nadeem-alam-2853b9232
+                    </a>
+                    <span>•</span>
+                    <a href={profile.github} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                      github.com/nadeemalam178
+                    </a>
+                  </div>
                 </div>
-                <div className="flex items-center justify-center gap-4 text-xs text-blue-700 mt-1.5 font-medium">
-                  <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                    linkedin.com/in/nadeem-alam-2853b9232
-                  </a>
-                  <span>•</span>
-                  <a href={profile.github} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                    github.com/nadeemalam178
-                  </a>
+
+                <div className="relative w-20 h-24 sm:w-24 sm:h-28 rounded-xl overflow-hidden border-2 border-zinc-300 shadow-sm shrink-0">
+                  <Image
+                    src="/nadeem-alam.jpg"
+                    alt={profile.name}
+                    width={100}
+                    height={120}
+                    className="w-full h-full object-cover object-top filter grayscale"
+                  />
                 </div>
               </div>
 
