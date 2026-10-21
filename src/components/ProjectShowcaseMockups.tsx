@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Bed,
   Search,
@@ -45,113 +46,136 @@ export function RadiantHmsPreview() {
         </div>
       </div>
 
-      {/* Tab 1: OPD Triage Queue */}
-      {activeTab === "opd" && (
-        <div className="space-y-2">
-          <div className="grid grid-cols-3 gap-2 text-center text-[10px] mb-2">
-            <div className="p-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-cyan-300">
-              <div className="font-bold text-xs text-white">42</div>
-              <div>Waiting OPD</div>
-            </div>
-            <div className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">
-              <div className="font-bold text-xs text-white">18</div>
-              <div>Consulting</div>
-            </div>
-            <div className="p-1.5 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-300">
-              <div className="font-bold text-xs text-white">4.2m</div>
-              <div>Avg Triage Wait</div>
-            </div>
-          </div>
-
-          <div className="space-y-1.5">
-            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/[0.04]">
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded bg-blue-500/20 text-cyan-300 text-[10px] flex items-center justify-center font-bold">
-                  01
-                </span>
-                <div>
-                  <div className="text-white font-medium text-[11px]">Synthetic Patient A (M/34)</div>
-                  <div className="text-[10px] text-zinc-400">Cardiology OPD • Triage Level 2</div>
-                </div>
+      {/* Module Content with smooth crossfade */}
+      <AnimatePresence mode="wait">
+        {activeTab === "opd" && (
+          <motion.div
+            key="opd"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-2"
+          >
+            <div className="grid grid-cols-3 gap-2 text-center text-[10px] mb-2">
+              <div className="p-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-cyan-300">
+                <div className="font-bold text-xs text-white">42</div>
+                <div>Waiting OPD</div>
               </div>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                In Consultation
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.02] border border-white/[0.04]">
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded bg-white/[0.05] text-zinc-400 text-[10px] flex items-center justify-center font-bold">
-                  02
-                </span>
-                <div>
-                  <div className="text-white font-medium text-[11px]">Synthetic Patient B (F/28)</div>
-                  <div className="text-[10px] text-zinc-400">General OPD • Triage Level 3</div>
-                </div>
+              <div className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">
+                <div className="font-bold text-xs text-white">18</div>
+                <div>Consulting</div>
               </div>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
-                Next in Queue
+              <div className="p-1.5 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-300">
+                <div className="font-bold text-xs text-white">4.2m</div>
+                <div>Avg Triage Wait</div>
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] border border-white/[0.04]">
+                <div className="flex items-center gap-2">
+                  <span className="w-5 h-5 rounded bg-blue-500/20 text-cyan-300 text-[10px] flex items-center justify-center font-bold">
+                    01
+                  </span>
+                  <div>
+                    <div className="text-white font-medium text-[11px]">Synthetic Patient A (M/34)</div>
+                    <div className="text-[10px] text-zinc-400">Cardiology OPD • Triage Level 2</div>
+                  </div>
+                </div>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                  In Consultation
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between p-2 rounded-lg bg-white/[0.02] border border-white/[0.04]">
+                <div className="flex items-center gap-2">
+                  <span className="w-5 h-5 rounded bg-white/[0.05] text-zinc-400 text-[10px] flex items-center justify-center font-bold">
+                    02
+                  </span>
+                  <div>
+                    <div className="text-white font-medium text-[11px]">Synthetic Patient B (F/28)</div>
+                    <div className="text-[10px] text-zinc-400">General OPD • Triage Level 3</div>
+                  </div>
+                </div>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                  Next in Queue
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Tab 2: Bed Management */}
+        {activeTab === "beds" && (
+          <motion.div
+            key="beds"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-2.5"
+          >
+            <div className="flex justify-between items-center text-[11px]">
+              <span className="text-zinc-300 flex items-center gap-1.5">
+                <Bed className="w-3.5 h-3.5 text-cyan-400" />
+                Simulated Bed Allocation
               </span>
+              <span className="text-white font-bold">120 / 140 Beds Active (85%)</span>
             </div>
-          </div>
-        </div>
-      )}
 
-      {/* Tab 2: Bed Management */}
-      {activeTab === "beds" && (
-        <div className="space-y-2.5">
-          <div className="flex justify-between items-center text-[11px]">
-            <span className="text-zinc-300 flex items-center gap-1.5">
-              <Bed className="w-3.5 h-3.5 text-cyan-400" />
-              Simulated Bed Allocation
-            </span>
-            <span className="text-white font-bold">120 / 140 Beds Active (85%)</span>
-          </div>
+            <div className="w-full h-2 rounded-full bg-white/[0.08] overflow-hidden flex">
+              <div className="h-full bg-blue-500" style={{ width: "65%" }} title="General Ward" />
+              <div className="h-full bg-purple-500" style={{ width: "20%" }} title="ICU" />
+              <div className="h-full bg-emerald-500" style={{ width: "15%" }} title="Available" />
+            </div>
 
-          <div className="w-full h-2 rounded-full bg-white/[0.08] overflow-hidden flex">
-            <div className="h-full bg-blue-500" style={{ width: "65%" }} title="General Ward" />
-            <div className="h-full bg-purple-500" style={{ width: "20%" }} title="ICU" />
-            <div className="h-full bg-emerald-500" style={{ width: "15%" }} title="Available" />
-          </div>
+            <div className="grid grid-cols-2 gap-2 text-[10px] pt-1">
+              <div className="p-2 rounded-lg bg-white/[0.03] border border-white/[0.05]">
+                <div className="text-zinc-400">ICU Bed Tracking</div>
+                <div className="text-white font-bold text-xs mt-0.5">18 / 20 Allocated</div>
+                <div className="text-emerald-400 text-[9px] mt-0.5">2 Ventilator Beds Free</div>
+              </div>
+              <div className="p-2 rounded-lg bg-white/[0.03] border border-white/[0.05]">
+                <div className="text-zinc-400">Private Recovery</div>
+                <div className="text-white font-bold text-xs mt-0.5">12 / 16 Allocated</div>
+                <div className="text-cyan-400 text-[9px] mt-0.5">4 Rooms Sanitized</div>
+              </div>
+            </div>
+          </motion.div>
+        )}
 
-          <div className="grid grid-cols-2 gap-2 text-[10px] pt-1">
-            <div className="p-2 rounded-lg bg-white/[0.03] border border-white/[0.05]">
-              <div className="text-zinc-400">ICU Bed Tracking</div>
-              <div className="text-white font-bold text-xs mt-0.5">18 / 20 Allocated</div>
-              <div className="text-emerald-400 text-[9px] mt-0.5">2 Ventilator Beds Free</div>
+        {/* Tab 3: Pharmacy Dispensing */}
+        {activeTab === "pharmacy" && (
+          <motion.div
+            key="pharmacy"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-2"
+          >
+            <div className="text-[11px] text-zinc-300 flex items-center justify-between">
+              <span>Automated Inventory Schema</span>
+              <span className="text-emerald-400 font-bold">Relational Sync</span>
             </div>
-            <div className="p-2 rounded-lg bg-white/[0.03] border border-white/[0.05]">
-              <div className="text-zinc-400">Private Recovery</div>
-              <div className="text-white font-bold text-xs mt-0.5">12 / 16 Allocated</div>
-              <div className="text-cyan-400 text-[9px] mt-0.5">4 Rooms Sanitized</div>
+            <div className="space-y-1.5 text-[10px]">
+              <div className="flex justify-between p-1.5 rounded bg-white/[0.03] border border-white/[0.05]">
+                <span>Sample Item: Amoxicillin 500mg (Batch #AM-Demo)</span>
+                <span className="text-emerald-300">480 In Stock</span>
+              </div>
+              <div className="flex justify-between p-1.5 rounded bg-white/[0.03] border border-white/[0.05]">
+                <span>Sample Item: Paracetamol 650mg (Batch #PC-Demo)</span>
+                <span className="text-emerald-300">1,200 In Stock</span>
+              </div>
+              <div className="flex justify-between p-1.5 rounded bg-white/[0.03] border border-white/[0.05]">
+                <span>Sample Item: Saline 0.9% IV (Batch #SL-Demo)</span>
+                <span className="text-amber-300">Low Stock Warning (28 left)</span>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* Tab 3: Pharmacy Dispensing */}
-      {activeTab === "pharmacy" && (
-        <div className="space-y-2">
-          <div className="text-[11px] text-zinc-300 flex items-center justify-between">
-            <span>Automated Inventory Schema</span>
-            <span className="text-emerald-400 font-bold">Relational Sync</span>
-          </div>
-          <div className="space-y-1.5 text-[10px]">
-            <div className="flex justify-between p-1.5 rounded bg-white/[0.03] border border-white/[0.05]">
-              <span>Sample Item: Amoxicillin 500mg (Batch #AM-Demo)</span>
-              <span className="text-emerald-300">480 In Stock</span>
-            </div>
-            <div className="flex justify-between p-1.5 rounded bg-white/[0.03] border border-white/[0.05]">
-              <span>Sample Item: Paracetamol 650mg (Batch #PC-Demo)</span>
-              <span className="text-emerald-300">1,200 In Stock</span>
-            </div>
-            <div className="flex justify-between p-1.5 rounded bg-white/[0.03] border border-white/[0.05]">
-              <span>Sample Item: Saline 0.9% IV (Batch #SL-Demo)</span>
-              <span className="text-amber-300">Low Stock Warning (28 left)</span>
-            </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -201,43 +225,54 @@ export function KosiVoterPreview() {
         ))}
       </div>
 
-      {/* Selected District Stats Card */}
-      <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-2">
-        <div className="flex justify-between items-baseline">
+      {/* Selected District Stats Card with smooth transition */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={current.name}
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -5 }}
+          transition={{ duration: 0.2 }}
+          className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-2"
+        >
+          <div className="flex justify-between items-baseline">
+            <div>
+              <div className="text-base font-bold text-white">{current.name} District</div>
+              <div className="text-[10px] text-zinc-400">Territory Directory Node</div>
+            </div>
+            <div className="text-xs font-bold text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-800/40">
+              Status: {current.status}
+            </div>
+          </div>
+
+          {/* Progress verification meter */}
           <div>
-            <div className="text-base font-bold text-white">{current.name} District</div>
-            <div className="text-[10px] text-zinc-400">Territory Directory Node</div>
+            <div className="flex justify-between text-[10px] text-zinc-400 mb-1">
+              <span>Data Sanitation Coverage</span>
+              <span className="text-white font-bold">{current.verified}</span>
+            </div>
+            <div className="w-full h-2 rounded-full bg-white/[0.08] overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: current.verified }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="h-full bg-gradient-to-r from-emerald-500 to-teal-400"
+              />
+            </div>
           </div>
-          <div className="text-xs font-bold text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-800/40">
-            Status: {current.status}
-          </div>
-        </div>
 
-        {/* Progress verification meter */}
-        <div>
-          <div className="flex justify-between text-[10px] text-zinc-400 mb-1">
-            <span>Data Sanitation Coverage</span>
-            <span className="text-white font-bold">{current.verified}</span>
+          <div className="grid grid-cols-2 gap-2 pt-1 text-[10px]">
+            <div className="p-1.5 rounded bg-black/40 border border-white/[0.04]">
+              <span className="text-zinc-400">Electoral Segment:</span>
+              <span className="text-white font-bold ml-1.5">Graduate</span>
+            </div>
+            <div className="p-1.5 rounded bg-black/40 border border-white/[0.04]">
+              <span className="text-zinc-400">Historical Turnout:</span>
+              <span className="text-cyan-400 font-bold ml-1.5">{current.turnout}</span>
+            </div>
           </div>
-          <div className="w-full h-2 rounded-full bg-white/[0.08] overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500"
-              style={{ width: current.verified }}
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-2 pt-1 text-[10px]">
-          <div className="p-1.5 rounded bg-black/40 border border-white/[0.04]">
-            <span className="text-zinc-400">Electoral Segment:</span>
-            <span className="text-white font-bold ml-1.5">Graduate</span>
-          </div>
-          <div className="p-1.5 rounded bg-black/40 border border-white/[0.04]">
-            <span className="text-zinc-400">Historical Turnout:</span>
-            <span className="text-cyan-400 font-bold ml-1.5">{current.turnout}</span>
-          </div>
-        </div>
-      </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
@@ -315,10 +350,15 @@ export function PrepTakePreview() {
       </div>
 
       {selectedOption !== null && (
-        <div className="p-2 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-[10px] text-emerald-300">
+        <motion.div
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.25 }}
+          className="p-2 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-[10px] text-emerald-300"
+        >
           <span className="font-bold">Pedagogical Concept: </span>
           {question.explanation}
-        </div>
+        </motion.div>
       )}
     </div>
   );
@@ -368,20 +408,27 @@ export function SangathanSearchPreview() {
 
       {/* Filtered list */}
       <div className="space-y-1.5 max-h-36 overflow-y-auto">
-        {filtered.map((c, i) => (
-          <div
-            key={i}
-            className="flex items-center justify-between p-2 rounded-lg bg-white/[0.02] border border-white/[0.04] text-[10px]"
-          >
-            <div>
-              <div className="font-bold text-white text-[11px]">{c.name}</div>
-              <div className="text-zinc-400">{c.role} • {c.district}</div>
-            </div>
-            <span className="text-cyan-400 font-mono bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-800/40">
-              {c.contact}
-            </span>
-          </div>
-        ))}
+        <AnimatePresence>
+          {filtered.map((c, i) => (
+            <motion.div
+              layout
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.2, delay: i * 0.03 }}
+              key={c.name}
+              className="flex items-center justify-between p-2 rounded-lg bg-white/[0.02] border border-white/[0.04] text-[10px]"
+            >
+              <div>
+                <div className="font-bold text-white text-[11px]">{c.name}</div>
+                <div className="text-zinc-400">{c.role} • {c.district}</div>
+              </div>
+              <span className="text-cyan-400 font-mono bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-800/40">
+                {c.contact}
+              </span>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
     </div>
   );

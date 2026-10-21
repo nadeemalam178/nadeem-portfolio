@@ -100,7 +100,13 @@ export default function LiveSandbox() {
     <section id="sandbox" className="py-24 border-b border-white/[0.06] relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col items-center text-center mb-12"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono mb-3">
             <Terminal className="w-3.5 h-3.5" />
             <span>Interactive Data Simulation</span>
@@ -116,35 +122,50 @@ export default function LiveSandbox() {
             <ShieldAlert className="w-3.5 h-3.5 text-amber-400" />
             <span>Synthetic Demonstration Environment • No Confidential Records Exposed</span>
           </div>
-        </div>
+        </motion.div>
 
         {/* Workflow Diagram: Data Intake -> Validation -> Transformation -> Reporting */}
-        <div className="mb-10 p-5 rounded-2xl bg-[#0b0d14] border border-white/[0.08]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mb-10 p-5 rounded-2xl bg-[#0b0d14] border border-white/[0.08]"
+        >
           <div className="text-xs font-mono uppercase tracking-wider text-zinc-400 mb-3 text-center sm:text-left">
             Typical Data Lifecycle & Reporting Workflow
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs font-mono">
-            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]">
-              <div className="text-cyan-400 font-bold mb-1">01. Intake</div>
-              <div className="text-zinc-300">Raw multi-district spreadsheets & CSV rosters</div>
-            </div>
-            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]">
-              <div className="text-blue-400 font-bold mb-1">02. Validation</div>
-              <div className="text-zinc-300">Sanitation scripts, duplicate removal & regex checks</div>
-            </div>
-            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]">
-              <div className="text-purple-400 font-bold mb-1">03. Transformation</div>
-              <div className="text-zinc-300">SQL grouping, cross-tabulation & relational indexing</div>
-            </div>
-            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]">
-              <div className="text-emerald-400 font-bold mb-1">04. Delivery</div>
-              <div className="text-zinc-300">Looker Studio dashboards & automated daily MIS</div>
-            </div>
+            {[
+              { num: "01. Intake", color: "text-cyan-400", desc: "Raw multi-district spreadsheets & CSV rosters" },
+              { num: "02. Validation", color: "text-blue-400", desc: "Sanitation scripts, duplicate removal & regex checks" },
+              { num: "03. Transformation", color: "text-purple-400", desc: "SQL grouping, cross-tabulation & relational indexing" },
+              { num: "04. Delivery", color: "text-emerald-400", desc: "Looker Studio dashboards & automated daily MIS" },
+            ].map((step, i) => (
+              <motion.div
+                key={step.num}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.15 + i * 0.08 }}
+                whileHover={{ y: -2, transition: { duration: 0.2 } }}
+                className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.05] hover:border-white/[0.12] transition-colors"
+              >
+                <div className={`${step.color} font-bold mb-1`}>{step.num}</div>
+                <div className="text-zinc-300">{step.desc}</div>
+              </motion.div>
+            ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Sandbox Hardware Enclosure */}
-        <div className="p-1 rounded-2xl bg-gradient-to-b from-white/[0.1] to-white/[0.02] border border-white/[0.08] shadow-2xl">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          className="p-1 rounded-2xl bg-gradient-to-b from-white/[0.1] to-white/[0.02] border border-white/[0.08] shadow-2xl"
+        >
           <div className="rounded-[calc(1rem-2px)] bg-[#090b12] p-5 sm:p-7">
             {/* Top Bar: Preset Selector & Controls */}
             <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-5 border-b border-white/[0.08]">
@@ -153,30 +174,41 @@ export default function LiveSandbox() {
                   <Database className="w-3.5 h-3.5 text-cyan-400" />
                   Select Schema:
                 </span>
-                {presets.map((preset) => (
-                  <button
-                    key={preset.id}
-                    onClick={() => setActivePreset(preset)}
-                    className={`px-3 py-1 rounded-lg text-xs font-mono transition-all ${
-                      activePreset.id === preset.id
-                        ? "bg-white text-zinc-950 font-bold shadow-sm"
-                        : "bg-white/[0.04] text-zinc-400 hover:text-white border border-white/[0.06]"
-                    }`}
-                  >
-                    {preset.name}
-                  </button>
-                ))}
+                <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                  {presets.map((preset) => (
+                    <button
+                      key={preset.id}
+                      onClick={() => setActivePreset(preset)}
+                      className={`relative px-3 py-1 rounded-lg text-xs font-mono transition-colors ${
+                        activePreset.id === preset.id
+                          ? "text-zinc-950 font-bold"
+                          : "text-zinc-400 hover:text-white"
+                      }`}
+                    >
+                      {activePreset.id === preset.id && (
+                        <motion.div
+                          layoutId="active-sandbox-preset"
+                          className="absolute inset-0 bg-white rounded-lg shadow-sm"
+                          transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                        />
+                      )}
+                      <span className="relative z-10">{preset.name}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Run Query Button */}
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={handleRun}
                 disabled={isRunning}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-mono font-semibold transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-mono font-semibold transition-colors shadow-md shadow-emerald-950/40 disabled:opacity-50"
               >
                 <Play className={`w-3.5 h-3.5 ${isRunning ? "animate-spin" : "fill-current"}`} />
                 <span>{isRunning ? "Executing..." : "Execute Query"}</span>
-              </button>
+              </motion.button>
             </div>
 
             {/* Code Terminal Display */}
@@ -286,9 +318,11 @@ export default function LiveSandbox() {
                         <span className="text-white font-bold">{item.value.toLocaleString()}</span>
                       </div>
                       <div className="w-full h-2.5 rounded-full bg-white/[0.05] overflow-hidden">
-                        <div
-                          style={{ width: `${(item.value / maxValue) * 100}%` }}
-                          className={`h-full rounded-full ${item.color} transition-all duration-500`}
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${(item.value / maxValue) * 100}%` }}
+                          transition={{ duration: 0.65, delay: i * 0.08, ease: "easeOut" }}
+                          className={`h-full rounded-full ${item.color}`}
                         />
                       </div>
                     </div>
@@ -297,7 +331,7 @@ export default function LiveSandbox() {
               )}
             </AnimatePresence>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Mail,
   Phone,
@@ -42,7 +43,13 @@ export default function ContactSection() {
     <section id="contact" className="py-24 border-b border-white/[0.06] relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col items-center text-center mb-12"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono mb-3">
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Direct Communication</span>
@@ -53,11 +60,17 @@ export default function ContactSection() {
           <p className="text-sm sm:text-base text-zinc-400 max-w-xl mt-2 leading-relaxed">
             Open to discussing data analytics projects, automation workflows, full-stack application development, or full-time opportunities.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 max-w-5xl mx-auto">
           {/* Direct Channels Card (2 cols) */}
-          <div className="lg:col-span-2 space-y-4">
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-2 space-y-4"
+          >
             <div className="p-6 rounded-2xl bg-[#0b0d14] border border-white/[0.08]">
               <h3 className="text-base font-bold text-white mb-4">Direct Contact Details</h3>
 
@@ -156,10 +169,16 @@ export default function ContactSection() {
                 </a>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Email Composer Form (3 cols) */}
-          <div className="lg:col-span-3">
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-3"
+          >
             <div className="p-6 sm:p-7 rounded-2xl bg-[#0b0d14] border border-white/[0.08]">
               <h3 className="text-base font-bold text-white mb-1">Direct Message Dispatch</h3>
               <p className="text-xs text-zinc-400 mb-5">
@@ -229,16 +248,18 @@ export default function ContactSection() {
                   />
                 </div>
 
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white text-zinc-950 font-semibold text-xs hover:bg-zinc-200 transition-all hover:scale-[1.01] active:scale-95 shadow-sm"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white text-zinc-950 font-semibold text-xs hover:bg-zinc-200 transition-colors shadow-sm"
                 >
                   <Send className="w-3.5 h-3.5" />
                   <span>Draft Email to Nadeem</span>
-                </button>
+                </motion.button>
               </form>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

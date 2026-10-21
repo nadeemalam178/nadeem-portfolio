@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Terminal,
   Layers,
@@ -22,7 +23,13 @@ export default function BentoGrid({ onSelectProject }: BentoGridProps) {
     <section id="bento" className="py-20 border-b border-white/[0.06] relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-12"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-cyan-400 text-xs font-mono mb-3">
             <Layers className="w-3.5 h-3.5" />
             <span>Architecture & Core Competencies</span>
@@ -33,12 +40,19 @@ export default function BentoGrid({ onSelectProject }: BentoGridProps) {
           <p className="text-sm sm:text-base text-zinc-400 max-w-2xl mt-2 leading-relaxed">
             Organized around three core engineering disciplines: quantitative data modeling, reliable spreadsheet automation, and modern full-stack web applications.
           </p>
-        </div>
+        </motion.div>
 
         {/* Bento Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Card 1: Data Analytics & Reporting (Spans 2 cols on tablet/desktop) */}
-          <div className="md:col-span-2">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ y: -3, transition: { duration: 0.25 } }}
+            className="md:col-span-2"
+          >
             <AntigravityCard
               glowColor="rgba(56, 189, 248, 0.15)"
               tiltIntensity={5}
@@ -94,10 +108,17 @@ export default function BentoGrid({ onSelectProject }: BentoGridProps) {
                 </button>
               </div>
             </AntigravityCard>
-          </div>
+          </motion.div>
 
           {/* Card 2: Mathematical Foundation */}
-          <div className="md:col-span-1">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ y: -3, transition: { duration: 0.25 } }}
+            className="md:col-span-1"
+          >
             <AntigravityCard
               glowColor="rgba(168, 85, 247, 0.15)"
               tiltIntensity={6}
@@ -129,10 +150,17 @@ export default function BentoGrid({ onSelectProject }: BentoGridProps) {
                 TCS NQT Cognitive Recognized
               </div>
             </AntigravityCard>
-          </div>
+          </motion.div>
 
           {/* Card 3: Automation & Scripting Workbench */}
-          <div className="md:col-span-2">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ y: -3, transition: { duration: 0.25 } }}
+            className="md:col-span-2"
+          >
             <AntigravityCard
               glowColor="rgba(16, 185, 129, 0.15)"
               tiltIntensity={5}
@@ -144,34 +172,52 @@ export default function BentoGrid({ onSelectProject }: BentoGridProps) {
                     <Terminal className="w-4 h-4 text-emerald-400" />
                     <span className="text-xs font-mono text-zinc-300">Functional Automation Scripts</span>
                   </div>
-                  <div className="flex rounded-lg bg-black/40 p-0.5 border border-white/[0.08]">
+                  <div className="flex relative rounded-lg bg-black/40 p-0.5 border border-white/[0.08]">
                     <button
                       onClick={() => setActiveTab("sql")}
-                      className={`px-2.5 py-1 text-[11px] font-mono rounded-md transition-all ${
-                        activeTab === "sql"
-                          ? "bg-emerald-500/20 text-emerald-300 font-semibold"
-                          : "text-zinc-400 hover:text-white"
+                      className={`relative z-10 px-2.5 py-1 text-[11px] font-mono rounded-md transition-colors ${
+                        activeTab === "sql" ? "text-emerald-300 font-semibold" : "text-zinc-400 hover:text-white"
                       }`}
                     >
-                      SQL Aggregation
+                      {activeTab === "sql" && (
+                        <motion.div
+                          layoutId="bento-tab-indicator"
+                          className="absolute inset-0 bg-emerald-500/20 border border-emerald-500/30 rounded-md"
+                          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        />
+                      )}
+                      <span className="relative z-10">SQL Aggregation</span>
                     </button>
                     <button
                       onClick={() => setActiveTab("script")}
-                      className={`px-2.5 py-1 text-[11px] font-mono rounded-md transition-all ${
-                        activeTab === "script"
-                          ? "bg-emerald-500/20 text-emerald-300 font-semibold"
-                          : "text-zinc-400 hover:text-white"
+                      className={`relative z-10 px-2.5 py-1 text-[11px] font-mono rounded-md transition-colors ${
+                        activeTab === "script" ? "text-emerald-300 font-semibold" : "text-zinc-400 hover:text-white"
                       }`}
                     >
-                      Apps Script Workflow
+                      {activeTab === "script" && (
+                        <motion.div
+                          layoutId="bento-tab-indicator"
+                          className="absolute inset-0 bg-emerald-500/20 border border-emerald-500/30 rounded-md"
+                          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        />
+                      )}
+                      <span className="relative z-10">Apps Script Workflow</span>
                     </button>
                   </div>
                 </div>
 
-                <div className="rounded-xl bg-[#06070a] border border-white/[0.06] p-3.5 font-mono text-xs overflow-x-auto text-zinc-300">
-                  {activeTab === "sql" ? (
-                    <pre className="text-[11.5px] leading-5 text-emerald-400/90">
-                      <code>{`-- Operational cross-tabulation query example
+                <div className="rounded-xl bg-[#06070a] border border-white/[0.06] p-3.5 font-mono text-xs overflow-x-auto text-zinc-300 min-h-[140px]">
+                  <AnimatePresence mode="wait">
+                    {activeTab === "sql" ? (
+                      <motion.pre
+                        key="sql"
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -6 }}
+                        transition={{ duration: 0.2 }}
+                        className="text-[11.5px] leading-5 text-emerald-400/90"
+                      >
+                        <code>{`-- Operational cross-tabulation query example
 SELECT 
   territory_name,
   COUNT(DISTINCT entity_id) AS total_records,
@@ -180,10 +226,17 @@ SELECT
 FROM operational_registry
 GROUP BY territory_name
 ORDER BY total_records DESC;`}</code>
-                    </pre>
-                  ) : (
-                    <pre className="text-[11.5px] leading-5 text-cyan-300/90">
-                      <code>{`// Automated Daily MIS Pipeline & Spreadsheet Ingestion
+                      </motion.pre>
+                    ) : (
+                      <motion.pre
+                        key="script"
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -6 }}
+                        transition={{ duration: 0.2 }}
+                        className="text-[11.5px] leading-5 text-cyan-300/90"
+                      >
+                        <code>{`// Automated Daily MIS Pipeline & Spreadsheet Ingestion
 function syncOperationalMetrics() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const rawSheet = ss.getSheetByName("Raw_Intake");
@@ -191,8 +244,9 @@ function syncOperationalMetrics() {
   const validatedRows = sanitizeDataset(data);
   updateLookerDataFeed(validatedRows);
 }`}</code>
-                    </pre>
-                  )}
+                      </motion.pre>
+                    )}
+                  </AnimatePresence>
                 </div>
               </div>
 
@@ -201,10 +255,17 @@ function syncOperationalMetrics() {
                 <span className="font-mono text-emerald-400">Production Tested</span>
               </div>
             </AntigravityCard>
-          </div>
+          </motion.div>
 
           {/* Card 4: Full-Stack Web Development */}
-          <div className="md:col-span-1">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ y: -3, transition: { duration: 0.25 } }}
+            className="md:col-span-1"
+          >
             <AntigravityCard
               glowColor="rgba(59, 130, 246, 0.15)"
               tiltIntensity={6}
@@ -243,7 +304,7 @@ function syncOperationalMetrics() {
                 </button>
               </div>
             </AntigravityCard>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

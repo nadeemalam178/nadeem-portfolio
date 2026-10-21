@@ -44,7 +44,13 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
     <section id="projects" className="py-24 border-b border-white/[0.06] relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col items-center text-center mb-12"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono mb-3">
             <FolderGit2 className="w-3.5 h-3.5" />
             <span>Verified Technical Work</span>
@@ -55,23 +61,36 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
           <p className="text-sm sm:text-base text-zinc-400 max-w-2xl mt-2 leading-relaxed">
             Real software systems, automated reporting pipelines, and interactive technical demonstrations with open-source repositories and verifiable architectural breakdowns.
           </p>
-        </div>
+        </motion.div>
 
         {/* Filter and Search Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 max-w-4xl mx-auto">
-          {/* Category Chips */}
-          <div className="flex flex-wrap items-center justify-center gap-2">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 max-w-4xl mx-auto"
+        >
+          {/* Category Chips with sliding animated pill */}
+          <div className="flex flex-wrap items-center justify-center gap-1.5 p-1 rounded-full bg-white/[0.03] border border-white/[0.06]">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all ${
+                className={`relative px-3.5 py-1.5 rounded-full text-xs font-mono transition-colors ${
                   activeCategory === cat
-                    ? "bg-white text-zinc-950 font-semibold shadow-sm"
-                    : "bg-white/[0.04] hover:bg-white/[0.08] text-zinc-400 hover:text-white border border-white/[0.06]"
+                    ? "text-zinc-950 font-semibold"
+                    : "text-zinc-400 hover:text-white"
                 }`}
               >
-                {cat}
+                {activeCategory === cat && (
+                  <motion.div
+                    layoutId="project-category-pill"
+                    className="absolute inset-0 bg-white rounded-full shadow-sm"
+                    transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                  />
+                )}
+                <span className="relative z-10">{cat}</span>
               </button>
             ))}
           </div>
@@ -87,7 +106,7 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
               className="w-full pl-10 pr-4 py-2 text-xs font-mono rounded-xl bg-white/[0.03] border border-white/[0.08] text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-500/50 transition-colors"
             />
           </div>
-        </div>
+        </motion.div>
 
         {/* Projects Grid with Interactive Visual Showcases */}
         <motion.div
@@ -98,12 +117,14 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
             {filteredProjects.map((project, idx) => (
               <motion.div
                 layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3, delay: idx * 0.05 }}
+                transition={{ duration: 0.45, delay: idx * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -4, transition: { duration: 0.25 } }}
                 key={project.id}
-                className="w-full"
+                className="w-full group"
               >
                 <AntigravityCard
                   tiltIntensity={5}
@@ -151,8 +172,8 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
                       {project.tagline}
                     </p>
 
-                    {/* Interactive Visual Showcase Mockup */}
-                    <div className="mb-5">
+                    {/* Interactive Visual Showcase Mockup with subtle zoom */}
+                    <div className="mb-5 overflow-hidden rounded-2xl transition-transform duration-500 ease-out group-hover:scale-[1.015]">
                       {project.id === "radiant-hms" && <RadiantHmsPreview />}
                       {project.id === "kosi-voter-digitalize" && <KosiVoterPreview />}
                       {project.id === "preptake" && <PrepTakePreview />}

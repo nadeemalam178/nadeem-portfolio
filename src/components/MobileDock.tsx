@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Search, FolderGit2, Terminal, FileText, Send } from "lucide-react";
 
 interface MobileDockProps {
@@ -16,7 +17,12 @@ export default function MobileDock({ onOpenCmd, onOpenCv }: MobileDockProps) {
   };
 
   return (
-    <div className="sm:hidden fixed bottom-4 inset-x-4 z-40 pointer-events-none flex justify-center">
+    <motion.div
+      initial={{ y: 60, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: 0.4, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      className="sm:hidden fixed bottom-4 inset-x-4 z-40 pointer-events-none flex justify-center"
+    >
       <div className="pointer-events-auto p-1.5 rounded-full bg-[#0a0d17]/85 border border-white/[0.12] backdrop-blur-2xl shadow-2xl shadow-black/80 flex items-center justify-between gap-1 max-w-sm w-full">
         {/* Search */}
         <button
@@ -68,6 +74,6 @@ export default function MobileDock({ onOpenCmd, onOpenCv }: MobileDockProps) {
           <span className="text-[9px] font-mono mt-0.5 font-bold">Chat</span>
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }
