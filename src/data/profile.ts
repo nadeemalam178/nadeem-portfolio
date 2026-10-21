@@ -82,6 +82,17 @@ export const profile: ProfileData = {
       ],
     },
     {
+      category: "UI/UX & Spatial Interface Design",
+      skills: [
+        { name: "Antigravity 3D & Spatial UI" },
+        { name: "Responsive & Mobile-First Design" },
+        { name: "Bento Grid Architecture" },
+        { name: "Framer Motion & GSAP Animations" },
+        { name: "Glassmorphism & Micro-Interactions" },
+        { name: "Information Architecture & a11y" },
+      ],
+    },
+    {
       category: "Automation, Tools & DevOps",
       skills: [
         { name: "Google Apps Script" },
