@@ -2,15 +2,15 @@
 
 import { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
-import { Sparkles, FileText, Menu, X, ArrowUpRight, Mail } from "lucide-react";
-import { Github, Linkedin } from "@/components/Icons";
+import { Sparkles, FileText, Menu, X, ArrowUpRight, Search, Command } from "lucide-react";
 import { profile } from "@/data/profile";
 
 interface NavbarProps {
   onOpenCv: () => void;
+  onOpenCmd: () => void;
 }
 
-export default function Navbar({ onOpenCv }: NavbarProps) {
+export default function Navbar({ onOpenCv, onOpenCmd }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -39,84 +39,103 @@ export default function Navbar({ onOpenCv }: NavbarProps) {
   const navLinks = [
     { label: "Overview", href: "#bento" },
     { label: "Projects", href: "#projects" },
+    { label: "SQL Sandbox", href: "#sandbox" },
     { label: "Experience", href: "#experience" },
     { label: "Contact", href: "#contact" },
   ];
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         scrolled
-          ? "bg-[#0b0d14]/80 backdrop-blur-xl border-b border-white/[0.08] shadow-lg shadow-black/40 py-3.5"
+          ? "bg-[#080a12]/80 backdrop-blur-2xl border-b border-white/[0.08] shadow-lg shadow-black/50 py-3"
           : "bg-transparent py-5"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo with Doppelrand / Concentric glow */}
           <a
             href="#"
             className="flex items-center gap-3 group focus:outline-none"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 p-[1px] shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-shadow">
-              <div className="w-full h-full bg-[#0d1017] rounded-[11px] flex items-center justify-center font-bold text-white tracking-wider text-sm group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-400 p-[1px] shadow-lg shadow-blue-500/20 group-hover:shadow-cyan-400/30 transition-shadow">
+              <div className="w-full h-full bg-[#0d1017] rounded-[15px] flex items-center justify-center font-bold text-white tracking-wider text-xs font-mono group-hover:scale-105 transition-transform">
                 NA
               </div>
             </div>
             <div className="flex flex-col">
-              <span className="font-semibold text-white tracking-tight text-base group-hover:text-cyan-400 transition-colors">
+              <span className="font-semibold text-white tracking-tight text-sm group-hover:text-cyan-400 transition-colors">
                 {profile.name}
               </span>
-              <span className="text-[11px] text-zinc-400 font-mono tracking-wide -mt-0.5">
+              <span className="text-[10px] text-zinc-400 font-mono tracking-wider -mt-0.5">
                 Data Analyst & Dev
               </span>
             </div>
           </a>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden md:flex items-center gap-1 bg-white/[0.04] border border-white/[0.08] rounded-full px-4 py-1.5 backdrop-blur-md">
+          <nav className="hidden lg:flex items-center gap-1 bg-white/[0.04] border border-white/[0.08] rounded-full px-4 py-1.5 backdrop-blur-xl shadow-inner">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="px-3.5 py-1.5 text-xs font-medium text-zinc-300 hover:text-white hover:bg-white/[0.06] rounded-full transition-all"
+                className="px-3.5 py-1 text-xs font-medium text-zinc-300 hover:text-white hover:bg-white/[0.07] rounded-full transition-all"
               >
                 {link.label}
               </a>
             ))}
           </nav>
 
-          {/* Desktop Actions */}
-          <div className="hidden sm:flex items-center gap-3">
+          {/* Desktop Actions + Cmd+K Trigger */}
+          <div className="hidden sm:flex items-center gap-2.5">
+            {/* Command Palette Button */}
+            <button
+              id="cmd-k-trigger"
+              onClick={onOpenCmd}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono text-zinc-300 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.09] transition-all hover:scale-105"
+              title="Open Command Palette (Cmd + K / Ctrl + K)"
+            >
+              <Search className="w-3.5 h-3.5 text-cyan-400" />
+              <span className="hidden md:inline text-[11px]">Search</span>
+              <kbd className="px-1.5 py-0.5 text-[10px] rounded bg-white/[0.08] border border-white/[0.1] text-zinc-300">
+                ⌘K
+              </kbd>
+            </button>
+
+            {/* Resume / CV Modal Trigger */}
             <button
               onClick={onOpenCv}
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium text-zinc-200 bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.1] transition-all hover:scale-105"
             >
               <FileText className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Resume / CV</span>
+              <span>Resume</span>
             </button>
 
+            {/* Hire / Contact Action with nested trailing icon */}
             <button
               onClick={triggerCelebration}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-md shadow-blue-600/30 transition-all hover:scale-105 active:scale-95"
+              className="group inline-flex items-center gap-2 pl-4 pr-1.5 py-1.5 rounded-full text-xs font-semibold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 shadow-md shadow-blue-600/30 transition-all hover:scale-[1.02] active:scale-95"
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-spin" style={{ animationDuration: "4s" }} />
               <span>Get in Touch</span>
+              <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                <ArrowUpRight className="w-3.5 h-3.5 text-white" />
+              </div>
             </button>
           </div>
 
           {/* Mobile menu toggle */}
           <div className="flex sm:hidden items-center gap-2">
             <button
-              onClick={onOpenCv}
-              className="p-2 rounded-lg bg-white/[0.05] border border-white/[0.1] text-zinc-200"
-              aria-label="View CV"
+              onClick={onOpenCmd}
+              className="p-2 rounded-xl bg-white/[0.05] border border-white/[0.1] text-zinc-200"
+              aria-label="Search Command Palette"
             >
-              <FileText className="w-4 h-4 text-cyan-400" />
+              <Search className="w-4 h-4 text-cyan-400" />
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg bg-white/[0.05] border border-white/[0.1] text-zinc-300 hover:text-white"
+              className="p-2 rounded-xl bg-white/[0.05] border border-white/[0.1] text-zinc-300 hover:text-white"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -127,7 +146,7 @@ export default function Navbar({ onOpenCv }: NavbarProps) {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="sm:hidden bg-[#0b0d14]/95 border-b border-white/[0.1] backdrop-blur-2xl px-6 py-5 transition-all">
+        <div className="sm:hidden bg-[#0a0d16]/95 border-b border-white/[0.1] backdrop-blur-2xl px-6 py-5 transition-all">
           <div className="flex flex-col gap-3">
             {navLinks.map((link) => (
               <a
@@ -143,19 +162,29 @@ export default function Navbar({ onOpenCv }: NavbarProps) {
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
+                  onOpenCmd();
+                }}
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-mono text-zinc-200 bg-white/[0.06] border border-white/[0.1]"
+              >
+                <Search className="w-4 h-4 text-cyan-400" />
+                Quick Search (Cmd + K)
+              </button>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
                   onOpenCv();
                 }}
-                className="w-full flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-medium text-zinc-200 bg-white/[0.06] border border-white/[0.1]"
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-medium text-zinc-200 bg-white/[0.06] border border-white/[0.1]"
               >
                 <FileText className="w-4 h-4 text-cyan-400" />
-                View & Download Curriculum Vitae
+                View & Print Curriculum Vitae
               </button>
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   triggerCelebration();
                 }}
-                className="w-full flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600"
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-blue-600 to-cyan-600"
               >
                 <Sparkles className="w-4 h-4 text-amber-300" />
                 Get in Touch

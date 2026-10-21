@@ -6,16 +6,19 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import BentoGrid from "@/components/BentoGrid";
 import ProjectsSection from "@/components/ProjectsSection";
+import LiveSandbox from "@/components/LiveSandbox";
 import ExperienceSection from "@/components/ExperienceSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import ProjectModal from "@/components/ProjectModal";
 import CvModal from "@/components/CvModal";
+import CommandPalette from "@/components/CommandPalette";
 import { projects } from "@/data/projects";
 
 export default function Home() {
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [isCvOpen, setIsCvOpen] = useState<boolean>(false);
+  const [isCmdOpen, setIsCmdOpen] = useState<boolean>(false);
 
   const selectedProject = selectedProjectId
     ? projects.find((p) => p.id === selectedProjectId) || null
@@ -27,13 +30,17 @@ export default function Home() {
       <FluidBackground />
 
       {/* Navigation */}
-      <Navbar onOpenCv={() => setIsCvOpen(true)} />
+      <Navbar
+        onOpenCv={() => setIsCvOpen(true)}
+        onOpenCmd={() => setIsCmdOpen(true)}
+      />
 
       {/* Main Body Content */}
       <main className="flex-1">
         <Hero onOpenCv={() => setIsCvOpen(true)} />
         <BentoGrid onSelectProject={(id) => setSelectedProjectId(id)} />
         <ProjectsSection onSelectProject={(id) => setSelectedProjectId(id)} />
+        <LiveSandbox />
         <ExperienceSection />
         <ContactSection />
       </main>
@@ -51,6 +58,13 @@ export default function Home() {
       <CvModal
         isOpen={isCvOpen}
         onClose={() => setIsCvOpen(false)}
+      />
+
+      {/* Interactive Command Palette (Cmd + K / Ctrl + K) */}
+      <CommandPalette
+        isOpen={isCmdOpen}
+        onClose={() => setIsCmdOpen(false)}
+        onOpenCv={() => setIsCvOpen(true)}
       />
     </div>
   );
