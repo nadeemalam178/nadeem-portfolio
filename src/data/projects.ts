@@ -1,332 +1,307 @@
+export type ProjectCategory = "Full-Stack" | "Data & Analytics" | "Automation" | "Mobile";
+export type ProjectStatus = "Active Development" | "Functional Application" | "Data Platform" | "Utility / Tool";
+
 export interface Project {
   id: string;
   title: string;
   tagline: string;
-  category: "Full-Stack" | "Data & Analytics" | "Automation" | "Mobile";
+  category: ProjectCategory;
+  status: ProjectStatus;
   featured: boolean;
-  stars: number;
   tags: string[];
-  description: string;
-  metrics?: string;
+  summary: string;
+  roleAndContribution: string;
   repoUrl: string;
   demoUrl?: string;
-  accentColor: string;
-  highlights: string[];
-  // Deep-dive case study fields:
+  verifiedFeatures: string[];
+  // Deep Case Study Information
   problem: string;
   solution: string;
   architectureDecisions: {
     decision: string;
     rationale: string;
-    alternative: string;
+    tradeoff: string;
   }[];
-  benchmarks: {
-    metric: string;
+  technicalSpecifications: {
+    label: string;
     value: string;
-    description: string;
+    detail: string;
   }[];
+  currentLimitations: string[];
+  nextSteps: string[];
 }
 
 export const projects: Project[] = [
   {
     id: "radiant-hms",
     title: "Radiant Hospitals HMS",
-    tagline: "Enterprise Hospital Management System with Clinical & Financial Modules",
+    tagline: "Modular Hospital Management System Architecture with Clinical & Administrative Workflows",
     category: "Full-Stack",
+    status: "Active Development",
     featured: true,
-    stars: 5,
     tags: ["TypeScript", "Next.js", "React", "Tailwind CSS", "Node.js", "PostgreSQL"],
-    description:
-      "A comprehensive, production-grade Hospital Management System engineered to streamline hospital operations. Features OPD/IPD tracking, doctor consultation queues, pharmacy inventory, laboratory test dispatch, and patient billing with role-based access control.",
-    metrics: "5 Core Hospital Modules | Sub-second Patient Lookup",
+    summary:
+      "A modular Hospital Management System engineered to demonstrate structured clinical triage, bed allocation, pharmacy dispensing, and billing reconciliation workflows with type-safe schemas.",
+    roleAndContribution:
+      "Sole architect and developer. Designed the relational database entity relationships, structured the Next.js App Router layout hierarchy, implemented TypeScript interfaces for clinical workflows, and created responsive interface views.",
     repoUrl: "https://github.com/nadeemalam178/radiant-hospitals-hms",
     demoUrl: "https://github.com/nadeemalam178/radiant-hospitals-hms",
-    accentColor: "from-blue-600 to-indigo-600",
-    highlights: [
-      "Modular architecture for OPD, IPD, Pharmacy, Laboratory, and Billing workflows.",
-      "Strict type safety and robust API schema validation using TypeScript.",
-      "Dynamic bed management and doctor appointment scheduling grid.",
-      "Invoice generation and automated medication dispensing receipts.",
+    verifiedFeatures: [
+      "Modular OPD patient triage consultation queue with queue state transitions.",
+      "Hospital bed occupancy tracking with ICU and general ward status categorization.",
+      "Structured pharmacy inventory catalog with automated dispensing itemization.",
+      "Comprehensive TypeScript interfaces guaranteeing type safety across patient records.",
     ],
     problem:
-      "Regional healthcare centers struggle with paper-heavy patient records, miscalculated billing invoices, and fragmented pharmacy inventory logs, leading to long triage bottlenecks and delayed clinical intervention.",
+      "Small and medium healthcare centers frequently operate on fragmented paper registers and unconnected spreadsheets, leading to queue misplacement during peak OPD hours and inventory reconciliation delays.",
     solution:
-      "Built a unified, type-safe Next.js platform that synchronizes patient intake, appointment scheduling, electronic medical records, laboratory tests, and automated billing into a single relational database with role-based security.",
+      "Designed a unified web platform that models the lifecycle of a patient visit: initial registration -> OPD doctor queue -> prescription -> pharmacy fulfillment -> invoice generation, backed by a normalized schema.",
     architectureDecisions: [
       {
-        decision: "Normalized Relational Schema (PostgreSQL)",
-        rationale: "Ensures absolute transactional consistency for patient billing and pharmaceutical lot tracking where data anomalies cannot be tolerated.",
-        alternative: "NoSQL / MongoDB (rejected due to risks of orphaned billing records and inventory sync race conditions)",
+        decision: "Relational Schema Model with PostgreSQL",
+        rationale: "Patient records, bed assignments, and billing transactions require ACID compliance and foreign key integrity to prevent orphaned medical entries.",
+        tradeoff: "Requires upfront schema migrations compared to flexible NoSQL documents.",
       },
       {
-        decision: "Server Components & Optimistic UI Updates",
-        rationale: "Allows clinical staff on low-spec tablets to look up patient history in <200ms with zero client-side hydration penalty.",
-        alternative: "Heavy client-side SPA (rejected due to poor initial load times on hospital terminal hardware)",
+        decision: "Next.js Server Components with Client Interactivity",
+        rationale: "Keeps initial HTML bundle lean for low-bandwidth hospital terminal machines while keeping interactive triage state client-side.",
+        tradeoff: "Requires clear separation of server-only and client-interactive component boundaries.",
       },
     ],
-    benchmarks: [
-      { metric: "Patient Lookup Latency", value: "<180ms", description: "Indexed query across 50k+ simulated patient records" },
-      { metric: "Billing Accuracy", value: "99.98%", description: "Automated GST and prescription calculation validation" },
-      { metric: "Modules Integrated", value: "5 Hubs", description: "OPD, IPD, Pharmacy, Pathology, Billing" },
+    technicalSpecifications: [
+      { label: "Core Modules", value: "5 Hubs", detail: "OPD, IPD Beds, Pharmacy, Diagnostics, Invoicing" },
+      { label: "Type Safety", value: "Strict TS", detail: "End-to-end interface coverage for all clinical data contracts" },
+      { label: "Design System", value: "Tailwind CSS", detail: "High-contrast clinical views optimized for fast scanning" },
+    ],
+    currentLimitations: [
+      "Payment gateway integration is currently mock-based and pending production merchant verification.",
+      "HL7 / FHIR protocol interoperability is not yet implemented.",
+    ],
+    nextSteps: [
+      "Implement role-based authorization guards (Receptionist, Doctor, Pharmacist, Administrator).",
+      "Connect live PostgreSQL test instance with seeded synthetic hospital data.",
     ],
   },
   {
     id: "kosi-voter-digitalize",
-    title: "Kosi Voter Digitalization & Analytics",
-    tagline: "13-District Graduate Constituency Voter Hierarchy & Live Intelligence",
+    title: "Kosi Region Voter Digitalization & Analytics",
+    tagline: "Multi-District Graduate Constituency Dataset Directory & Analytics Dashboard",
     category: "Data & Analytics",
+    status: "Data Platform",
     featured: true,
-    stars: 8,
-    tags: ["HTML5", "JavaScript", "Data Visualization", "Looker Studio", "Analytics"],
-    description:
-      "Large-scale voter dataset digitalization platform covering 13 districts in the Kosi Region Graduate Constituency. Combines automated tabular hygiene, cross-tabulation, district directory hierarchies, and interactive analytical visualizers.",
-    metrics: "13 Districts Covered | 100k+ Data Points Processed",
+    tags: ["HTML5", "JavaScript", "Looker Studio", "Data Cleaning", "Analytics"],
+    summary:
+      "A structured regional data project organizing graduate constituency voter directories across 13 administrative districts, featuring automated data hygiene scripts and interactive analytical dashboards.",
+    roleAndContribution:
+      "Lead data analyst. Formulated data standardisation rules, consolidated disparate district rosters, created relational cross-tabulations, and designed executive dashboards for operational coordinators.",
     repoUrl: "https://github.com/nadeemalam178/kosi-voter-digitalize",
     demoUrl: "https://github.com/nadeemalam178/kosi-voter-digitalize",
-    accentColor: "from-emerald-500 to-teal-700",
-    highlights: [
-      "Dynamic interactive dashboard for district-wise and block-wise demographic trends.",
-      "Clean hierarchy structure mapping assembly segments to polling stations.",
-      "Automated tabular validation scripts detecting duplicate entries and anomalies.",
-      "Exportable summary reports for strategic field directors.",
+    verifiedFeatures: [
+      "Hierarchical district-to-block-to-booth directory taxonomy across 13 regional districts.",
+      "Data sanitation routines to identify duplicate entries, missing contact fields, and misspellings.",
+      "Interactive analytics dashboard visualizing district-level registration status.",
+      "Exportable tabular summaries configured for field coordination teams.",
     ],
     problem:
-      "Electoral rolls across 13 expansive districts in Bihar's Kosi Region were scattered across inconsistent spreadsheets and scanned PDF rosters, preventing campaign leadership from accurately identifying eligible graduate voters.",
+      "Graduate voter registration records across 13 districts in the Kosi region arrived in inconsistent spreadsheet structures, making it difficult for regional coordinators to assess verification coverage and territory progress.",
     solution:
-      "Designed an automated data processing pipeline using Python and JavaScript to standardize inconsistent voter registries, cross-tabulate demographics, and output a dynamic multi-level directory dashboard.",
+      "Created a standardized data ingestion protocol that cleans raw spreadsheet files, normalizes district and assembly names, and generates pre-aggregated analytical feeds for Looker Studio and web dashboards.",
     architectureDecisions: [
       {
-        decision: "Pre-Aggregated JSON Data Feeds",
-        rationale: "Pre-compiles district and block summaries into lightweight cached payloads so dashboard charts load instantly in remote field areas without active database connectivity.",
-        alternative: "Live client-side raw dataset parsing (rejected because client browsers froze parsing 100k+ rows)",
+        decision: "Pre-Aggregated JSON Feeds for Web Views",
+        rationale: "Pre-aggregating district summaries avoids transferring massive raw tabular datasets to client browsers in low-connectivity areas.",
+        tradeoff: "Requires re-running the aggregation script whenever underlying spreadsheet rows are updated.",
       },
       {
-        decision: "Dual-Engine Dashboard (Looker Studio + Vanilla Web UI)",
-        rationale: "Looker Studio provides high-level executive KPI briefs, while the custom web app offers granular search and filtering for field officers.",
-        alternative: "Single proprietary BI tool (too expensive and inaccessible for ground cadres)",
+        decision: "Standardized Master Dictionary for Administrative Territories",
+        rationale: "Eliminated transcription discrepancies between varying spellings of regional blocks and urban wards.",
+        tradeoff: "Required manual curation of the initial territorial lookup dictionary.",
       },
     ],
-    benchmarks: [
-      { metric: "Records Standardized", value: "100K+", description: "Voter rows cleaned and verified across 13 districts" },
-      { metric: "Turnaround Reduction", value: "75%", description: "Cut weekly reporting cycle from 20 hours to 5 hours" },
-      { metric: "Territories Indexed", value: "13 Districts", description: "Complete hierarchy down to polling station level" },
+    technicalSpecifications: [
+      { label: "Coverage Scope", value: "13 Districts", detail: "Complete Kosi region graduate constituency coverage" },
+      { label: "Hierarchy Depth", value: "3 Levels", detail: "District -> Block / Assembly Segment -> Polling Station" },
+      { label: "Reporting Format", value: "Dual Feed", detail: "Looker Studio executive briefs + lightweight client HTML" },
+    ],
+    currentLimitations: [
+      "Dashboard relies on periodic batch updates rather than sub-minute live data streaming.",
+    ],
+    nextSteps: [
+      "Automate Google Drive webhook triggers to re-run compilation scripts upon new file upload.",
+      "Add demographic trend visualization comparing enrollment across electoral cycles.",
     ],
   },
   {
     id: "preptake",
-    title: "PrepTake B.Ed Exam Preparation Portal",
-    tagline: "Lightweight, Mobile-First EdTech Platform for CTET & State Exams",
+    title: "PrepTake Exam Preparation App",
+    tagline: "Mobile-First Teacher Eligibility Exam Preparation Application",
     category: "Full-Stack",
+    status: "Functional Application",
     featured: true,
-    stars: 4,
-    tags: ["Python", "Flask", "Tailwind CSS", "EdTech", "Responsive Design"],
-    description:
-      "A modern, ultra-lightweight exam preparation web application targeted at teacher eligibility exams including CTET Paper 2, Bihar STET, and BPSC TRE 4.0. Features practice tests, timed mocks, and immediate explanatory answer keys.",
-    metrics: "Mobile-First UX | Fast Question Engine",
+    tags: ["Python", "Flask", "Tailwind CSS", "Mobile-First", "EdTech"],
+    summary:
+      "A lightweight web application designed for teacher eligibility test candidates (CTET, Bihar STET, BPSC TRE) providing timed practice tests, question categorization, and immediate score breakdowns.",
+    roleAndContribution:
+      "Sole developer and subject-matter researcher. Leveraged my B.Ed academic background to curate pedagogical questions, built the Flask backend routing, and engineered a mobile-first interface optimized for rural internet bandwidth.",
     repoUrl: "https://github.com/nadeemalam178/preptake",
     demoUrl: "https://github.com/nadeemalam178/preptake",
-    accentColor: "from-amber-500 to-orange-600",
-    highlights: [
-      "Question bank categorization tailored to pedagogical frameworks and math syllabi.",
-      "Low-bandwidth optimized interface for candidates in regional zones.",
-      "Immediate score computation and strengths/weaknesses breakdown.",
-      "Interactive quiz runner with progress persistence.",
+    verifiedFeatures: [
+      "Pedagogical and mathematical subject tracks tailored to CTET Paper 2 and Bihar STET curricula.",
+      "Client-side quiz state persistence to prevent progress loss during mobile network drops.",
+      "Immediate question-by-question explanatory answer feedback.",
+      "Lightweight asset bundle loading smoothly on mobile browser viewports.",
     ],
     problem:
-      "Candidates preparing for Bihar STET and BPSC TRE in rural areas face sluggish, ad-bloated test portals that fail over intermittent 3G/4G cellular connections.",
+      "Rural teacher candidates frequently face ad-saturated exam websites that crash on 3G/4G connections and lose in-progress test attempts when coverage fluctuates.",
     solution:
-      "Architected a streamlined mobile-first web app with offline quiz caching, minimal asset payloads (<150KB initial load), and instantaneous client-side question validation.",
+      "Engineered an ad-free, minimal-weight web application using Python/Flask and Tailwind CSS that caches mock exam questions locally and batches answers cleanly.",
     architectureDecisions: [
       {
-        decision: "Lightweight Flask Microframework",
-        rationale: "Provides minimal server overhead, zero bloat, and fast response times on economical hosting instances.",
-        alternative: "Django (rejected due to unnecessary administrative weight for a nimble quiz engine)",
+        decision: "Lightweight Microframework (Flask)",
+        rationale: "Avoids heavy monolithic dependencies and runs with high responsiveness on low-cost server environments.",
+        tradeoff: "Requires custom handling for features that full frameworks provide out of the box.",
       },
       {
-        decision: "Client-side Session Storage for Quiz State",
-        rationale: "Prevents loss of exam answers during mobile network drops by syncing to localStorage before batch submitting.",
-        alternative: "Per-question server polling (causes submission drops during spotty coverage)",
+        decision: "Local Storage Fallback for Test Answers",
+        rationale: "Guarantees candidates do not lose exam progress if their connection momentarily drops during a timed mock test.",
+        tradeoff: "Requires synchronization checks before finalizing the final submission payload.",
       },
     ],
-    benchmarks: [
-      { metric: "Initial Bundle Size", value: "<150 KB", description: "Ultra-lean payload loaded in under 1 second on 3G" },
-      { metric: "Exam Formats", value: "3 Major", description: "CTET Paper 2, Bihar STET, BPSC TRE 4.0" },
-      { metric: "Question Switch Latency", value: "<5ms", description: "Instantaneous next-question transition" },
+    technicalSpecifications: [
+      { label: "Target Exams", value: "3 Key Tracks", detail: "CTET Paper 2, Bihar STET, BPSC TRE" },
+      { label: "Architecture", value: "Flask + HTML5", detail: "Lightweight server-rendered routes with client state" },
+      { label: "Bundle Weight", value: "<180 KB", detail: "Minimal initial payload for fast mobile load" },
     ],
-  },
-  {
-    id: "zp-dashboard",
-    title: "ZP-Dashboard & Assembly Visualizer",
-    tagline: "Constituency-Level Multi-District Performance Intelligence",
-    category: "Data & Analytics",
-    featured: false,
-    stars: 3,
-    tags: ["JavaScript", "MIS Reporting", "Charts", "SQL", "Dashboard"],
-    description:
-      "A high-impact data visualization dashboard designed for monitoring constituency progress, public representation, and key electoral metrics across Arwal, Aurangabad, Gaya, and Jehanabad districts.",
-    metrics: "4 Major Districts | Multi-Tier Breakdown",
-    repoUrl: "https://github.com/nadeemalam178/ZP-Dashboard",
-    demoUrl: "https://github.com/nadeemalam178/ZP-Dashboard",
-    accentColor: "from-purple-600 to-pink-600",
-    highlights: [
-      "Constituency drill-down filters from district down to booth level.",
-      "Real-time KPI comparison charts across administrative zones.",
-      "Seamless integration with Google Sheets and relational databases.",
+    currentLimitations: [
+      "Currently supports multiple-choice format only; subjective response evaluation is not supported.",
     ],
-    problem:
-      "Campaign leadership lacked real-time visibility into booth-level voter mobilization metrics across disparate assembly constituencies.",
-    solution:
-      "Engineered an interactive dashboard visualizer connecting Google Sheets telemetry to dynamic Chart.js dashboards for live executive briefings.",
-    architectureDecisions: [
-      {
-        decision: "Live Data Feed via Google Apps Script API",
-        rationale: "Enables non-technical data entry staff to update familiar spreadsheets while the executive dashboard automatically reflects updates in real-time.",
-        alternative: "Custom CMS database entry (higher training hurdle for temporary field staff)",
-      },
-    ],
-    benchmarks: [
-      { metric: "Districts Monitored", value: "4 Key", description: "Arwal, Aurangabad, Gaya, Jehanabad" },
-      { metric: "Dashboard Refresh", value: "Live Sync", description: "Real-time updates triggered on sheet edits" },
+    nextSteps: [
+      "Add candidate performance analytics tracking historical score improvements over time.",
+      "Implement offline PWA service worker caching for complete offline mock completion.",
     ],
   },
   {
     id: "sangathan-search",
-    title: "SangathanSearch Engine",
-    tagline: "Lightning-Fast In-Memory Search Engine for Field Cadres",
+    title: "SangathanSearch Directory",
+    tagline: "In-Memory Client-Side Contact & Hierarchy Lookup Engine",
     category: "Full-Stack",
+    status: "Utility / Tool",
     featured: false,
-    stars: 2,
-    tags: ["JavaScript", "Fuzzy Search", "Data Indexing", "Web App"],
-    description:
-      "Specialized search and lookup platform designed to query thousands of organizational hierarchy members instantaneously with phone numbers, designations, and administrative territories.",
-    metrics: "<15ms Query Response | Offline Indexing",
+    tags: ["JavaScript", "In-Memory Search", "Data Indexing", "Web Tool"],
+    summary:
+      "A specialized in-memory lookup utility developed for organizational field personnel to query thousands of member contacts and administrative assignments instantaneously.",
+    roleAndContribution:
+      "Developer. Structured the pre-indexed data array, wrote the substring matching logic, and designed a responsive contact card layout with direct communication triggers.",
     repoUrl: "https://github.com/nadeemalam178/SangathanSearch",
     demoUrl: "https://github.com/nadeemalam178/SangathanSearch",
-    accentColor: "from-cyan-500 to-blue-600",
-    highlights: [
-      "Client-side indexing for instantaneous search without server roundtrips.",
-      "Tolerant fuzzy search handling transliteration and spelling variations.",
-      "Direct action buttons to call, message, or copy contact cards.",
+    verifiedFeatures: [
+      "Instantaneous in-memory filtering by name, district, or organizational designation.",
+      "Tolerant substring matching accommodating spelling variations.",
+      "One-tap call and clipboard copying actions for field coordinators.",
+      "Zero server roundtrips required after initial asset load.",
     ],
     problem:
-      "Field teams in remote campaign blocks needed to quickly locate district coordinators and block in-charges without remembering exact spellings or relying on slow mobile data.",
+      "Field teams coordinating across districts frequently needed to look up territory in-charges while traveling, where slow network connectivity made remote API search queries impractical.",
     solution:
-      "Constructed a high-speed in-memory client-side search engine leveraging phonetic matching and substring indexing.",
+      "Built a client-side search utility that bundles a compressed JSON roster into browser memory upon initial visit, enabling immediate local filtering without active internet.",
     architectureDecisions: [
       {
-        decision: "In-Memory Inverted Index",
-        rationale: "Loads the compressed cadre roster once upon app opening, enabling sub-15ms fuzzy lookups completely offline.",
-        alternative: "Server-side SQL LIKE queries (slow latency on field 4G)",
+        decision: "Client-Side In-Memory Inverted Index",
+        rationale: "Provides sub-20ms search latency regardless of cellular network quality in remote areas.",
+        tradeoff: "Dataset must remain under a few megabytes to prevent browser memory pressure.",
       },
     ],
-    benchmarks: [
-      { metric: "Search Latency", value: "<15ms", description: "In-memory substring & fuzzy match" },
-      { metric: "Offline Capability", value: "100%", description: "Fully operable with zero active internet after initial load" },
+    technicalSpecifications: [
+      { label: "Search Mechanism", value: "Client-Side", detail: "Fast array filtering with normalized substring matches" },
+      { label: "Dependency", value: "Zero Libs", detail: "Built with vanilla JavaScript DOM APIs" },
+    ],
+    currentLimitations: [
+      "Roster data is statically compiled; updating members requires regenerating the source JSON.",
+    ],
+    nextSteps: [
+      "Implement IndexedDB storage to support rosters with tens of thousands of members.",
     ],
   },
   {
     id: "booth-website",
     title: "Booth Visualizer & OCR Extractor",
-    tagline: "Computer Vision & OCR Data Extraction for Election Polling Stations",
+    tagline: "Electoral Polling Station Visualizer & Scanned PDF Data Extraction Pipeline",
     category: "Automation",
+    status: "Utility / Tool",
     featured: false,
-    stars: 3,
-    tags: ["Python", "OCR / Tesseract", "Data Processing", "Computer Vision"],
-    description:
-      "Bankipur Assembly Election booth-wise data visualizer paired with automated OCR scripts that convert physical electoral voter rolls and station lists into structured SQL database records.",
-    metrics: "Hundreds of Scanned Sheets Processed",
+    tags: ["Python", "OCR", "OpenCV", "Data Extraction", "SQL"],
+    summary:
+      "A data processing and visualizer project developed for Bankipur assembly constituency, utilizing Python OCR to convert scanned PDF electoral rolls into structured tabular datasets.",
+    roleAndContribution:
+      "Pipeline developer. Implemented image pre-processing scripts with OpenCV (binarization, deskewing), configured Tesseract OCR routines, and built web visualization tables.",
     repoUrl: "https://github.com/nadeemalam178/Booth-Website",
     demoUrl: "https://github.com/nadeemalam178/Booth-Website",
-    accentColor: "from-violet-500 to-indigo-700",
-    highlights: [
-      "Automated deskewing and text bounding box extraction from PDF rolls.",
-      "Relational schema generation directly from scanned tabular layouts.",
-      "Interactive map and table visualizer for booth officers.",
+    verifiedFeatures: [
+      "Automated image thresholding and noise removal on scanned paper documents.",
+      "Extraction of polling station names, booth numbers, and voter counts into structured CSV/SQL formats.",
+      "Web interface displaying booth-wise distributions for constituency coordinators.",
     ],
     problem:
-      "Official polling station allocation lists were provided exclusively as low-resolution, scanned Hindi/English paper PDFs, preventing digital search.",
+      "Official polling station assignments were released exclusively as scanned physical PDF sheets with scanner artifacts and uneven lighting, preventing automated search or mapping.",
     solution:
-      "Developed a Python Computer Vision pipeline with OpenCV image deskewing, Tesseract OCR bounding box extraction, and automated normalization into SQL tables.",
+      "Constructed a multi-step image processing pipeline in Python that cleans scanned sheets, segments text bounding boxes, and parses numbers and names into relational tables.",
     architectureDecisions: [
       {
-        decision: "Pre-OCR Image Binarization & Morphological Filtering",
-        rationale: "Removes scanner paper noise and misaligned photocopier lines before feeding into the OCR engine, boosting character recognition from 64% to 92%.",
-        alternative: "Direct OCR on raw PDFs (resulted in unusable garbled text)",
+        decision: "Pre-OCR Morphological Filtering with OpenCV",
+        rationale: "Removes scanner skew and dot-matrix paper noise prior to OCR, significantly improving text recognition fidelity.",
+        tradeoff: "Adds processing latency per PDF page compared to raw OCR.",
       },
     ],
-    benchmarks: [
-      { metric: "OCR Accuracy", value: "92.4%", description: "Character recognition accuracy on degraded scanner sheets" },
-      { metric: "Digitization Speed", value: "12x", description: "Faster than manual transcription typists" },
+    technicalSpecifications: [
+      { label: "Pipeline Stack", value: "Python + OpenCV", detail: "Tesseract OCR engine with custom preprocessing" },
+      { label: "Output Schema", value: "Relational SQL", detail: "Normalized tables ready for database insertion" },
     ],
-  },
-  {
-    id: "bihar-zp-scraper",
-    title: "Bihar Zila Parishad Scraper & Pipeline",
-    tagline: "Resilient Web Scraper & Dataset Generator for Local Governance",
-    category: "Automation",
-    featured: false,
-    stars: 2,
-    tags: ["Python", "BeautifulSoup", "Automation", "ETL", "JSON/CSV"],
-    description:
-      "Automated web-scraping script suite collecting comprehensive contact details, territorial assignments, and tenure info for Zila Parishad members across Bihar state portals.",
-    metrics: "Fully Automated ETL Pipeline",
-    repoUrl: "https://github.com/nadeemalam178/Bihar-ZP-Scraper",
-    demoUrl: "https://github.com/nadeemalam178/Bihar-ZP-Scraper",
-    accentColor: "from-rose-500 to-red-600",
-    highlights: [
-      "Robust error-handling with exponential backoff and captcha handling.",
-      "Clean export formats in CSV, JSON, and normalized SQL seed scripts.",
-      "Powering downstream analytical dashboards and contact verification.",
+    currentLimitations: [
+      "Extremely degraded or handwritten photocopies still require human-in-the-loop review.",
     ],
-    problem:
-      "Local governance representative data was buried inside pagination links across outdated government web portals with frequent connection drops.",
-    solution:
-      "Built an idempotent Python web scraping suite with session retry policies, rate limiting, and automated data normalization into relational formats.",
-    architectureDecisions: [
-      {
-        decision: "Idempotent Checkpointing to SQLite",
-        rationale: "Allows the scraper to resume from the exact last record if the host portal throttles or resets the connection.",
-        alternative: "Single in-memory array write (lost all scraped data on server timeout)",
-      },
-    ],
-    benchmarks: [
-      { metric: "Fault Tolerance", value: "Auto-Resume", description: "Zero data loss on network drops" },
-      { metric: "Export Formats", value: "CSV, JSON, SQL", description: "Direct seed files ready for BI dashboards" },
+    nextSteps: [
+      "Train a fine-tuned layout parser model for mixed Hindi and English tabular rosters.",
     ],
   },
   {
     id: "al-qalam-app",
-    title: "Al-Qalam Public School Mobile App",
-    tagline: "Educational Mobile Platform for Academic Notifications & Attendance",
+    title: "Al-Qalam Public School Portal",
+    tagline: "Educational Communication & Academic Notice Mobile Platform",
     category: "Mobile",
+    status: "Functional Application",
     featured: false,
-    stars: 2,
-    tags: ["Dart", "Flutter", "Cross-Platform", "Mobile App"],
-    description:
-      "Cross-platform mobile application developed for students, parents, and teachers to receive circular notifications, track daily attendance, and review academic calendars.",
-    metrics: "Android & iOS Ready",
+    tags: ["Dart", "Flutter", "Mobile", "Cross-Platform", "Education"],
+    summary:
+      "A cross-platform mobile application and web interface designed for school circulars, academic notices, and student attendance visibility.",
+    roleAndContribution:
+      "Mobile developer. Built responsive screens using Flutter, implemented state management for student record lists, and designed clean academic notice card components.",
     repoUrl: "https://github.com/nadeemalam178/Al-Qalam-Public-School",
     demoUrl: "https://github.com/nadeemalam178/Al-Qalam-Public-School",
-    accentColor: "from-teal-500 to-emerald-700",
-    highlights: [
-      "Clean Flutter UI with fast state management.",
-      "Real-time notifications for urgent announcements.",
-      "Intuitive student report card and attendance ledger.",
+    verifiedFeatures: [
+      "Unified cross-platform screens running on Android and web viewports.",
+      "Categorized notice board for institutional circulars and examination calendars.",
+      "Clean attendance register view for parents and teachers.",
     ],
     problem:
-      "Parents and teachers had no direct, unified channel for urgent school closures, fee notices, and student attendance logs.",
+      "Small private schools often rely on unorganized WhatsApp groups for circulars and notices, causing parents to miss critical academic dates and fee announcements.",
     solution:
-      "Created a cross-platform Flutter application with real-time push alerts, offline calendar caching, and an intuitive attendance ledger.",
+      "Developed a dedicated Flutter application providing an organized repository of announcements, academic calendars, and class notices with offline caching.",
     architectureDecisions: [
       {
-        decision: "Flutter Cross-Platform Architecture",
-        rationale: "Maintains a single shared codebase running smoothly on both budget Android devices and iOS.",
-        alternative: "Separate native Swift and Kotlin apps (double maintenance overhead)",
+        decision: "Single Flutter Codebase for Mobile and Web",
+        rationale: "Allows delivering both Android APK and responsive web portal from a single unified codebase.",
+        tradeoff: "Web build has a larger initial engine download than pure HTML/JS.",
       },
     ],
-    benchmarks: [
-      { metric: "Frame Rate", value: "60 FPS", description: "Smooth fluid animations on budget mobile chipsets" },
-      { metric: "Platforms Supported", value: "Android & iOS", description: "Single codebase distribution" },
+    technicalSpecifications: [
+      { label: "SDK", value: "Flutter 3.x", detail: "Dart language with Material 3 responsive design" },
+      { label: "Platform", value: "Android & Web", detail: "Multi-platform build targets" },
+    ],
+    currentLimitations: [
+      "Push notification integration requires Firebase configuration in production deployment.",
+    ],
+    nextSteps: [
+      "Connect cloud database backend for real-time notification broadcasting.",
     ],
   },
 ];

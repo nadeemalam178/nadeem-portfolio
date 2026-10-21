@@ -1,100 +1,113 @@
-# Nadeem Alam — Developer & Data Analyst Portfolio
+# Nadeem Alam | Data Analyst, Automation Developer & Full-Stack Application Builder
 
-A modern, fluid, production-grade portfolio website built with **Next.js 16**, **React 19**, **Tailwind CSS v4**, and **Framer Motion**. Engineered to showcase enterprise full-stack systems, constituency-level data analytics, operational automation, and a print-ready interactive Curriculum Vitae.
+A high-performance personal portfolio, data workbench, and interactive curriculum vitae built with **Next.js 16**, **React 19**, **TypeScript**, and **Tailwind CSS v4**.
 
-![Portfolio Preview](public/favicon.ico)
-
----
-
-## ✨ Features
-
-- **Fluid Ambient Canvas**: Interactive mouse-following liquid gradients and glassmorphism cards.
-- **Context-Aware Bento Grid**:
-  - Flagship system spotlight (**Radiant Hospitals HMS**)
-  - Dynamic query & automation workbench (Interactive SQL & Google Apps Script tabs)
-  - Live geographic card (Patna, Bihar, IST live clock)
-  - Data analytics in production (**Kosi Region Voter Digitalization**)
-  - Interactive Tech Stack tags
-- **Curated Projects Showcase**:
-  - Filterable by: `All`, `Full-Stack`, `Data & Analytics`, `Automation`, `Mobile`
-  - Real-time instant search by tech, title, or keyword
-  - Deep-dive case study modal with architecture breakdowns and direct GitHub repository links
-- **Integrated Curriculum Vitae & Print Engine**:
-  - Formal A4-formatted ATS resume view
-  - 1-Click **"Print / Save as PDF"** feature optimized for standard A4 paper dimensions
-  - Direct 1-click email and phone clipboard copy
-- **Interactive Micro-Interactions**:
-  - Confetti particle triggers on CTA clicks
-  - Live availability badge with smooth pulsing indicators
-  - Mobile-responsive navigation drawer
+Engineered to demonstrate operational data management, automated reporting workflows, relational schema design, interactive analytics discovery, and full-stack web applications.
 
 ---
 
-## 🛠️ Tech Stack
+## ⚡ Verified Architectural Features
 
-- **Framework**: [Next.js 16](https://nextjs.org/) (App Router & Turbopack)
-- **UI Library**: [React 19](https://react.dev/)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
-- **Icons**: [Lucide React](https://lucide.dev/) + Custom SVG Brand Icons
-- **Effects**: [canvas-confetti](https://www.npmjs.com/package/canvas-confetti)
-- **Language**: TypeScript (Strict typing)
+1. **Restrained Editorial Visual Design**:
+   - Sophisticated dark-neutral palette (`#08090d`, `#0c0e17`) with cyan and indigo accents.
+   - Dual-bezel concentric borders with subtle micro-depth and zero neon clutter.
+   - Respects `prefers-reduced-motion` across all interactive surfaces.
+
+2. **Interactive Project Discovery & Micro-App Showcases**:
+   - **Radiant Hospitals HMS**: Interactive clinical triage OPD, bed occupancy matrix, and pharmacy dispensing simulation.
+   - **Kosi Voter Digitalization**: 13-district selector with aggregated polling booth counts and localized electoral MIS metrics.
+   - **PrepTake Exam Engine**: Interactive client-side question testing engine with score tracking.
+   - **SangathanSearch**: In-memory multi-attribute search and filtering across simulated organizational units.
+   - All interactive sample datasets are synthetically generated and clearly labeled.
+
+3. **In-Browser SQL & Data Workbench**:
+   - Interactive SQL query runner with syntax-highlighted statements.
+   - Live toggling between structured data tables and analytical visual charts.
+
+4. **Multi-Page Architecture Decision Records (ADR)**:
+   - Dedicated deep-dive routes for flagship projects (`/projects/[id]`) statically pre-rendered at build time.
+   - Transparent rationale, trade-off analysis, current technical limitations, and engineering roadmaps.
+
+5. **Consolidated ATS-Optimized Curriculum Vitae**:
+   - Unified tabbed experience covering verified organizational roles, MCA / B.Ed / B.Sc. academic background, and official certifications (STET, CTET, TCS NQT).
+   - Dedicated modal with 1-click standard A4 print/export styles (`@media print` hiding headers, dock, and backdrops).
+
+6. **Precision Navigation & Mobile Dock**:
+   - Quick command palette (`⌘K` / `Ctrl+K`) for keyboard-driven site discovery.
+   - Fixed mobile dock for thumb-friendly navigation on smaller viewports.
+   - Lenis inertial momentum scrolling with top laser progress indicator.
 
 ---
 
-## 🚀 Getting Started
+## 🛠️ Technology Stack
+
+- **Framework**: Next.js 16 (App Router, Turbopack, Cache Components)
+- **UI Library**: React 19 (Strict Mode, Zero synchronous state in effects)
+- **Styling**: Tailwind CSS v4 & PostCSS
+- **Animation**: Framer Motion & Lenis Momentum Scrolling
+- **Icons**: Lucide React & Custom Brand SVGs
+- **Type Safety**: TypeScript 5 (Strict mode)
+- **Linting**: ESLint 9 (0 errors, 0 warnings)
+
+---
+
+## 🚀 Local Development & Verification
 
 ### Prerequisites
+- Node.js `v20+` or `v22+`
+- npm `v10+`
 
-- Node.js `v20+` or `v24+`
-- npm `v10+` or `v11+`
-
-### Installation & Development
-
+### Installation & Run
 ```bash
-# Navigate to the portfolio folder
-cd portfolio
+# Clone the repository
+git clone https://github.com/nadeemalam178/nadeem-portfolio.git
+cd nadeem-portfolio
 
-# Install dependencies (already installed)
+# Install dependencies
 npm install
 
 # Start development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Visit [http://localhost:3000](http://localhost:3000) to view the application.
 
-### Production Build
-
+### Verification Commands
 ```bash
+# Verify ESLint (0 errors, 0 warnings)
+npm run lint
+
+# Verify full Turbopack production build (all 13 routes prerendered)
 npm run build
-npm run start
 ```
 
 ---
 
-## 🌐 Deploy to GitHub Pages or Vercel
+## 🌐 Deployment Configuration
 
-### Deploy to Vercel (Recommended — 1-Click)
-1. Push this repository to GitHub:
-   ```bash
-   git remote add origin https://github.com/nadeemalam178/<your-repo-name>.git
-   git push -u origin main
-   ```
-2. Go to [vercel.com](https://vercel.com) and import the repository. Vercel automatically detects Next.js and deploys it with sub-second speeds.
+The repository is pre-configured with multi-platform deployment manifests:
 
-### Deploy to GitHub Pages
-To export static HTML for GitHub Pages:
-1. Add `output: 'export'` to `next.config.ts`.
-2. Run `npm run build`. The static files will be generated in `out/`.
-3. Deploy to the `gh-pages` branch.
+### 1. Vercel (Recommended)
+- Manifest: `vercel.json`
+- Zero-config deployment. Connect your GitHub repository to Vercel and it will automatically build using `next build`.
+- Environment variable (optional): `NEXT_PUBLIC_SITE_URL=https://your-domain.vercel.app`
+
+### 2. Netlify
+- Manifest: `netlify.toml`
+- Includes configuration for Next.js runtime plugin (`@netlify/plugin-nextjs`).
+
+### 3. GitHub Actions CI
+- Workflow: `.github/workflows/ci.yml`
+- Automatically executes linting and production build verification on every push and pull request to `main`.
 
 ---
 
-## 👤 Author
+## 👤 Verified Professional Information
 
-**Nadeem Alam**  
-- **Email**: [alamnadeem178@gmail.com](mailto:alamnadeem178@gmail.com)  
-- **LinkedIn**: [nadeem-alam-2853b9232](https://www.linkedin.com/in/nadeem-alam-2853b9232)  
-- **GitHub**: [@nadeemalam178](https://github.com/nadeemalam178)  
+- **Name**: Nadeem Alam
+- **Title**: Data Analyst, Automation Developer & Full-Stack Application Builder
 - **Location**: Patna, Bihar, India
+- **Education**: Master of Computer Applications (SMU), B.Ed, B.Sc. (Maths Hons)
+- **Email**: [alamnadeem178@gmail.com](mailto:alamnadeem178@gmail.com)
+- **LinkedIn**: [nadeem-alam-2853b9232](https://www.linkedin.com/in/nadeem-alam-2853b9232)
+- **GitHub**: [@nadeemalam178](https://github.com/nadeemalam178)

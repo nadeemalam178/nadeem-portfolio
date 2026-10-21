@@ -13,25 +13,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nadeem Alam | Data Analyst & Full-Stack Automation Engineer",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://nadeem-portfolio.vercel.app"),
+  title: "Nadeem Alam | Data Analyst, Automation Developer & Full-Stack Application Builder",
   description:
-    "Portfolio of Nadeem Alam showcasing flagship projects like Radiant Hospitals HMS, Kosi Voter Digitalization, ZP Dashboards, and an interactive curriculum vitae.",
+    "Professional portfolio of Nadeem Alam: Data analyst, reporting specialist, MIS automation developer, and full-stack application builder. Advanced Excel, SQL, Google Apps Script, Next.js, and TypeScript.",
   keywords: [
     "Nadeem Alam",
     "Data Analyst",
-    "MIS Executive",
-    "Full Stack Developer",
-    "Patna Bihar",
-    "Next.js Portfolio",
+    "Automation Developer",
+    "Full-Stack Application Builder",
+    "MIS Reporting",
+    "Google Apps Script",
+    "Next.js",
     "TypeScript",
-    "Looker Studio",
     "SQL",
+    "Patna Bihar",
   ],
   authors: [{ name: "Nadeem Alam", url: "https://github.com/nadeemalam178" }],
   openGraph: {
-    title: "Nadeem Alam | Data Analyst & Full-Stack Automation Engineer",
+    title: "Nadeem Alam | Data Analyst, Automation Developer & Full-Stack Application Builder",
     description:
-      "Transforming complex operational datasets into fluid, high-impact analytical dashboards and web systems.",
+      "Operational data management, automated reporting workflows, and full-stack application development.",
     type: "website",
     url: "https://github.com/nadeemalam178",
   },

@@ -1,21 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState } from "react";
 import {
-  Database,
   Terminal,
-  Activity,
-  MapPin,
-  Clock,
   Layers,
+  Code2,
+  GraduationCap,
   ArrowUpRight,
-  Sparkles,
   CheckCircle2,
-  Cpu,
 } from "lucide-react";
-import { profile } from "@/data/profile";
-import { projects } from "@/data/projects";
 import AntigravityCard from "@/components/AntigravityCard";
 
 interface BentoGridProps {
@@ -23,168 +16,180 @@ interface BentoGridProps {
 }
 
 export default function BentoGrid({ onSelectProject }: BentoGridProps) {
-  const [activeCodeTab, setActiveCodeTab] = useState<"sql" | "script">("sql");
-  const [time, setTime] = useState<string>("");
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setTime(
-        now.toLocaleTimeString("en-IN", {
-          timeZone: "Asia/Kolkata",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        })
-      );
-    };
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const featuredHms = projects.find((p) => p.id === "radiant-hms");
-  const featuredKosi = projects.find((p) => p.id === "kosi-voter-digitalize");
+  const [activeTab, setActiveTab] = useState<"sql" | "script">("sql");
 
   return (
-    <section id="bento" className="py-20 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="bento" className="py-20 border-b border-white/[0.06] relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/[0.08] border border-blue-500/20 text-blue-400 text-xs font-medium mb-3">
+        <div className="mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-cyan-400 text-xs font-mono mb-3">
             <Layers className="w-3.5 h-3.5" />
-            <span>Spatial Bento Architecture</span>
+            <span>Architecture & Core Competencies</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Engineering & Analytics Highlights
+          <h2 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
+            How I Approach Engineering & Data Systems
           </h2>
-          <p className="text-sm sm:text-base text-zinc-400 max-w-xl mt-2">
-            A real-time overview of core technical competencies, production systems, and operational automation with interactive 3D spatial depth.
+          <p className="text-sm sm:text-base text-zinc-400 max-w-2xl mt-2 leading-relaxed">
+            Organized around three core engineering disciplines: quantitative data modeling, reliable spreadsheet automation, and modern full-stack web applications.
           </p>
         </div>
 
-        {/* Bento Grid Container */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {/* Card 1: Featured Flagship (Spans 2 cols) */}
-          <div className="md:col-span-2 lg:col-span-2">
+        {/* Bento Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {/* Card 1: Data Analytics & Reporting (Spans 2 cols on tablet/desktop) */}
+          <div className="md:col-span-2">
             <AntigravityCard
-              glowColor="rgba(59, 130, 246, 0.3)"
-              tiltIntensity={7}
-              className="p-6 sm:p-7 bg-gradient-to-br from-white/[0.05] to-white/[0.02] border-white/[0.09] h-full flex flex-col justify-between"
+              glowColor="rgba(56, 189, 248, 0.15)"
+              tiltIntensity={5}
+              className="p-6 sm:p-7 bg-[#0b0d14] border-white/[0.08] h-full flex flex-col justify-between"
             >
-              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl pointer-events-none group-hover:bg-blue-600/20 transition-colors" />
-
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-400">
-                    FLAGSHIP FULL-STACK
+                  <span className="text-xs font-mono font-semibold px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
+                    DATA ARCHITECTURE
                   </span>
-                  <span className="text-xs text-zinc-400 flex items-center gap-1.5">
-                    <Activity className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-                    Production Ready
+                  <span className="text-xs text-zinc-400 font-mono">
+                    JSPT & JOGGF Experience
                   </span>
                 </div>
 
-                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
-                  {featuredHms?.title}
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
+                  Operational Data Pipelines & Executive Dashboards
                 </h3>
-                <p className="text-zinc-300 text-sm leading-relaxed mb-4">
-                  {featuredHms?.description}
+                <p className="text-sm text-zinc-300 leading-relaxed mb-4">
+                  Consolidating fragmented field reports and spreadsheet logs into clean relational schemas. Designing Looker Studio dashboards that provide operational leadership with verifiable KPI tracking and territory coverage metrics.
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 my-4">
-                  {featuredHms?.highlights.slice(0, 2).map((item, i) => (
-                    <div key={i} className="flex items-start gap-2 text-xs text-zinc-300">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 my-3">
+                  <div className="flex items-start gap-2 text-xs text-zinc-300">
+                    <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                    <span>Systematic multi-tier data validation & sanitation</span>
+                  </div>
+                  <div className="flex items-start gap-2 text-xs text-zinc-300">
+                    <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                    <span>Hierarchical constituency directory structuring</span>
+                  </div>
+                  <div className="flex items-start gap-2 text-xs text-zinc-300">
+                    <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                    <span>Cross-tabulation across municipal & rural blocks</span>
+                  </div>
+                  <div className="flex items-start gap-2 text-xs text-zinc-300">
+                    <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                    <span>Executive briefs optimized for fast decision-making</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-white/[0.07] mt-3">
-                <div className="flex flex-wrap gap-1.5">
-                  {featuredHms?.tags.slice(0, 4).map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-white/[0.06] text-zinc-300"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+              <div className="flex items-center justify-between pt-4 border-t border-white/[0.06] mt-4">
+                <span className="text-xs font-mono text-zinc-400">
+                  Featured Case Study: Kosi Voter Platform
+                </span>
                 <button
-                  onClick={() => onSelectProject("radiant-hms")}
-                  className="inline-flex items-center gap-1 text-xs font-medium text-cyan-400 hover:text-cyan-300 group-hover:translate-x-1 transition-all"
+                  onClick={() => onSelectProject("kosi-voter-digitalize")}
+                  className="inline-flex items-center gap-1 text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors"
                 >
-                  <span>Deep Dive</span>
+                  <span>Read Breakdown</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </AntigravityCard>
           </div>
 
-          {/* Card 2: Interactive Code & Automation Engine */}
-          <div className="md:col-span-1 lg:col-span-2">
+          {/* Card 2: Mathematical Foundation */}
+          <div className="md:col-span-1">
             <AntigravityCard
-              glowColor="rgba(16, 185, 129, 0.3)"
-              tiltIntensity={7}
-              className="p-6 bg-gradient-to-br from-white/[0.05] to-white/[0.02] border-white/[0.09] h-full flex flex-col justify-between"
+              glowColor="rgba(168, 85, 247, 0.15)"
+              tiltIntensity={6}
+              className="p-6 bg-[#0b0d14] border-white/[0.08] h-full flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-mono text-zinc-400">ACADEMIC FOUNDATION</span>
+                  <GraduationCap className="w-4 h-4 text-purple-400" />
+                </div>
+                <h4 className="text-lg font-bold text-white mb-2">Mathematics & MCA</h4>
+                <p className="text-xs text-zinc-300 leading-relaxed mb-4">
+                  B.Sc. Mathematics (Hons) background providing rigorous grounding in discrete math, probability, calculus, and quantitative modeling, complemented by ongoing Master of Computer Applications (MCA) studies.
+                </p>
+
+                <div className="space-y-2 text-xs font-mono text-zinc-300">
+                  <div className="p-2 rounded-lg bg-white/[0.03] border border-white/[0.05]">
+                    <div className="text-white font-bold">MCA (2026–2028)</div>
+                    <div className="text-zinc-400 text-[11px]">Sikkim Manipal University</div>
+                  </div>
+                  <div className="p-2 rounded-lg bg-white/[0.03] border border-white/[0.05]">
+                    <div className="text-white font-bold">B.Sc. Mathematics Hons</div>
+                    <div className="text-zinc-400 text-[11px]">Magadh University (2017–2020)</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-white/[0.06] mt-4 text-[11px] font-mono text-zinc-400">
+                TCS NQT Cognitive Recognized
+              </div>
+            </AntigravityCard>
+          </div>
+
+          {/* Card 3: Automation & Scripting Workbench */}
+          <div className="md:col-span-2">
+            <AntigravityCard
+              glowColor="rgba(16, 185, 129, 0.15)"
+              tiltIntensity={5}
+              className="p-6 bg-[#0b0d14] border-white/[0.08] h-full flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <Terminal className="w-4 h-4 text-emerald-400" />
-                    <span className="text-xs font-mono text-zinc-300">Automation & Query Hub</span>
+                    <span className="text-xs font-mono text-zinc-300">Functional Automation Scripts</span>
                   </div>
-                  {/* Code Tabs */}
-                  <div className="flex rounded-lg bg-black/40 p-0.5 border border-white/[0.07]">
+                  <div className="flex rounded-lg bg-black/40 p-0.5 border border-white/[0.08]">
                     <button
-                      onClick={() => setActiveCodeTab("sql")}
+                      onClick={() => setActiveTab("sql")}
                       className={`px-2.5 py-1 text-[11px] font-mono rounded-md transition-all ${
-                        activeCodeTab === "sql"
+                        activeTab === "sql"
                           ? "bg-emerald-500/20 text-emerald-300 font-semibold"
                           : "text-zinc-400 hover:text-white"
                       }`}
                     >
-                      SQL
+                      SQL Aggregation
                     </button>
                     <button
-                      onClick={() => setActiveCodeTab("script")}
+                      onClick={() => setActiveTab("script")}
                       className={`px-2.5 py-1 text-[11px] font-mono rounded-md transition-all ${
-                        activeCodeTab === "script"
+                        activeTab === "script"
                           ? "bg-emerald-500/20 text-emerald-300 font-semibold"
                           : "text-zinc-400 hover:text-white"
                       }`}
                     >
-                      AppsScript
+                      Apps Script Workflow
                     </button>
                   </div>
                 </div>
 
-                {/* Code Snippet Box */}
-                <div className="rounded-xl bg-[#090b10] border border-white/[0.06] p-3.5 font-mono text-xs overflow-x-auto text-zinc-300 shadow-inner">
-                  {activeCodeTab === "sql" ? (
+                <div className="rounded-xl bg-[#06070a] border border-white/[0.06] p-3.5 font-mono text-xs overflow-x-auto text-zinc-300">
+                  {activeTab === "sql" ? (
                     <pre className="text-[11.5px] leading-5 text-emerald-400/90">
-                      <code>{`-- Constituency Data Aggregation & Cross-Tab
+                      <code>{`-- Operational cross-tabulation query example
 SELECT 
-  district_name,
-  COUNT(DISTINCT voter_id) AS total_graduates,
-  SUM(CASE WHEN verified = 1 THEN 1 ELSE 0 END) AS verified_cadres,
-  ROUND(AVG(turnout_rate), 2) AS avg_turnout
-FROM constituency_master
-GROUP BY district_name
-ORDER BY total_graduates DESC;`}</code>
+  territory_name,
+  COUNT(DISTINCT entity_id) AS total_records,
+  SUM(CASE WHEN verification_status = 'VERIFIED' THEN 1 ELSE 0 END) AS verified_count,
+  ROUND(AVG(completion_pct), 1) AS avg_progress
+FROM operational_registry
+GROUP BY territory_name
+ORDER BY total_records DESC;`}</code>
                     </pre>
                   ) : (
-                    <pre className="text-[11.5px] leading-5 text-cyan-400/90">
-                      <code>{`// Automated Daily MIS Pipeline & Email Dispatch
-function syncConstituencyMetrics() {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet();
-  const rawData = sheet.getSheetByName("Raw_Input").getDataRange().getValues();
-  const cleaned = cleanDataset(rawData);
-  buildLookerFeed(cleaned);
-  MailApp.sendEmail("director@jspt.in", "Daily MIS Ready", "Automated sync complete.");
+                    <pre className="text-[11.5px] leading-5 text-cyan-300/90">
+                      <code>{`// Automated Daily MIS Pipeline & Spreadsheet Ingestion
+function syncOperationalMetrics() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const rawSheet = ss.getSheetByName("Raw_Intake");
+  const data = rawSheet.getDataRange().getValues();
+  const validatedRows = sanitizeDataset(data);
+  updateLookerDataFeed(validatedRows);
 }`}</code>
                     </pre>
                   )}
@@ -192,116 +197,50 @@ function syncConstituencyMetrics() {
               </div>
 
               <div className="flex items-center justify-between text-xs text-zinc-400 mt-3 pt-2 border-t border-white/[0.05]">
-                <span>ETL Automation & Cross-tabulation</span>
-                <span className="font-mono text-emerald-400">Automated 100%</span>
+                <span>Data Intake & Validation Workflows</span>
+                <span className="font-mono text-emerald-400">Production Tested</span>
               </div>
             </AntigravityCard>
           </div>
 
-          {/* Card 3: Live Time & Location */}
+          {/* Card 4: Full-Stack Web Development */}
           <div className="md:col-span-1">
             <AntigravityCard
-              glowColor="rgba(244, 63, 94, 0.25)"
-              tiltIntensity={9}
-              className="p-6 bg-gradient-to-br from-white/[0.05] to-white/[0.02] border-white/[0.09] h-full flex flex-col justify-between"
+              glowColor="rgba(59, 130, 246, 0.15)"
+              tiltIntensity={6}
+              className="p-6 bg-[#0b0d14] border-white/[0.08] h-full flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-mono text-zinc-400">GEOGRAPHY & TIME</span>
-                  <MapPin className="w-4 h-4 text-rose-400" />
+                  <span className="text-xs font-mono text-zinc-400">APPLICATION ENGINEERING</span>
+                  <Code2 className="w-4 h-4 text-blue-400" />
                 </div>
-                <h4 className="text-lg font-bold text-white mb-1">Patna, Bihar</h4>
-                <p className="text-xs text-zinc-400">India (IST GMT +5:30)</p>
-              </div>
-
-              <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center justify-between">
-                <div className="flex items-center gap-1.5 text-xs text-zinc-300">
-                  <Clock className="w-3.5 h-3.5 text-cyan-400 animate-spin" style={{ animationDuration: "12s" }} />
-                  <span>Live Time:</span>
-                </div>
-                <div className="font-mono text-sm font-semibold text-cyan-300 bg-cyan-950/40 px-2.5 py-0.5 rounded-lg border border-cyan-800/40">
-                  {time || "Loading..."}
-                </div>
-              </div>
-            </AntigravityCard>
-          </div>
-
-          {/* Card 4: Data & BI Spotlight (Kosi Digitalization) */}
-          <div className="md:col-span-2 lg:col-span-2">
-            <AntigravityCard
-              glowColor="rgba(99, 102, 241, 0.3)"
-              tiltIntensity={7}
-              className="p-6 bg-gradient-to-br from-white/[0.05] to-white/[0.02] border-white/[0.09] h-full flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400">
-                    DATA ANALYTICS IN PRODUCTION
-                  </span>
-                  <span className="text-xs font-mono text-zinc-400">13 Districts</span>
-                </div>
-
-                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors">
-                  {featuredKosi?.title}
-                </h3>
-                <p className="text-zinc-300 text-sm leading-relaxed mb-3">
-                  Digitalizing voter hierarchies and constructing real-time analytical dashboards across 13 administrative districts for strategic leadership review.
+                <h4 className="text-lg font-bold text-white mb-2">Modern Web Stack</h4>
+                <p className="text-xs text-zinc-300 leading-relaxed mb-4">
+                  Constructing responsive, type-safe web systems using TypeScript, Next.js, React, and Node.js with strict attention to semantic HTML and mobile usability.
                 </p>
-              </div>
-
-              <div className="flex items-center justify-between pt-3 border-t border-white/[0.06] mt-2">
-                <div className="flex items-center gap-2 text-xs text-zinc-300">
-                  <Database className="w-3.5 h-3.5 text-indigo-400" />
-                  <span>100K+ Tabular Rows Cleaned</span>
-                </div>
-                <button
-                  onClick={() => onSelectProject("kosi-voter-digitalize")}
-                  className="inline-flex items-center gap-1 text-xs font-medium text-indigo-400 hover:text-indigo-300 transition-colors"
-                >
-                  <span>Case Study</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </AntigravityCard>
-          </div>
-
-          {/* Card 5: Core Tech Cloud */}
-          <div className="md:col-span-1">
-            <AntigravityCard
-              glowColor="rgba(245, 158, 11, 0.25)"
-              tiltIntensity={9}
-              className="p-6 bg-gradient-to-br from-white/[0.05] to-white/[0.02] border-white/[0.09] h-full flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-mono text-zinc-400">TECH STACK</span>
-                  <Cpu className="w-4 h-4 text-amber-400" />
-                </div>
-                <h4 className="text-base font-bold text-white mb-3">Core Toolset</h4>
 
                 <div className="flex flex-wrap gap-1.5">
-                  {[
-                    "SQL",
-                    "Python",
-                    "TypeScript",
-                    "Next.js",
-                    "Looker Studio",
-                    "Apps Script",
-                    "Spatial UI",
-                    "Tailwind",
-                  ].map((item) => (
+                  {["TypeScript", "Next.js", "React", "PostgreSQL", "Tailwind CSS", "Node.js"].map((t) => (
                     <span
-                      key={item}
-                      className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-white/[0.06] hover:bg-white/[0.12] text-zinc-300 border border-white/[0.05] transition-colors"
+                      key={t}
+                      className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-white/[0.04] text-zinc-300 border border-white/[0.06]"
                     >
-                      {item}
+                      {t}
                     </span>
                   ))}
                 </div>
               </div>
 
-              <div className="text-[11px] text-zinc-400 mt-4 pt-2 border-t border-white/[0.05]">
-                Full-Stack + Data Science Synergy
+              <div className="pt-3 border-t border-white/[0.06] mt-4 flex items-center justify-between text-xs">
+                <span className="text-zinc-400">Flagship: Radiant HMS</span>
+                <button
+                  onClick={() => onSelectProject("radiant-hms")}
+                  className="text-cyan-400 font-mono flex items-center gap-1 hover:underline"
+                >
+                  <span>Explore</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </button>
               </div>
             </AntigravityCard>
           </div>

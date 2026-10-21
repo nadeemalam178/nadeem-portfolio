@@ -1,6 +1,15 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, CheckCircle2, Cpu, Database, Layers, Sparkles, Terminal, Activity } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  CheckCircle2,
+  Layers,
+  Sparkles,
+  Activity,
+  AlertCircle,
+  ArrowRight,
+} from "lucide-react";
 import { Github } from "@/components/Icons";
 import { projects } from "@/data/projects";
 import AntigravityCard from "@/components/AntigravityCard";
@@ -82,22 +91,22 @@ export default async function ProjectCaseStudyPage({
             {project.tagline}
           </p>
 
-          {/* Quick Benchmark Cards (Double-Bezel concentric architecture) */}
+          {/* Quick Technical Specification Cards (Double-Bezel concentric architecture) */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
-            {project.benchmarks.map((b, i) => (
+            {project.technicalSpecifications.map((spec, i) => (
               <div
                 key={i}
                 className="p-1 rounded-[1.75rem] bg-gradient-to-b from-white/[0.12] to-white/[0.02] border border-white/[0.08] shadow-xl"
               >
                 <div className="p-5 rounded-[calc(1.75rem-4px)] bg-[#0c0e17] h-full flex flex-col justify-between shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)]">
                   <div className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider mb-1">
-                    {b.metric}
+                    {spec.label}
                   </div>
-                  <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent my-1">
-                    {b.value}
+                  <div className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent my-1">
+                    {spec.value}
                   </div>
                   <div className="text-xs text-zinc-400">
-                    {b.description}
+                    {spec.detail}
                   </div>
                 </div>
               </div>
@@ -172,22 +181,22 @@ export default async function ProjectCaseStudyPage({
                   {adr.rationale}
                 </p>
                 <div className="text-xs font-mono text-zinc-400 bg-black/40 p-2.5 rounded-xl border border-white/[0.04]">
-                  <span className="text-amber-400">Rejected Alternative: </span>
-                  {adr.alternative}
+                  <span className="text-amber-400">Trade-Off Analysis: </span>
+                  {adr.tradeoff}
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Section 3: Key Engineering Deliverables */}
+        {/* Section 3: Verified Features */}
         <div className="mb-14 p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-white/[0.04] to-white/[0.01] border border-white/[0.08]">
-          <h3 className="text-xl font-bold text-white mb-4">Key Engineering Highlights</h3>
+          <h3 className="text-xl font-bold text-white mb-4">Verified Technical Capabilities</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {project.highlights.map((h, i) => (
+            {project.verifiedFeatures.map((feat, i) => (
               <div key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-300">
                 <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-                <span>{h}</span>
+                <span>{feat}</span>
               </div>
             ))}
           </div>
@@ -209,7 +218,40 @@ export default async function ProjectCaseStudyPage({
           </div>
         </div>
 
-        {/* Section 4: Project CTAs & Next/Prev Navigation */}
+        {/* Section 4: Current Limitations & Next Roadmap Steps */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
+          <div className="p-6 rounded-2xl bg-amber-500/[0.03] border border-amber-500/20">
+            <div className="flex items-center gap-2 text-amber-400 text-xs font-mono uppercase tracking-wider mb-3">
+              <AlertCircle className="w-4 h-4" />
+              <span>Current Limitations</span>
+            </div>
+            <ul className="space-y-2 text-xs sm:text-sm text-zinc-300">
+              {project.currentLimitations.map((lim, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="text-amber-400 font-mono">•</span>
+                  <span>{lim}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-blue-500/[0.03] border border-blue-500/20">
+            <div className="flex items-center gap-2 text-cyan-400 text-xs font-mono uppercase tracking-wider mb-3">
+              <ArrowRight className="w-4 h-4" />
+              <span>Engineering Roadmap & Next Steps</span>
+            </div>
+            <ul className="space-y-2 text-xs sm:text-sm text-zinc-300">
+              {project.nextSteps.map((step, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="text-cyan-400 font-mono">→</span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Section 5: Project CTAs & Next/Prev Navigation */}
         <div className="pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4">
           <a
             href={project.repoUrl}

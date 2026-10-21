@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import confetti from "canvas-confetti";
 import { Sparkles, Menu, X, ArrowUpRight, Search } from "lucide-react";
 import { profile } from "@/data/profile";
 
@@ -21,14 +20,7 @@ export default function Navbar({ onOpenCmd }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const triggerCelebration = () => {
-    confetti({
-      particleCount: 70,
-      spread: 60,
-      origin: { y: 0.15 },
-      colors: ["#38bdf8", "#818cf8", "#34d399", "#f43f5e"],
-    });
-
+  const scrollToContact = () => {
     const contactEl = document.getElementById("contact");
     if (contactEl) {
       contactEl.scrollIntoView({ behavior: "smooth" });
@@ -104,7 +96,7 @@ export default function Navbar({ onOpenCmd }: NavbarProps) {
 
             {/* Hire / Contact Action with nested trailing icon */}
             <button
-              onClick={triggerCelebration}
+              onClick={scrollToContact}
               className="group inline-flex items-center gap-2 pl-4 pr-1.5 py-1.5 rounded-full text-xs font-semibold text-white bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 shadow-md shadow-blue-600/30 transition-all hover:scale-[1.02] active:scale-95"
             >
               <span>Get in Touch</span>
@@ -162,7 +154,7 @@ export default function Navbar({ onOpenCmd }: NavbarProps) {
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  triggerCelebration();
+                  scrollToContact();
                 }}
                 className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-blue-600 to-cyan-600"
               >

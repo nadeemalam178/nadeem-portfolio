@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUp, Mail, Heart } from "lucide-react";
+import { ArrowUp, Mail } from "lucide-react";
 import { Github, Linkedin } from "@/components/Icons";
 import { profile } from "@/data/profile";
 
@@ -68,7 +68,7 @@ export default function Footer() {
           <div className="flex items-center gap-1">
             <span>Crafted with</span>
             <span className="text-rose-500">♥</span>
-            <span>using Next.js 15, Tailwind & Framer Motion</span>
+            <span>using Next.js 16, React 19 & Tailwind CSS</span>
           </div>
         </div>
       </div>

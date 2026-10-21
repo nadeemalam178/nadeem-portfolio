@@ -25,15 +25,14 @@ export interface ProfileData {
   phone: string;
   github: string;
   linkedin: string;
-  status: string;
-  stats: {
-    label: string;
-    value: string;
-    subtext: string;
+  availability: string;
+  corePillars: {
+    title: string;
+    description: string;
   }[];
-  skillCategories: {
+  skillGroups: {
     category: string;
-    skills: { name: string; level?: string; icon?: string }[];
+    skills: string[];
   }[];
   experience: Experience[];
   education: Education[];
@@ -43,64 +42,95 @@ export interface ProfileData {
 
 export const profile: ProfileData = {
   name: "Nadeem Alam",
-  title: "Data Analyst & Full-Stack Automation Engineer",
-  headline: "Transforming complex operational and political datasets into fluid, high-impact analytical dashboards and web systems.",
-  bio: "Data Analyst and MIS specialist with comprehensive hands-on experience developing enterprise dashboards, automated data validation pipelines, and modern web applications. Proficient in SQL, Python, TypeScript, Next.js, Looker Studio, and Google Apps Script, bridging the gap between rigorous mathematical data modeling and intuitive user interfaces.",
+  title: "Data Analyst, Automation Developer & Full-Stack Application Builder",
+  headline:
+    "Building operational data pipelines, reporting automation, and web applications that solve practical organizational bottlenecks.",
+  bio:
+    "Data analyst and full-stack developer with a foundational background in Mathematics (B.Sc. Hons) and currently pursuing MCA. Hands-on experience developing constituency and operational dashboards, automating multi-sheet reporting pipelines using Google Apps Script and Python, and engineering modern full-stack web applications with TypeScript, Next.js, and SQL.",
   location: "Patna, Bihar, India",
   email: "alamnadeem178@gmail.com",
   phone: "+91 9113770860",
   github: "https://github.com/nadeemalam178",
   linkedin: "https://www.linkedin.com/in/nadeem-alam-2853b9232",
-  status: "Open for High-Impact Roles & Consulting",
-  stats: [
-    { label: "Public Repositories", value: "20+", subtext: "Full-Stack, Data & Tools" },
-    { label: "Data Records Processed", value: "250K+", subtext: "Constituency & MIS Data" },
-    { label: "Interactive Dashboards", value: "15+", subtext: "Looker & Web-based BI" },
-    { label: "Automation Workflows", value: "40+", subtext: "Apps Script & Python" },
+  availability: "Available for Data Analytics, Automation & Engineering Roles",
+  corePillars: [
+    {
+      title: "Operational Data Analysis & MIS",
+      description:
+        "Standardizing fragmented multi-district datasets, constructing executive dashboards, and designing validation pipelines for leadership decision support.",
+    },
+    {
+      title: "Workflow Automation & Scripting",
+      description:
+        "Automating recurring spreadsheet reporting, cross-tabulation, and notification pipelines using Google Apps Script, Python, and SQL.",
+    },
+    {
+      title: "Full-Stack Application Development",
+      description:
+        "Building modular web systems, relational database schemas, and responsive user interfaces with TypeScript, Next.js, React, and Tailwind CSS.",
+    },
   ],
-  skillCategories: [
+  skillGroups: [
     {
-      category: "Data Analytics & Business Intelligence",
+      category: "Data Analytics & Reporting",
       skills: [
-        { name: "SQL (MySQL / PostgreSQL)" },
-        { name: "Looker Studio" },
-        { name: "Advanced Excel & Google Sheets" },
-        { name: "KPI Dashboards" },
-        { name: "MIS Architecture" },
-        { name: "Data Cleaning & Validation" },
+        "Data Validation & Cleaning",
+        "Looker Studio",
+        "Executive MIS Reporting",
+        "Cross-Tabulation Analysis",
+        "KPI Dashboard Architecture",
+        "Tally ERP 9",
       ],
     },
     {
-      category: "Full-Stack & Web Engineering",
+      category: "Spreadsheet Automation & Scripting",
       skills: [
-        { name: "TypeScript" },
-        { name: "Next.js & React" },
-        { name: "Tailwind CSS" },
-        { name: "Python (FastAPI / Flask)" },
-        { name: "RESTful APIs" },
-        { name: "Modern JavaScript (ESNext)" },
+        "Google Apps Script",
+        "Advanced Excel (Formulas, Power Query)",
+        "Google Sheets API Integration",
+        "Python (Data Processing)",
+        "Automated Email & Report Feeds",
       ],
     },
     {
-      category: "UI/UX & Spatial Interface Design",
+      category: "SQL & Database Design",
       skills: [
-        { name: "Antigravity 3D & Spatial UI" },
-        { name: "Responsive & Mobile-First Design" },
-        { name: "Bento Grid Architecture" },
-        { name: "Framer Motion & GSAP Animations" },
-        { name: "Glassmorphism & Micro-Interactions" },
-        { name: "Information Architecture & a11y" },
+        "MySQL",
+        "PostgreSQL Schema Design",
+        "Relational Data Modeling",
+        "Query Optimization & Indexing",
+        "ETL Data Ingestion",
       ],
     },
     {
-      category: "Automation, Tools & DevOps",
+      category: "Frontend & Web Engineering",
       skills: [
-        { name: "Google Apps Script" },
-        { name: "Web Scraping & OCR" },
-        { name: "Git & GitHub CLI" },
-        { name: "Java Scripting" },
-        { name: "Tally ERP 9" },
-        { name: "Turbopack & Vite" },
+        "TypeScript",
+        "Next.js (App Router)",
+        "React",
+        "Tailwind CSS",
+        "Responsive & Mobile-First UX",
+        "Accessible Semantic HTML",
+      ],
+    },
+    {
+      category: "Backend, APIs & Mobile",
+      skills: [
+        "Node.js",
+        "Python (Flask / FastAPI)",
+        "RESTful API Architecture",
+        "Flutter / Dart (Cross-Platform Mobile)",
+        "Web Scraping (BeautifulSoup)",
+      ],
+    },
+    {
+      category: "Tools & Deployment",
+      skills: [
+        "Git & GitHub CLI",
+        "Vercel Deployment",
+        "Netlify Hosting",
+        "Linux / Bash Scripting",
+        "Visual Studio Code",
       ],
     },
   ],
@@ -112,12 +142,12 @@ export const profile: ProfileData = {
       location: "Patna, Bihar",
       type: "Full-Time",
       description: [
-        "Engineered constituency-level dynamic dashboards and data analytics pipelines enabling strategic leadership decision-making.",
-        "Architected automated reporting workflows using Google Apps Script and Google Workspace, slashing weekly report generation turnaround time by 75%.",
-        "Streamlined raw voter data ingestion, rigorous cross-tabulation, and statistical hygiene across municipal and assembly constituencies.",
-        "Formulated key performance indicator (KPI) models and ad-hoc analytical briefs for ground operational strategy.",
+        "Develop constituency-level analytical dashboards and daily MIS reports for executive leadership review.",
+        "Oversee multi-tier data collection, hygiene verification, and cross-tabulation across municipal and district datasets.",
+        "Build automated reporting routines using Google Apps Script and Google Workspace, significantly reducing manual compilation hours.",
+        "Produce ad-hoc quantitative briefings and operational KPI tracking models for field teams.",
       ],
-      skills: ["SQL", "Google Apps Script", "Looker Studio", "Data Modeling", "Excel Automation", "KPI Tracking"],
+      skills: ["SQL", "Google Apps Script", "Looker Studio", "Excel / Google Sheets", "Data Modeling", "MIS"],
     },
     {
       role: "Executive Officer (EO)",
@@ -126,38 +156,38 @@ export const profile: ProfileData = {
       location: "Patna, Bihar",
       type: "Full-Time",
       description: [
-        "Maintained and validated core operational datasets across multi-tier field teams, guaranteeing high data fidelity.",
-        "Constructed organizational MIS tracking engines to supervise field team velocity, task completions, and daily metrics.",
-        "Designed executive-level BI dashboards in Looker Studio for programmatic review by directors.",
-        "Spearheaded migration of legacy fragmented records into structured, high-integrity relational spreadsheet databases.",
+        "Maintained operational datasets and implemented systematic validation checkpoints across multi-tier team logs.",
+        "Built MIS tracking mechanisms to monitor task progress, field coverage, and weekly deliverables.",
+        "Configured management dashboards in Looker Studio for programmatic review by directors.",
+        "Migrated legacy disconnected spreadsheet records into structured, standardized operational workbooks.",
       ],
-      skills: ["MIS Reporting", "Looker Studio", "Data Validation", "Team Leadership", "Spreadsheet Systems"],
+      skills: ["MIS Reporting", "Looker Studio", "Data Validation", "Spreadsheet Systems", "Operations"],
     },
   ],
   education: [
     {
       degree: "Master of Computer Applications (MCA)",
-      institution: "Sikkim Manipal University (SMU)",
-      period: "2026 – 2028",
-      details: "Advanced software engineering, distributed systems, and modern database management systems.",
+      institution: "Sikkim Manipal University (Distance Learning)",
+      period: "2026 – 2028 (In Progress)",
+      details: "Focusing on advanced database systems, software engineering, algorithms, and distributed applications.",
     },
     {
       degree: "Bachelor of Education (B.Ed)",
       institution: "F.S University",
       period: "2022 – 2024",
-      details: "Educational psychology, pedagogy, and curriculum instructional design.",
+      details: "Pedagogical methodology, instructional design, and educational evaluation frameworks.",
     },
     {
       degree: "B.Sc. Mathematics (Honours)",
       institution: "Magadh University",
       period: "2017 – 2020",
-      details: "Discrete mathematics, statistics, probability, linear algebra, and quantitative analysis.",
+      details: "Rigorous coursework in discrete mathematics, calculus, linear algebra, probability, and quantitative analysis.",
     },
     {
       degree: "Intermediate in Science (I.Sc.)",
       institution: "Patna Muslim High School",
       period: "2016 – 2017",
-      details: "Physics, Chemistry, Mathematics.",
+      details: "Physics, Chemistry, and Mathematics.",
     },
     {
       degree: "Matriculation (10th Standard)",
@@ -168,7 +198,7 @@ export const profile: ProfileData = {
   certifications: [
     "STET Qualified (Secondary Teacher Eligibility Test)",
     "CTET Qualified (Central Teacher Eligibility Test)",
-    "TCS NQT – Performance Recognized",
+    "TCS NQT – Performance Recognized (Cognitive & Analytical)",
   ],
-  languages: ["English (Professional)", "Hindi (Native)", "Urdu (Native)"],
+  languages: ["English (Professional Working)", "Hindi (Native)", "Urdu (Native)"],
 };

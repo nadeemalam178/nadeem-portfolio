@@ -1,131 +1,143 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Terminal, Box, Sparkles } from "lucide-react";
-import { Github } from "@/components/Icons";
+import { ArrowDown, FileText, CheckCircle2, MapPin } from "lucide-react";
+import { Github, Linkedin } from "@/components/Icons";
 import { profile } from "@/data/profile";
-import AntigravityCard from "@/components/AntigravityCard";
 
 export default function Hero() {
-  const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const verifiedQuickSkills = [
+    "SQL (MySQL / PostgreSQL)",
+    "Google Apps Script Automation",
+    "Looker Studio & MIS",
+    "Advanced Excel & Sheets",
+    "TypeScript & Next.js",
+    "Python Data Pipelines",
+  ];
 
   return (
-    <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
-      {/* Floating Spatial Background Elements */}
-      <div className="absolute top-24 right-[-5%] w-72 h-72 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none animate-float" />
-      <div className="absolute top-48 left-[-5%] w-80 h-80 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none animate-float-delayed" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-          {/* Status & Mode Badge */}
+    <section className="relative pt-24 pb-16 md:pt-32 md:pb-20 border-b border-white/[0.06] overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-3xl">
+          {/* Availability pill & Location */}
           <motion.div
-            initial={{ opacity: 0, y: -15 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-wrap items-center justify-center gap-2 mb-6"
+            transition={{ duration: 0.4 }}
+            className="flex flex-wrap items-center gap-3 mb-6"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/[0.08] border border-emerald-500/20 text-emerald-400 text-xs font-medium shadow-sm shadow-emerald-950/40">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span>{profile.status}</span>
+              <span>{profile.availability}</span>
             </div>
 
-            <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/[0.08] border border-blue-500/20 text-cyan-300 text-xs font-mono">
-              <Box className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Spatial 3D Antigravity Mode</span>
+            <div className="inline-flex items-center gap-1.5 text-xs text-zinc-400 font-mono">
+              <MapPin className="w-3.5 h-3.5 text-zinc-500" />
+              <span>{profile.location}</span>
             </div>
           </motion.div>
 
-          {/* Headline */}
+          {/* Name & Headline */}
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] mb-6"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-4"
           >
-            Transforming Complex Data into{" "}
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-400 bg-clip-text text-transparent">
-              Fluid Digital Systems
-            </span>
+            {profile.name}
           </motion.h1>
 
-          {/* Subheading */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base sm:text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto leading-relaxed mb-8"
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-lg sm:text-xl md:text-2xl font-semibold text-zinc-200 mb-5 leading-snug"
           >
-            Hi, I&apos;m <span className="text-white font-semibold">Nadeem Alam</span>. Data Analyst & Full-Stack Automation Engineer with a background in Mathematics & MCA. Specializing in spatial UI, interactive BI dashboards, and enterprise web applications.
+            {profile.title}
           </motion.p>
 
-          {/* Streamlined Action Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+          {/* Concise Value Statement */}
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap items-center justify-center gap-3.5 mb-14"
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-8 max-w-2xl"
           >
-            <button
-              onClick={() => scrollTo("projects")}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 text-white font-semibold text-xs shadow-lg shadow-blue-600/30 hover:scale-105 active:scale-95 transition-all"
-            >
-              <span>Explore Interactive Demos</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+            Bridging quantitative mathematics, automated spreadsheet pipelines, and production web applications. I help teams eliminate repetitive reporting bottlenecks, model reliable database schemas, and deploy responsive software systems.
+          </motion.p>
 
-            <button
-              onClick={() => scrollTo("sandbox")}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.12] text-zinc-200 hover:text-white font-medium text-xs backdrop-blur-md transition-all hover:scale-105 active:scale-95"
+          {/* Action CTAs & Professional Links */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex flex-wrap items-center gap-3 mb-10"
+          >
+            <a
+              href="#projects"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-zinc-950 font-semibold text-xs hover:bg-zinc-200 transition-all hover:scale-[1.02] active:scale-95 shadow-sm"
             >
-              <Terminal className="w-4 h-4 text-emerald-400" />
-              <span>Run SQL Sandbox</span>
-            </button>
+              <span>Explore Selected Work</span>
+              <ArrowDown className="w-3.5 h-3.5" />
+            </a>
 
             <a
-              href={profile.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-3 rounded-full bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] text-zinc-300 hover:text-white transition-all hover:scale-105"
-              aria-label="GitHub Profile"
+              href="#resume-section"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.1] text-zinc-200 hover:text-white font-medium text-xs transition-all hover:scale-[1.02]"
             >
-              <Github className="w-4 h-4" />
-              <span className="text-xs font-mono">nadeemalam178</span>
+              <FileText className="w-3.5 h-3.5 text-zinc-400" />
+              <span>Review Resume & CV</span>
             </a>
+
+            <div className="flex items-center gap-2 ml-1">
+              <a
+                href={profile.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.09] border border-white/[0.08] text-zinc-300 hover:text-white transition-colors"
+                aria-label="GitHub Profile (@nadeemalam178)"
+                title="GitHub Profile"
+              >
+                <Github className="w-4 h-4" />
+              </a>
+
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.09] border border-white/[0.08] text-zinc-300 hover:text-white transition-colors"
+                aria-label="LinkedIn Profile"
+                title="LinkedIn Profile"
+              >
+                <Linkedin className="w-4 h-4" />
+              </a>
+            </div>
           </motion.div>
 
-          {/* 3D Spatial Metrics Row */}
+          {/* Core Technical Foundation Pills */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="w-full grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl"
+            transition={{ duration: 0.5, delay: 0.35 }}
+            className="pt-6 border-t border-white/[0.06]"
           >
-            {profile.stats.map((stat) => (
-              <AntigravityCard
-                key={stat.label}
-                glowColor="rgba(56, 189, 248, 0.2)"
-                tiltIntensity={8}
-                className="p-4 bg-white/[0.03] hover:bg-white/[0.06] border-white/[0.08]"
-              >
-                <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-br from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent mb-1 font-mono">
-                  {stat.value}
-                </div>
-                <div className="text-xs font-medium text-zinc-200">
-                  {stat.label}
-                </div>
-                <div className="text-[11px] text-zinc-400 mt-0.5">
-                  {stat.subtext}
-                </div>
-              </AntigravityCard>
-            ))}
+            <div className="text-[11px] font-mono uppercase tracking-wider text-zinc-400 mb-3">
+              Core Technical Competencies
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {verifiedQuickSkills.map((skill) => (
+                <span
+                  key={skill}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/[0.03] border border-white/[0.07] text-xs font-mono text-zinc-300"
+                >
+                  <CheckCircle2 className="w-3 h-3 text-cyan-400" />
+                  <span>{skill}</span>
+                </span>
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>

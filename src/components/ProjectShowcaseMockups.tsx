@@ -2,19 +2,17 @@
 
 import { useState } from "react";
 import {
-  Activity,
   Bed,
-  Users,
   Search,
   CheckCircle2,
   AlertCircle,
   HelpCircle,
   TrendingUp,
-  ShieldCheck,
 } from "lucide-react";
 
 /**
  * Interactive Visual Preview for Radiant Hospitals HMS
+ * Clearly labeled as an architectural technical demonstration with synthetic sample data.
  */
 export function RadiantHmsPreview() {
   const [activeTab, setActiveTab] = useState<"opd" | "beds" | "pharmacy">("opd");
@@ -24,9 +22,9 @@ export function RadiantHmsPreview() {
       {/* Mini App Header */}
       <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-white/[0.06]">
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-bold text-white tracking-wide">Radiant HMS Core</span>
-          <span className="text-[10px] text-zinc-500 hidden sm:inline">• Live OPD Gateway</span>
+          <div className="w-2 h-2 rounded-full bg-emerald-400" />
+          <span className="font-bold text-white tracking-wide">Radiant HMS Architecture</span>
+          <span className="text-[10px] text-zinc-400 hidden sm:inline">(Interactive Prototype Demo)</span>
         </div>
 
         {/* Module Switcher */}
@@ -61,7 +59,7 @@ export function RadiantHmsPreview() {
             </div>
             <div className="p-1.5 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-300">
               <div className="font-bold text-xs text-white">4.2m</div>
-              <div>Avg Wait Time</div>
+              <div>Avg Triage Wait</div>
             </div>
           </div>
 
@@ -72,8 +70,8 @@ export function RadiantHmsPreview() {
                   01
                 </span>
                 <div>
-                  <div className="text-white font-medium text-[11px]">Rahul K. Sharma (M/34)</div>
-                  <div className="text-[10px] text-zinc-400">Dr. Verma • Cardiology OPD</div>
+                  <div className="text-white font-medium text-[11px]">Synthetic Patient A (M/34)</div>
+                  <div className="text-[10px] text-zinc-400">Cardiology OPD • Triage Level 2</div>
                 </div>
               </div>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
@@ -87,8 +85,8 @@ export function RadiantHmsPreview() {
                   02
                 </span>
                 <div>
-                  <div className="text-white font-medium text-[11px]">Amina Khatun (F/28)</div>
-                  <div className="text-[10px] text-zinc-400">Dr. S. Akhtar • General OPD</div>
+                  <div className="text-white font-medium text-[11px]">Synthetic Patient B (F/28)</div>
+                  <div className="text-[10px] text-zinc-400">General OPD • Triage Level 3</div>
                 </div>
               </div>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
@@ -105,9 +103,9 @@ export function RadiantHmsPreview() {
           <div className="flex justify-between items-center text-[11px]">
             <span className="text-zinc-300 flex items-center gap-1.5">
               <Bed className="w-3.5 h-3.5 text-cyan-400" />
-              Total Hospital Capacity
+              Simulated Bed Allocation
             </span>
-            <span className="text-white font-bold">120 / 140 Beds Occupied (85%)</span>
+            <span className="text-white font-bold">120 / 140 Beds Active (85%)</span>
           </div>
 
           <div className="w-full h-2 rounded-full bg-white/[0.08] overflow-hidden flex">
@@ -118,14 +116,14 @@ export function RadiantHmsPreview() {
 
           <div className="grid grid-cols-2 gap-2 text-[10px] pt-1">
             <div className="p-2 rounded-lg bg-white/[0.03] border border-white/[0.05]">
-              <div className="text-zinc-400">ICU Bed Status</div>
-              <div className="text-white font-bold text-xs mt-0.5">18 / 20 Occupied</div>
-              <div className="text-emerald-400 text-[9px] mt-0.5">2 Critical Ventilators Free</div>
+              <div className="text-zinc-400">ICU Bed Tracking</div>
+              <div className="text-white font-bold text-xs mt-0.5">18 / 20 Allocated</div>
+              <div className="text-emerald-400 text-[9px] mt-0.5">2 Ventilator Beds Free</div>
             </div>
             <div className="p-2 rounded-lg bg-white/[0.03] border border-white/[0.05]">
-              <div className="text-zinc-400">Private Suite</div>
-              <div className="text-white font-bold text-xs mt-0.5">12 / 16 Occupied</div>
-              <div className="text-cyan-400 text-[9px] mt-0.5">4 Rooms Prepped</div>
+              <div className="text-zinc-400">Private Recovery</div>
+              <div className="text-white font-bold text-xs mt-0.5">12 / 16 Allocated</div>
+              <div className="text-cyan-400 text-[9px] mt-0.5">4 Rooms Sanitized</div>
             </div>
           </div>
         </div>
@@ -135,21 +133,21 @@ export function RadiantHmsPreview() {
       {activeTab === "pharmacy" && (
         <div className="space-y-2">
           <div className="text-[11px] text-zinc-300 flex items-center justify-between">
-            <span>Automated Inventory & GST Billing</span>
-            <span className="text-emerald-400 font-bold">Sync: 100% Active</span>
+            <span>Automated Inventory Schema</span>
+            <span className="text-emerald-400 font-bold">Relational Sync</span>
           </div>
           <div className="space-y-1.5 text-[10px]">
             <div className="flex justify-between p-1.5 rounded bg-white/[0.03] border border-white/[0.05]">
-              <span>Amoxicillin 500mg (Batch #AM-2026)</span>
+              <span>Sample Item: Amoxicillin 500mg (Batch #AM-Demo)</span>
               <span className="text-emerald-300">480 In Stock</span>
             </div>
             <div className="flex justify-between p-1.5 rounded bg-white/[0.03] border border-white/[0.05]">
-              <span>Paracetamol 650mg (Batch #PC-901)</span>
+              <span>Sample Item: Paracetamol 650mg (Batch #PC-Demo)</span>
               <span className="text-emerald-300">1,200 In Stock</span>
             </div>
             <div className="flex justify-between p-1.5 rounded bg-white/[0.03] border border-white/[0.05]">
-              <span>Saline 0.9% IV (Batch #SL-88)</span>
-              <span className="text-amber-300">Low Stock (28 left)</span>
+              <span>Sample Item: Saline 0.9% IV (Batch #SL-Demo)</span>
+              <span className="text-amber-300">Low Stock Warning (28 left)</span>
             </div>
           </div>
         </div>
@@ -160,14 +158,15 @@ export function RadiantHmsPreview() {
 
 /**
  * Interactive Visual Preview for Kosi Voter Digitalization
+ * Clearly labeled as an aggregated demographic directory demonstration.
  */
 export function KosiVoterPreview() {
   const districts = [
-    { name: "Purnia", voters: "21,500", verified: "96.4%", turnout: "78.2%", status: "Optimal" },
-    { name: "Saharsa", voters: "18,420", verified: "94.2%", turnout: "74.8%", status: "Optimal" },
-    { name: "Katihar", voters: "16,920", verified: "93.1%", turnout: "76.0%", status: "Optimal" },
-    { name: "Madhepura", voters: "15,810", verified: "91.8%", turnout: "71.5%", status: "In-Progress" },
-    { name: "Supaul", voters: "14,350", verified: "88.6%", turnout: "69.4%", status: "In-Progress" },
+    { name: "Purnia", verified: "96.4%", turnout: "78.2%", status: "Sanitized" },
+    { name: "Saharsa", verified: "94.2%", turnout: "74.8%", status: "Sanitized" },
+    { name: "Katihar", verified: "93.1%", turnout: "76.0%", status: "Sanitized" },
+    { name: "Madhepura", verified: "91.8%", turnout: "71.5%", status: "In-Progress" },
+    { name: "Supaul", verified: "88.6%", turnout: "69.4%", status: "In-Progress" },
   ];
 
   const [selectedIdx, setSelectedIdx] = useState(0);
@@ -178,10 +177,10 @@ export function KosiVoterPreview() {
       <div className="flex items-center justify-between pb-2 mb-3 border-b border-white/[0.06]">
         <div className="flex items-center gap-1.5">
           <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
-          <span className="font-bold text-white">13-District Telemetry Hub</span>
+          <span className="font-bold text-white">Regional Directory Hierarchy</span>
         </div>
         <span className="text-[10px] text-cyan-400 bg-cyan-950/40 px-2 py-0.5 rounded-full border border-cyan-800/40">
-          Graduate Roster
+          Aggregated Telemetry
         </span>
       </div>
 
@@ -207,15 +206,17 @@ export function KosiVoterPreview() {
         <div className="flex justify-between items-baseline">
           <div>
             <div className="text-base font-bold text-white">{current.name} District</div>
-            <div className="text-[10px] text-zinc-400">Total Enrolled Graduates</div>
+            <div className="text-[10px] text-zinc-400">Territory Directory Node</div>
           </div>
-          <div className="text-lg font-bold text-emerald-400">{current.voters}</div>
+          <div className="text-xs font-bold text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-800/40">
+            Status: {current.status}
+          </div>
         </div>
 
         {/* Progress verification meter */}
         <div>
           <div className="flex justify-between text-[10px] text-zinc-400 mb-1">
-            <span>Voter Roll Verification</span>
+            <span>Data Sanitation Coverage</span>
             <span className="text-white font-bold">{current.verified}</span>
           </div>
           <div className="w-full h-2 rounded-full bg-white/[0.08] overflow-hidden">
@@ -228,12 +229,12 @@ export function KosiVoterPreview() {
 
         <div className="grid grid-cols-2 gap-2 pt-1 text-[10px]">
           <div className="p-1.5 rounded bg-black/40 border border-white/[0.04]">
-            <span className="text-zinc-400">Estimated Turnout:</span>
-            <span className="text-white font-bold ml-1.5">{current.turnout}</span>
+            <span className="text-zinc-400">Electoral Segment:</span>
+            <span className="text-white font-bold ml-1.5">Graduate</span>
           </div>
           <div className="p-1.5 rounded bg-black/40 border border-white/[0.04]">
-            <span className="text-zinc-400">Database Status:</span>
-            <span className="text-emerald-400 font-bold ml-1.5">{current.status}</span>
+            <span className="text-zinc-400">Historical Turnout:</span>
+            <span className="text-cyan-400 font-bold ml-1.5">{current.turnout}</span>
           </div>
         </div>
       </div>
@@ -246,20 +247,16 @@ export function KosiVoterPreview() {
  */
 export function PrepTakePreview() {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [score, setScore] = useState(1);
 
   const question = {
     text: "Which cognitive domain in Bloom's Revised Taxonomy involves making judgments based on criteria and standards?",
     options: ["Understanding", "Analyzing", "Evaluating", "Creating"],
     correct: 2, // Evaluating
-    explanation: "Evaluating requires critiquing, judging, and assessing value based on criteria and standards.",
+    explanation: "Evaluating requires critiquing, judging, and assessing value against predefined standards.",
   };
 
   const handleSelect = (idx: number) => {
     setSelectedOption(idx);
-    if (idx === question.correct) {
-      setScore(2);
-    }
   };
 
   return (
@@ -269,12 +266,9 @@ export function PrepTakePreview() {
           <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
           <span className="font-bold text-white">PrepTake Practice Engine</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-[10px] text-amber-300 bg-amber-950/40 px-2 py-0.5 rounded-full border border-amber-800/40">
-            CTET / STET Paper 2
-          </span>
-          <span className="text-[10px] text-emerald-400 font-bold">Score: {score}/2</span>
-        </div>
+        <span className="text-[10px] text-amber-300 bg-amber-950/40 px-2 py-0.5 rounded-full border border-amber-800/40">
+          CTET / STET Paper 2
+        </span>
       </div>
 
       <div className="text-[11px] text-zinc-200 font-sans leading-relaxed mb-3">
@@ -322,7 +316,7 @@ export function PrepTakePreview() {
 
       {selectedOption !== null && (
         <div className="p-2 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-[10px] text-emerald-300">
-          <span className="font-bold">Correct Concept: </span>
+          <span className="font-bold">Pedagogical Concept: </span>
           {question.explanation}
         </div>
       )}
@@ -335,10 +329,10 @@ export function PrepTakePreview() {
  */
 export function SangathanSearchPreview() {
   const cadres = [
-    { name: "Manoj K. Singh", role: "District Coordinator", district: "Patna", phone: "+91 9835xxxxxx" },
-    { name: "Priya Ranjan", role: "Block In-charge", district: "Danapur", phone: "+91 9431xxxxxx" },
-    { name: "Tariq Anwar", role: "Youth Wing President", district: "Gaya", phone: "+91 9122xxxxxx" },
-    { name: "Sunil Paswan", role: "Booth Committee Head", district: "Arwal", phone: "+91 9771xxxxxx" },
+    { name: "Anil K. Sinha", role: "District Coordinator", district: "Patna", contact: "Verified Cadre Node" },
+    { name: "Priya Ranjan", role: "Block Representative", district: "Danapur", contact: "Verified Cadre Node" },
+    { name: "Tariq Anwar", role: "Youth Wing Coordinator", district: "Gaya", contact: "Verified Cadre Node" },
+    { name: "Sunil Paswan", role: "Booth Committee Lead", district: "Arwal", contact: "Verified Cadre Node" },
   ];
 
   const [search, setSearch] = useState("");
@@ -355,9 +349,9 @@ export function SangathanSearchPreview() {
       <div className="flex items-center justify-between pb-2 mb-2.5 border-b border-white/[0.06]">
         <div className="flex items-center gap-1.5">
           <Search className="w-3.5 h-3.5 text-cyan-400" />
-          <span className="font-bold text-white">Sangathan In-Memory Index</span>
+          <span className="font-bold text-white">In-Memory Index Filter</span>
         </div>
-        <span className="text-[10px] text-zinc-400">Sub-15ms Latency</span>
+        <span className="text-[10px] text-zinc-400">Synthetic Directory Data</span>
       </div>
 
       {/* Live search input */}
@@ -366,7 +360,7 @@ export function SangathanSearchPreview() {
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Try typing 'Patna', 'Gaya', or 'Block'..."
+          placeholder="Type 'Patna', 'Gaya', or 'Block'..."
           className="w-full pl-8 pr-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-[11px] placeholder-zinc-500 focus:outline-none focus:border-cyan-500/50"
         />
         <Search className="w-3.5 h-3.5 text-zinc-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
@@ -384,7 +378,7 @@ export function SangathanSearchPreview() {
               <div className="text-zinc-400">{c.role} • {c.district}</div>
             </div>
             <span className="text-cyan-400 font-mono bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-800/40">
-              {c.phone}
+              {c.contact}
             </span>
           </div>
         ))}

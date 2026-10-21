@@ -9,11 +9,9 @@ import {
   FileText,
   Terminal,
   Mail,
-  ExternalLink,
   Briefcase,
   X,
   Sparkles,
-  Command,
 } from "lucide-react";
 import { Github, Linkedin } from "@/components/Icons";
 import { projects } from "@/data/projects";
@@ -42,7 +40,6 @@ export default function CommandPalette({
         if (isOpen) {
           onClose();
         } else {
-          // Trigger open via parent
           const btn = document.getElementById("cmd-k-trigger");
           if (btn) btn.click();
         }
@@ -56,10 +53,9 @@ export default function CommandPalette({
   }, [isOpen, onClose]);
 
   const items = [
-    // Navigation targets
     {
-      type: "Nav",
-      title: "Interactive Bento Architecture",
+      type: "Navigation",
+      title: "Core Architecture & Competencies",
       icon: <Sparkles className="w-4 h-4 text-blue-400" />,
       action: () => {
         router.push("/#bento");
@@ -67,8 +63,8 @@ export default function CommandPalette({
       },
     },
     {
-      type: "Nav",
-      title: "Featured Projects & Case Studies",
+      type: "Navigation",
+      title: "Selected Applications & Data Platforms",
       icon: <FolderGit2 className="w-4 h-4 text-cyan-400" />,
       action: () => {
         router.push("/#projects");
@@ -76,8 +72,8 @@ export default function CommandPalette({
       },
     },
     {
-      type: "Nav",
-      title: "Interactive In-Browser SQL Sandbox",
+      type: "Navigation",
+      title: "Interactive Data Simulation & SQL Explorer",
       icon: <Terminal className="w-4 h-4 text-emerald-400" />,
       action: () => {
         router.push("/#sandbox");
@@ -85,15 +81,14 @@ export default function CommandPalette({
       },
     },
     {
-      type: "Nav",
-      title: "Work Experience & Education Journey",
+      type: "Navigation",
+      title: "Curriculum Vitae & Career History",
       icon: <Briefcase className="w-4 h-4 text-purple-400" />,
       action: () => {
-        router.push("/#experience");
+        router.push("/#resume-section");
         onClose();
       },
     },
-    // Projects direct case study links
     ...projects.map((p) => ({
       type: "Case Study",
       title: `${p.title} (${p.category})`,
@@ -103,10 +98,9 @@ export default function CommandPalette({
         onClose();
       },
     })),
-    // Actions
     {
       type: "Action",
-      title: "View & Print Curriculum Vitae (CV)",
+      title: "View & Print Full Curriculum Vitae",
       icon: <FileText className="w-4 h-4 text-amber-400" />,
       action: () => {
         onClose();
@@ -115,17 +109,16 @@ export default function CommandPalette({
     },
     {
       type: "Action",
-      title: `Copy Email (${profile.email})`,
+      title: `Copy Email Address (${profile.email})`,
       icon: <Mail className="w-4 h-4 text-rose-400" />,
       action: () => {
         navigator.clipboard.writeText(profile.email);
-        alert(`Copied ${profile.email} to clipboard!`);
         onClose();
       },
     },
     {
       type: "External",
-      title: "Visit GitHub Profile (@nadeemalam178)",
+      title: "Open GitHub Profile (@nadeemalam178)",
       icon: <Github className="w-4 h-4 text-white" />,
       action: () => {
         window.open(profile.github, "_blank");
@@ -134,7 +127,7 @@ export default function CommandPalette({
     },
     {
       type: "External",
-      title: "Visit LinkedIn Profile",
+      title: "Open LinkedIn Profile",
       icon: <Linkedin className="w-4 h-4 text-blue-400" />,
       action: () => {
         window.open(profile.linkedin, "_blank");
@@ -172,81 +165,80 @@ export default function CommandPalette({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-black/85 backdrop-blur-xl"
+          className="fixed inset-0 bg-black/85 backdrop-blur-md"
         />
 
-        {/* Palette Modal (Double-Bezel hardware enclosure) */}
+        {/* Palette Modal */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: -10 }}
+          initial={{ opacity: 0, scale: 0.97, y: -10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.96, y: -10 }}
-          className="relative w-full max-w-2xl rounded-[2rem] bg-gradient-to-b from-white/[0.14] to-white/[0.03] border border-white/[0.12] p-1.5 shadow-2xl z-10"
+          exit={{ opacity: 0, scale: 0.97, y: -10 }}
+          className="relative w-full max-w-xl rounded-2xl bg-[#0c0e18] border border-white/[0.12] shadow-2xl z-10 overflow-hidden"
         >
-          <div className="rounded-[calc(2rem-6px)] bg-[#0c0e18] overflow-hidden shadow-inner">
-            {/* Search Input Bar */}
-            <div className="flex items-center gap-3 px-5 py-4 border-b border-white/[0.08]">
-              <Search className="w-5 h-5 text-cyan-400 shrink-0" />
-              <input
-                autoFocus
-                type="text"
-                value={query}
-                onChange={(e) => {
-                  setQuery(e.target.value);
-                  setSelectedIndex(0);
-                }}
-                onKeyDown={handleKeyDownNav}
-                placeholder="Search case studies, SQL sandbox, CV, actions..."
-                className="w-full bg-transparent text-sm text-white placeholder-zinc-500 focus:outline-none font-mono"
-              />
+          {/* Search Input Bar */}
+          <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/[0.08]">
+            <Search className="w-4 h-4 text-cyan-400 shrink-0" />
+            <input
+              autoFocus
+              type="text"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setSelectedIndex(0);
+              }}
+              onKeyDown={handleKeyDownNav}
+              placeholder="Search case studies, SQL demo, CV, external links..."
+              className="w-full bg-transparent text-xs font-mono text-white placeholder-zinc-500 focus:outline-none"
+            />
+            <button
+              onClick={onClose}
+              className="p-1 rounded text-zinc-500 hover:text-white"
+              aria-label="Close command palette"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Items List */}
+          <div className="max-h-72 overflow-y-auto p-2 space-y-1 custom-scrollbar">
+            {filteredItems.map((item, idx) => (
               <button
-                onClick={onClose}
-                className="p-1 rounded-lg text-zinc-500 hover:text-white"
+                key={idx}
+                onClick={item.action}
+                onMouseEnter={() => setSelectedIndex(idx)}
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left text-xs font-mono transition-all ${
+                  selectedIndex === idx
+                    ? "bg-white/[0.08] text-white"
+                    : "text-zinc-300 hover:bg-white/[0.03]"
+                }`}
               >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Items List */}
-            <div className="max-h-80 overflow-y-auto p-2 space-y-1 custom-scrollbar">
-              {filteredItems.map((item, idx) => (
-                <button
-                  key={idx}
-                  onClick={item.action}
-                  onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-left text-xs font-mono transition-all ${
-                    selectedIndex === idx
-                      ? "bg-white/[0.08] text-white shadow-sm"
-                      : "text-zinc-300 hover:bg-white/[0.04]"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="p-1.5 rounded-lg bg-white/[0.05]">
-                      {item.icon}
-                    </div>
-                    <span>{item.title}</span>
+                <div className="flex items-center gap-2.5 truncate">
+                  <div className="p-1 rounded bg-white/[0.05] shrink-0">
+                    {item.icon}
                   </div>
-                  <span className="text-[10px] text-zinc-400 px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.04]">
-                    {item.type}
-                  </span>
-                </button>
-              ))}
-
-              {filteredItems.length === 0 && (
-                <div className="py-8 text-center text-xs font-mono text-zinc-500">
-                  No matching commands or projects found.
+                  <span className="truncate">{item.title}</span>
                 </div>
-              )}
-            </div>
+                <span className="text-[10px] text-zinc-400 px-1.5 py-0.5 rounded bg-white/[0.04] shrink-0 ml-2">
+                  {item.type}
+                </span>
+              </button>
+            ))}
 
-            {/* Footer with keyboard hints */}
-            <div className="px-5 py-3 border-t border-white/[0.06] bg-black/30 flex items-center justify-between text-[11px] font-mono text-zinc-400">
-              <div className="flex items-center gap-3">
-                <span>↑↓ to navigate</span>
-                <span>↵ to select</span>
-                <span>esc to close</span>
+            {filteredItems.length === 0 && (
+              <div className="py-6 text-center text-xs font-mono text-zinc-400">
+                No matching commands or projects found.
               </div>
-              <span className="text-cyan-400">Nadeem Alam Command Hub</span>
+            )}
+          </div>
+
+          {/* Footer with keyboard hints */}
+          <div className="px-4 py-2.5 border-t border-white/[0.06] bg-black/40 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+            <div className="flex items-center gap-3">
+              <span>↑↓ to navigate</span>
+              <span>↵ to select</span>
+              <span>esc to close</span>
             </div>
+            <span className="text-zinc-400">Navigation Hub</span>
           </div>
         </motion.div>
       </div>

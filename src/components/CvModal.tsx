@@ -5,16 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
   Printer,
-  Download,
   Mail,
   Phone,
   MapPin,
-  CheckCircle2,
   Copy,
   Check,
   FileText,
 } from "lucide-react";
-import { Github, Linkedin } from "@/components/Icons";
 import { profile } from "@/data/profile";
 
 interface CvModalProps {
@@ -23,7 +20,6 @@ interface CvModalProps {
 }
 
 export default function CvModal({ isOpen, onClose }: CvModalProps) {
-  const [viewMode, setViewMode] = useState<"clean" | "formal">("formal");
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -62,23 +58,23 @@ export default function CvModal({ isOpen, onClose }: CvModalProps) {
 
         {/* Modal Window */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          initial={{ opacity: 0, scale: 0.96, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-4xl rounded-3xl bg-[#0d1017] border border-white/[0.12] p-4 sm:p-7 shadow-2xl z-10 max-h-[92vh] flex flex-col"
+          exit={{ opacity: 0, scale: 0.96, y: 15 }}
+          className="relative w-full max-w-4xl rounded-2xl bg-[#0d1017] border border-white/[0.12] p-4 sm:p-6 shadow-2xl z-10 max-h-[92vh] flex flex-col"
         >
           {/* Header Controls (Hidden during print) */}
-          <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-white/[0.08] print:hidden">
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-3 mb-4 border-b border-white/[0.08] print:hidden">
             <div className="flex items-center gap-2">
               <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400">
                 <FileText className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white leading-tight">
+                <h3 className="text-base sm:text-lg font-bold text-white leading-tight">
                   Curriculum Vitae — {profile.name}
                 </h3>
                 <p className="text-xs text-zinc-400 font-mono">
-                  ATS-Friendly Professional Profile
+                  ATS-Standard Resume Format • Verified Record
                 </p>
               </div>
             </div>
@@ -87,11 +83,11 @@ export default function CvModal({ isOpen, onClose }: CvModalProps) {
             <div className="flex items-center gap-2">
               <button
                 onClick={handlePrint}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-medium shadow-md shadow-blue-500/20 transition-all hover:scale-105"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white text-zinc-950 hover:bg-zinc-200 text-xs font-semibold shadow-sm transition-all hover:scale-105"
                 title="Print or Save as PDF"
               >
-                <Printer className="w-4 h-4" />
-                <span>Print / PDF</span>
+                <Printer className="w-3.5 h-3.5" />
+                <span>Print / Save as PDF</span>
               </button>
 
               <button
@@ -99,7 +95,7 @@ export default function CvModal({ isOpen, onClose }: CvModalProps) {
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-zinc-300 text-xs font-medium border border-white/[0.08] transition-colors"
                 title="Copy Email"
               >
-                {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                 <span className="hidden sm:inline">{copied ? "Copied" : "Copy Email"}</span>
               </button>
 
@@ -113,29 +109,28 @@ export default function CvModal({ isOpen, onClose }: CvModalProps) {
             </div>
           </div>
 
-          {/* CV Content Container (Scrollable on screen, clean on print) */}
+          {/* CV Content Container (Formatted strictly for clean A4 printing) */}
           <div className="overflow-y-auto flex-1 pr-1 custom-scrollbar">
-            {/* The Formal White Paper Resume (A4 Style) */}
-            <div className="bg-white text-zinc-900 p-6 sm:p-10 rounded-2xl shadow-xl font-sans max-w-3xl mx-auto print:shadow-none print:p-0 print:m-0 print:max-w-full">
+            <div className="bg-white text-zinc-900 p-6 sm:p-10 rounded-xl shadow-xl font-sans max-w-3xl mx-auto print:shadow-none print:p-0 print:m-0 print:max-w-full">
               {/* Header */}
-              <div className="text-center border-b border-zinc-300 pb-5 mb-5">
+              <div className="text-center border-b border-zinc-300 pb-4 mb-4">
                 <h1 className="text-2xl sm:text-3xl font-extrabold uppercase tracking-wide text-zinc-900">
                   {profile.name}
                 </h1>
-                <p className="text-xs sm:text-sm font-semibold text-blue-800 mt-1">
-                  {profile.title}
+                <p className="text-xs sm:text-sm font-semibold text-zinc-700 mt-1">
+                  Data Analyst | Full-Stack Developer | MIS Specialist
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-zinc-600 mt-2">
                   <span className="flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-zinc-500" />
+                    <MapPin className="w-3 h-3 text-zinc-500" />
                     {profile.location}
                   </span>
                   <span className="flex items-center gap-1">
-                    <Phone className="w-3.5 h-3.5 text-zinc-500" />
+                    <Phone className="w-3 h-3 text-zinc-500" />
                     {profile.phone}
                   </span>
                   <span className="flex items-center gap-1">
-                    <Mail className="w-3.5 h-3.5 text-zinc-500" />
+                    <Mail className="w-3 h-3 text-zinc-500" />
                     {profile.email}
                   </span>
                 </div>
@@ -150,29 +145,29 @@ export default function CvModal({ isOpen, onClose }: CvModalProps) {
                 </div>
               </div>
 
-              {/* Profile Summary */}
-              <div className="mb-5">
-                <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b-2 border-zinc-800 pb-1 mb-2">
-                  Professional Summary
+              {/* Professional Profile */}
+              <div className="mb-4">
+                <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b border-zinc-800 pb-1 mb-2">
+                  Professional Profile
                 </h2>
                 <p className="text-xs text-zinc-700 leading-relaxed text-justify">
                   {profile.bio}
                 </p>
               </div>
 
-              {/* Core Skills */}
-              <div className="mb-5">
-                <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b-2 border-zinc-800 pb-1 mb-2">
-                  Technical & Analytical Skills
+              {/* Core Technical Skills */}
+              <div className="mb-4">
+                <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b border-zinc-800 pb-1 mb-2">
+                  Core Skills
                 </h2>
-                <div className="grid grid-cols-1 gap-1.5 text-xs">
-                  {profile.skillCategories.map((cat, i) => (
-                    <div key={i} className="flex">
-                      <span className="w-40 font-semibold text-zinc-800 shrink-0">
-                        {cat.category}:
+                <div className="space-y-1 text-xs">
+                  {profile.skillGroups.map((g, idx) => (
+                    <div key={idx} className="flex">
+                      <span className="w-44 font-semibold text-zinc-800 shrink-0">
+                        {g.category}:
                       </span>
                       <span className="text-zinc-700">
-                        {cat.skills.map((s) => s.name).join(", ")}
+                        {g.skills.join(", ")}
                       </span>
                     </div>
                   ))}
@@ -180,18 +175,18 @@ export default function CvModal({ isOpen, onClose }: CvModalProps) {
               </div>
 
               {/* Work Experience */}
-              <div className="mb-5">
-                <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b-2 border-zinc-800 pb-1 mb-2.5">
-                  Professional Experience
+              <div className="mb-4">
+                <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b border-zinc-800 pb-1 mb-2.5">
+                  Work Experience
                 </h2>
-                <div className="space-y-4">
+                <div className="space-y-3.5">
                   {profile.experience.map((exp, idx) => (
                     <div key={idx}>
-                      <div className="flex justify-between items-baseline">
-                        <span className="text-xs font-bold text-zinc-900">{exp.role}</span>
-                        <span className="text-[11px] font-semibold text-zinc-600">{exp.period}</span>
+                      <div className="flex justify-between items-baseline font-bold text-xs text-zinc-900">
+                        <span>{exp.role}</span>
+                        <span className="text-[11px] text-zinc-600 font-normal">{exp.period}</span>
                       </div>
-                      <div className="flex justify-between items-baseline italic text-xs text-zinc-700 mb-1.5">
+                      <div className="flex justify-between items-baseline italic text-xs text-zinc-700 mb-1">
                         <span>{exp.organization}</span>
                         <span className="text-[11px]">{exp.location}</span>
                       </div>
@@ -205,37 +200,37 @@ export default function CvModal({ isOpen, onClose }: CvModalProps) {
                 </div>
               </div>
 
-              {/* Key Projects in CV */}
-              <div className="mb-5">
-                <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b-2 border-zinc-800 pb-1 mb-2.5">
-                  Flagship Software & Data Systems
+              {/* Selected Projects */}
+              <div className="mb-4">
+                <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b border-zinc-800 pb-1 mb-2">
+                  Featured Software & Data Projects
                 </h2>
-                <div className="space-y-2 text-xs">
+                <div className="space-y-2 text-xs text-zinc-700">
                   <div>
-                    <span className="font-bold text-zinc-900">Radiant Hospitals HMS (TypeScript / Next.js)</span>: Full-scale hospital operations system covering OPD, IPD, pharmacy, pathology, and automated patient billing.
+                    <span className="font-bold text-zinc-900">Radiant Hospitals HMS (TypeScript / Next.js)</span>: Modular hospital operations prototype covering OPD queueing, bed allocation, and pharmacy inventory reconciliation.
                   </div>
                   <div>
-                    <span className="font-bold text-zinc-900">Kosi Voter Digitalization & Analytics (13 Districts)</span>: Extensive graduate constituency database digitalization, data cleansing, and live Looker / web analytics visualizer.
+                    <span className="font-bold text-zinc-900">Kosi Voter Digitalization & Analytics (13 Districts)</span>: Graduate voter dataset directory hierarchy with automated spreadsheet cleaning routines and Looker Studio dashboards.
                   </div>
                   <div>
-                    <span className="font-bold text-zinc-900">Data Automation Engine</span>: High-velocity automated reports and spreadsheet integration using Google Apps Script & Python.
+                    <span className="font-bold text-zinc-900">PrepTake Exam Web Application (Python / Flask)</span>: Lightweight mobile-first exam practice portal with client-side test state caching.
                   </div>
                 </div>
               </div>
 
               {/* Education */}
-              <div className="mb-5">
-                <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b-2 border-zinc-800 pb-1 mb-2.5">
-                  Education & Qualifications
+              <div className="mb-4">
+                <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b border-zinc-800 pb-1 mb-2">
+                  Education
                 </h2>
-                <div className="space-y-2">
+                <div className="space-y-1.5 text-xs">
                   {profile.education.map((edu, idx) => (
-                    <div key={idx} className="flex justify-between text-xs">
+                    <div key={idx} className="flex justify-between">
                       <div>
-                        <div className="font-bold text-zinc-900">{edu.degree}</div>
-                        <div className="italic text-zinc-700">{edu.institution}</div>
+                        <span className="font-bold text-zinc-900">{edu.degree}</span> —{" "}
+                        <span className="italic text-zinc-700">{edu.institution}</span>
                       </div>
-                      <span className="font-semibold text-zinc-600 text-[11px]">{edu.period}</span>
+                      <span className="text-zinc-600 text-[11px] shrink-0 font-mono">{edu.period}</span>
                     </div>
                   ))}
                 </div>
@@ -243,7 +238,7 @@ export default function CvModal({ isOpen, onClose }: CvModalProps) {
 
               {/* Certifications & Languages */}
               <div>
-                <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b-2 border-zinc-800 pb-1 mb-2">
+                <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-900 border-b border-zinc-800 pb-1 mb-2">
                   Certifications & Languages
                 </h2>
                 <div className="text-xs text-zinc-700 space-y-1">
