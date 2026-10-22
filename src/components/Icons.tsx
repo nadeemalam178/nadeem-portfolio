@@ -1,9 +1,11 @@
 import React from "react";
 
-export function Github({ className = "w-4 h-4" }: { className?: string }) {
+export function Github({ className = "w-4 h-4", size }: { className?: string; size?: number }) {
   return (
     <svg
       className={className}
+      width={size}
+      height={size}
       fill="currentColor"
       viewBox="0 0 24 24"
       aria-hidden="true"
@@ -17,10 +19,12 @@ export function Github({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
-export function Linkedin({ className = "w-4 h-4" }: { className?: string }) {
+export function Linkedin({ className = "w-4 h-4", size }: { className?: string; size?: number }) {
   return (
     <svg
       className={className}
+      width={size}
+      height={size}
       fill="currentColor"
       viewBox="0 0 24 24"
       aria-hidden="true"

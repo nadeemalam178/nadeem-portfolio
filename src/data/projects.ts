@@ -11,7 +11,7 @@ export interface Project {
   tags: string[];
   summary: string;
   roleAndContribution: string;
-  repoUrl: string;
+  repoUrl?: string;
   demoUrl?: string;
   verifiedFeatures: string[];
   // Deep Case Study Information
@@ -181,6 +181,50 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: "local-land-cordyline",
+    title: "Local Land by CORDYLINE",
+    tagline: "A buyer-facing Android app and administration dashboard for real-estate workflows",
+    category: "Full-Stack",
+    status: "Functional Application",
+    featured: true,
+    tags: ["React Native", "Next.js", "Supabase", "Google Maps"],
+    summary:
+      "A real-estate product pairing a native Android app for land buyers with a Next.js admin dashboard, powered by a shared Supabase backend.",
+    roleAndContribution:
+      "Built the Android application and Next.js administration panel for CORDYLINE, and configured the shared Supabase backend.",
+    demoUrl: "https://local-land-by-cordyline.vercel.app",
+    verifiedFeatures: [
+      "Android app with account sign-in and session restoration.",
+      "Property discovery with search, filters, and interactive maps.",
+      "Buyer interest and saved-property workflows.",
+      "Admin dashboard for property, user, and enquiry management.",
+      "Shared Supabase backend with database policies and media storage.",
+    ],
+    problem:
+      "The product needed to serve land buyers on Android while giving administrators a separate place to manage properties and buyer activity.",
+    solution:
+      "Delivered a buyer-facing Android app and a Next.js administration dashboard connected to a shared Supabase backend.",
+    architectureDecisions: [
+      {
+        decision: "Separate buyer and administration experiences",
+        rationale: "The mobile app focuses on property discovery, while the dashboard provides the documented administration workflows.",
+        tradeoff: "Two frontends require their data contracts and access rules to stay aligned.",
+      },
+      {
+        decision: "Supabase as the shared backend",
+        rationale: "The mobile app and dashboard use one backend for shared application data and account sessions.",
+        tradeoff: "Client and server access must follow the same database security policies.",
+      },
+    ],
+    technicalSpecifications: [
+      { label: "Buyer app", value: "Android", detail: "React Native with Expo" },
+      { label: "Admin dashboard", value: "Next.js", detail: "Property, user, and enquiry workflows" },
+      { label: "Backend", value: "Supabase", detail: "Shared cloud database and media storage" },
+    ],
+    currentLimitations: [],
+    nextSteps: [],
+  },
+  {
     id: "sangathan-search",
     title: "SangathanSearch Directory",
     tagline: "In-Memory Client-Side Contact & Hierarchy Lookup Engine",
@@ -265,37 +309,36 @@ export const projects: Project[] = [
   },
   {
     id: "al-qalam-app",
-    title: "Al-Qalam Public School Portal",
-    tagline: "Educational Communication & Academic Notice Mobile Platform",
-    category: "Mobile",
+    title: "Al-Qalam Public School App & Portal",
+    tagline: "A school web portal and cross-platform app with one cloud-backed foundation",
+    category: "Full-Stack",
     status: "Functional Application",
-    featured: false,
-    tags: ["Dart", "Flutter", "Mobile", "Cross-Platform", "Education"],
+    featured: true,
+    tags: ["Next.js", "Flutter", "Supabase", "Education"],
     summary:
-      "A cross-platform mobile application and web interface designed for school circulars, academic notices, and student attendance visibility.",
+      "A school web portal and Flutter app for students, parents, teachers, and administrators, backed by a shared Supabase database.",
     roleAndContribution:
-      "Mobile developer. Built responsive screens using Flutter, implemented state management for student record lists, and designed clean academic notice card components.",
-    repoUrl: "https://github.com/nadeemalam178/Al-Qalam-Public-School",
-    demoUrl: "https://github.com/nadeemalam178/Al-Qalam-Public-School",
+      "Built the school web portal and cross-platform mobile app, and connected the product to its shared Supabase database.",
     verifiedFeatures: [
-      "Unified cross-platform screens running on Android and web viewports.",
-      "Categorized notice board for institutional circulars and examination calendars.",
-      "Clean attendance register view for parents and teachers.",
+      "Next.js school portal with academics, admissions, notices, gallery, and contact pages.",
+      "Flutter mobile app for Android and iOS with admin, teacher, and parent dashboards.",
+      "Shared cloud database with 21 core relational tables, row-level security, and triggers.",
     ],
     problem:
       "Small private schools often rely on unorganized WhatsApp groups for circulars and notices, causing parents to miss critical academic dates and fee announcements.",
     solution:
-      "Developed a dedicated Flutter application providing an organized repository of announcements, academic calendars, and class notices with offline caching.",
+      "Built a web portal and role-based mobile app around one cloud database, giving families and school staff dedicated access to school information and workflows.",
     architectureDecisions: [
       {
-        decision: "Single Flutter Codebase for Mobile and Web",
-        rationale: "Allows delivering both Android APK and responsive web portal from a single unified codebase.",
-        tradeoff: "Web build has a larger initial engine download than pure HTML/JS.",
+        decision: "Separate web and mobile frontends over one backend",
+        rationale: "The project pairs a Next.js portal with a Flutter app while sharing Supabase data and security policies.",
+        tradeoff: "The experience and data rules need to remain consistent across both clients.",
       },
     ],
     technicalSpecifications: [
-      { label: "SDK", value: "Flutter 3.x", detail: "Dart language with Material 3 responsive design" },
-      { label: "Platform", value: "Android & Web", detail: "Multi-platform build targets" },
+      { label: "Web portal", value: "Next.js 16", detail: "React application for school information and communication" },
+      { label: "Mobile app", value: "Flutter", detail: "Android and iOS with role-specific dashboards" },
+      { label: "Backend", value: "Supabase", detail: "PostgreSQL database with row-level security" },
     ],
     currentLimitations: [
       "Push notification integration requires Firebase configuration in production deployment.",

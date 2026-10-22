@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, CheckCircle2, BookOpen, ArrowUpRight } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight, BookOpen, CheckCircle2, X } from "lucide-react";
 import { Github } from "@/components/Icons";
 import { Project } from "@/data/projects";
 
@@ -13,135 +13,153 @@ interface ProjectModalProps {
 }
 
 export default function ProjectModal({ project, onClose }: ProjectModalProps) {
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const reduceMotion = useReducedMotion();
 
-  if (!project) return null;
+  useEffect(() => {
+    if (!project) return;
+
+    const previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+
+      if (event.key !== "Tab" || !dialogRef.current) return;
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>("a[href], button:not([disabled])"),
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      previouslyFocused?.focus();
+    };
+  }, [project, onClose]);
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-        {/* Backdrop */}
+      {project && (
         <motion.div
+          className="project-modal-layer"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={onClose}
-          className="fixed inset-0 bg-black/85 backdrop-blur-md"
-        />
-
-        {/* Modal Window */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: 15 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.96, y: 15 }}
-          transition={{ duration: 0.2 }}
-          className="relative w-full max-w-2xl rounded-2xl bg-[#0d101a] border border-white/[0.12] p-6 sm:p-8 shadow-2xl z-10 max-h-[90vh] overflow-y-auto"
+          transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
         >
-          {/* Close button */}
-          <button
+          <motion.button
+            type="button"
+            className="project-modal-backdrop"
+            aria-label="Close project details"
             onClick={onClose}
-            className="absolute top-6 right-6 p-2 rounded-full bg-white/[0.05] hover:bg-white/[0.1] text-zinc-400 hover:text-white transition-colors"
-            aria-label="Close dialog"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
+          />
+
+          <motion.div
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-modal-title"
+            tabIndex={-1}
+            className="project-modal-window"
+            initial={{
+              opacity: 0,
+              transform: reduceMotion ? "none" : "translateY(12px) scale(.985)",
+            }}
+            animate={{ opacity: 1, transform: "translateY(0) scale(1)" }}
+            exit={{
+              opacity: 0,
+              transform: reduceMotion ? "none" : "translateY(7px) scale(.99)",
+            }}
+            transition={{ duration: 0.24, ease: [0.23, 1, 0.32, 1] }}
           >
-            <X className="w-5 h-5" />
-          </button>
-
-          {/* Header */}
-          <div className="mb-6">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs font-mono font-semibold px-2.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-cyan-400">
-                {project.category}
-              </span>
-              <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-white/[0.04] text-zinc-400 border border-white/[0.06]">
-                {project.status}
-              </span>
+            <div className="project-modal-head">
+              <div className="project-modal-kickers">
+                <span className="project-modal-category">{project.category}</span>
+                <span className="project-modal-status">{project.status}</span>
+              </div>
+              <h2 id="project-modal-title">{project.title}</h2>
+              <p className="project-modal-tagline">{project.tagline}</p>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-1">
-              {project.title}
-            </h2>
-            <p className="text-xs sm:text-sm font-mono text-zinc-400">
-              {project.tagline}
-            </p>
-          </div>
 
-          {/* Technical Summary */}
-          <div className="mb-6">
-            <h3 className="text-xs font-mono uppercase tracking-wider text-zinc-400 mb-2">
-              System Context & Summary
-            </h3>
-            <p className="text-sm text-zinc-300 leading-relaxed">
-              {project.summary}
-            </p>
-          </div>
-
-          {/* Verified Implemented Features */}
-          <div className="mb-6">
-            <h3 className="text-xs font-mono uppercase tracking-wider text-zinc-400 mb-3">
-              Verified Implemented Features
-            </h3>
-            <div className="space-y-2">
-              {project.verifiedFeatures.map((feature, idx) => (
-                <div key={idx} className="flex items-start gap-2.5 text-xs text-zinc-300">
-                  <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-                  <span>{feature}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Role & Contribution */}
-          <div className="mb-6 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06] text-xs text-zinc-300">
-            <span className="font-semibold text-white">My Specific Contribution: </span>
-            {project.roleAndContribution}
-          </div>
-
-          {/* Tech Stack Chips */}
-          <div className="mb-8">
-            <h3 className="text-xs font-mono uppercase tracking-wider text-zinc-400 mb-2.5">
-              Technologies & Frameworks
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-xs font-mono px-2.5 py-1 rounded-lg bg-white/[0.04] text-zinc-300 border border-white/[0.06]"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Modal Actions */}
-          <div className="flex flex-wrap items-center justify-between gap-3 pt-5 border-t border-white/[0.08]">
-            <Link
-              href={`/projects/${project.id}`}
+            <button
+              ref={closeButtonRef}
+              type="button"
+              className="project-modal-close"
               onClick={onClose}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-zinc-950 text-xs font-semibold hover:bg-zinc-200 transition-all shadow-sm"
+              aria-label="Close project details"
             >
-              <BookOpen className="w-4 h-4" />
-              <span>Read Full Technical Case Study</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </Link>
+              <X size={18} />
+            </button>
 
-            <a
-              href={project.repoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-white text-xs font-medium border border-white/[0.1] transition-all"
-            >
-              <Github className="w-4 h-4" />
-              <span>Inspect Source Repository</span>
-            </a>
-          </div>
+            <section className="project-modal-section">
+              <span className="project-modal-label">THE PROJECT</span>
+              <p className="project-modal-summary">{project.summary}</p>
+            </section>
+
+            <section className="project-modal-section">
+              <span className="project-modal-label">WHAT IT INCLUDES</span>
+              <ul className="project-modal-features">
+                {project.verifiedFeatures.map((feature) => (
+                  <li key={feature}><CheckCircle2 size={15} /><span>{feature}</span></li>
+                ))}
+              </ul>
+            </section>
+
+            <div className="project-modal-contribution">
+              <span className="project-modal-label">MY CONTRIBUTION</span>
+              <p>{project.roleAndContribution}</p>
+            </div>
+
+            <section className="project-modal-section project-modal-tech">
+              <span className="project-modal-label">TOOLS & TECHNOLOGIES</span>
+              <div className="project-modal-tags">
+                {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
+              </div>
+            </section>
+
+            <div className="project-modal-actions">
+              <Link href={`/projects/${project.id}`} className="project-modal-primary" onClick={onClose}>
+                <BookOpen size={15} /> Read the case study <ArrowUpRight size={14} />
+              </Link>
+              {project.demoUrl && project.demoUrl !== project.repoUrl && (
+                <a href={project.demoUrl} target="_blank" rel="noreferrer" className="project-modal-secondary">
+                  Open {project.id === "local-land-cordyline" ? "live dashboard" : "project"} <ArrowUpRight size={14} />
+                </a>
+              )}
+              {project.repoUrl ? (
+                <a href={project.repoUrl} target="_blank" rel="noreferrer" className="project-modal-secondary">
+                  <Github size={14} /> Source repository <ArrowUpRight size={13} />
+                </a>
+              ) : project.id === "local-land-cordyline" ? (
+                <span className="project-modal-private">Client project · private source</span>
+              ) : null}
+            </div>
+          </motion.div>
         </motion.div>
-      </div>
+      )}
     </AnimatePresence>
   );
 }

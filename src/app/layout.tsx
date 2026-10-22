@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://nadeem-portfolio.vercel.app"),
-  title: "Nadeem Alam | Data Analyst, Automation Developer & Full-Stack Application Builder",
+  title: "Nadeem Alam — Data, Automation & Software",
   description:
-    "Professional portfolio of Nadeem Alam: Data analyst, reporting specialist, MIS automation developer, and full-stack application builder. Advanced Excel, SQL, Google Apps Script, Next.js, and TypeScript.",
+    "Nadeem Alam builds practical data systems, reporting automation, and web applications for teams working with complex operational data.",
   keywords: [
     "Nadeem Alam",
     "Data Analyst",
@@ -31,11 +31,10 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Nadeem Alam", url: "https://github.com/nadeemalam178" }],
   openGraph: {
-    title: "Nadeem Alam | Data Analyst, Automation Developer & Full-Stack Application Builder",
-    description:
-      "Operational data management, automated reporting workflows, and full-stack application development.",
+    title: "Nadeem Alam — Data, Automation & Software",
+    description: "Operational analytics, workflow automation, and useful software built around real working problems.",
     type: "website",
-    url: "https://github.com/nadeemalam178",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://nadeem-portfolio.vercel.app",
   },
 };
 
@@ -45,8 +44,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} dark scroll-smooth`}>
-      <body className="min-h-screen bg-[#08090d] text-zinc-100 antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} data-scroll-behavior="smooth">
+      <head>
+        <link rel="stylesheet" href="/portfolio-motion.css" />
+      </head>
+      <body className="min-h-screen antialiased">
         {children}
       </body>
     </html>
