@@ -1,79 +1,149 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Search, FolderGit2, Terminal, FileText, Send } from "lucide-react";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Briefcase, Clock3, FileText, Layers, Send } from "lucide-react";
 
 interface MobileDockProps {
-  onOpenCmd: () => void;
   onOpenCv: () => void;
+  reduceMotion?: boolean;
+  isHidden?: boolean;
 }
 
-export default function MobileDock({ onOpenCmd, onOpenCv }: MobileDockProps) {
-  const scrollTo = (id: string) => {
+export default function MobileDock({
+  onOpenCv,
+  reduceMotion = false,
+  isHidden = false,
+}: MobileDockProps) {
+  const [activeSection, setActiveSection] = useState<string>("top");
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 200);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    if (!("IntersectionObserver" in window)) {
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+
+    const sectionIds = ["top", "work", "approach", "experience", "contact"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: "-20% 0px -55% 0px",
+        threshold: 0.05,
+      }
+    );
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
+  }, []);
+
+  const handleNavClick = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+      el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
     }
   };
 
+  const navItems = [
+    {
+      id: "work",
+      label: "Work",
+      icon: Briefcase,
+      onClick: () => handleNavClick("work"),
+      isActive: activeSection === "work",
+    },
+    {
+      id: "approach",
+      label: "Approach",
+      icon: Layers,
+      onClick: () => handleNavClick("approach"),
+      isActive: activeSection === "approach",
+    },
+    {
+      id: "experience",
+      label: "Experience",
+      icon: Clock3,
+      onClick: () => handleNavClick("experience"),
+      isActive: activeSection === "experience",
+    },
+    {
+      id: "cv",
+      label: "CV",
+      icon: FileText,
+      onClick: onOpenCv,
+      isActive: false,
+    },
+    {
+      id: "contact",
+      label: "Contact",
+      icon: Send,
+      onClick: () => handleNavClick("contact"),
+      isActive: activeSection === "contact",
+      isPrimary: true,
+    },
+  ];
+
   return (
-    <motion.div
-      initial={{ y: 60, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 0.4, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="sm:hidden fixed bottom-4 inset-x-4 z-40 pointer-events-none flex justify-center"
-    >
-      <div className="pointer-events-auto p-1.5 rounded-full bg-[#0a0d17]/85 border border-white/[0.12] backdrop-blur-2xl shadow-2xl shadow-black/80 flex items-center justify-between gap-1 max-w-sm w-full">
-        {/* Search */}
-        <button
-          onClick={onOpenCmd}
-          className="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-full hover:bg-white/[0.08] text-zinc-400 hover:text-cyan-400 active:scale-95 transition-all"
-          aria-label="Search Command Palette"
+    <AnimatePresence>
+      {!isHidden && isScrolled && (
+        <motion.nav
+          role="navigation"
+          aria-label="Mobile quick navigation dock"
+          className="mobile-dock-wrap"
+          initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.94 }}
+          animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+          exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.94 }}
+          transition={{ type: "spring", stiffness: 320, damping: 28 }}
         >
-          <Search className="w-4 h-4" />
-          <span className="text-[9px] font-mono mt-0.5">Search</span>
-        </button>
-
-        {/* Projects */}
-        <button
-          onClick={() => scrollTo("projects")}
-          className="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-full hover:bg-white/[0.08] text-zinc-400 hover:text-white active:scale-95 transition-all"
-          aria-label="Scroll to Projects"
-        >
-          <FolderGit2 className="w-4 h-4" />
-          <span className="text-[9px] font-mono mt-0.5">Projects</span>
-        </button>
-
-        {/* SQL Sandbox */}
-        <button
-          onClick={() => scrollTo("sandbox")}
-          className="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-full hover:bg-white/[0.08] text-zinc-400 hover:text-emerald-400 active:scale-95 transition-all"
-          aria-label="Scroll to SQL Sandbox"
-        >
-          <Terminal className="w-4 h-4" />
-          <span className="text-[9px] font-mono mt-0.5">SQL</span>
-        </button>
-
-        {/* Resume */}
-        <button
-          onClick={onOpenCv}
-          className="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-full hover:bg-white/[0.08] text-zinc-400 hover:text-amber-400 active:scale-95 transition-all"
-          aria-label="Open Resume"
-        >
-          <FileText className="w-4 h-4" />
-          <span className="text-[9px] font-mono mt-0.5">CV</span>
-        </button>
-
-        {/* Contact */}
-        <button
-          onClick={() => scrollTo("contact")}
-          className="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-md shadow-blue-500/20 active:scale-95 transition-all"
-          aria-label="Scroll to Contact"
-        >
-          <Send className="w-3.5 h-3.5" />
-          <span className="text-[9px] font-mono mt-0.5 font-bold">Chat</span>
-        </button>
-      </div>
-    </motion.div>
+          <div className="mobile-dock">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={item.onClick}
+                  className={`mobile-dock-item ${item.isActive ? "is-active" : ""} ${
+                    item.isPrimary ? "is-primary" : ""
+                  }`}
+                  aria-label={item.label}
+                  aria-current={item.isActive ? "page" : undefined}
+                >
+                  {item.isActive && (
+                    <motion.span
+                      layoutId="mobile-dock-pill"
+                      className="mobile-dock-pill"
+                      transition={{ type: "spring", stiffness: 360, damping: 30 }}
+                      aria-hidden="true"
+                    />
+                  )}
+                  <Icon size={15} className="mobile-dock-icon" strokeWidth={1.9} />
+                  <span className="mobile-dock-label">{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </motion.nav>
+      )}
+    </AnimatePresence>
   );
 }

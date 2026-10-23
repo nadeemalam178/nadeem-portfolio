@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ArrowDown, ArrowRight, ArrowUpRight, FileText, MapPin, Terminal } from "lucide-react";
 import { Github, Linkedin } from "@/components/Icons";
 import CvModal from "@/components/CvModal";
+import MobileDock from "@/components/MobileDock";
 import ProjectModal from "@/components/ProjectModal";
 import { profile } from "@/data/profile";
 import { projects } from "@/data/projects";
@@ -549,6 +550,11 @@ export default function PortfolioHome() {
       </main>
 
       <footer className="portfolio-footer"><div className="portfolio-container footer-inner"><a className="footer-mark" href="#top" aria-label="Back to top"><Terminal size={18} strokeWidth={1.8} /></a><span>© 2026 {profile.name}</span><span>Made with care in Patna, India</span><a href="#top">Back to top ↑</a></div></footer>
+      <MobileDock
+        onOpenCv={() => setIsCvOpen(true)}
+        reduceMotion={reduceMotion}
+        isHidden={isBooting || isCvOpen || Boolean(selectedProjectId)}
+      />
       <CvModal isOpen={isCvOpen} onClose={() => setIsCvOpen(false)} />
       <ProjectModal project={selectedProject} onClose={() => setSelectedProjectId(null)} />
     </div>
