@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, MotionValue, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowRight, ArrowUpRight, FileText, MapPin, Terminal } from "lucide-react";
@@ -147,6 +147,190 @@ function ProjectArtwork({ projectId }: { projectId: string }) {
   );
 }
 
+function HeroPortrait({
+  reduceMotion,
+  isBooting,
+  heroPortraitY,
+  heroPortraitScale,
+}: {
+  reduceMotion: boolean;
+  isBooting: boolean;
+  heroPortraitY: MotionValue<number>;
+  heroPortraitScale: MotionValue<number>;
+}) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Smooth springs for 3D card tilt
+  const tiltSpring = { stiffness: 160, damping: 20, mass: 0.6 };
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [8.5, -8.5]), tiltSpring);
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8.5, 8.5]), tiltSpring);
+
+  // Holographic internal photo parallax shift (counter-drifts slightly inside the frame for true 3D depth)
+  const photoParallaxX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-7, 7]), tiltSpring);
+  const photoParallaxY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-7, 7]), tiltSpring);
+
+  // Dynamic specular glare sheen coordinates that follow cursor
+  const glareX = useSpring(useTransform(mouseX, [-0.5, 0.5], [10, 90]), tiltSpring);
+  const glareY = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, 90]), tiltSpring);
+  const glareOpacity = useSpring(0, { stiffness: 120, damping: 22 });
+
+  const glareBackground = useTransform(
+    [glareX, glareY],
+    ([gx, gy]) =>
+      `radial-gradient(circle 280px at ${gx}% ${gy}%, rgba(255, 255, 255, 0.42) 0%, transparent 65%)`
+  );
+
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (reduceMotion) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+    mouseX.set(xPct);
+    mouseY.set(yPct);
+  };
+
+  const handleMouseEnter = () => {
+    if (!reduceMotion) {
+      setIsHovered(true);
+      glareOpacity.set(0.35);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    mouseX.set(0);
+    mouseY.set(0);
+    glareOpacity.set(0);
+  };
+
+  return (
+    <motion.div
+      className="hero-portrait-wrap"
+      style={reduceMotion ? undefined : { y: heroPortraitY, scale: heroPortraitScale }}
+      initial={false}
+      animate={reduceMotion || !isBooting ? { opacity: 1, x: 0, rotate: 0 } : { opacity: 0, x: 96, rotate: 3 }}
+      transition={{ type: "spring", stiffness: 100, damping: 27, mass: 0.9, delay: isBooting ? 0 : 0.12 }}
+    >
+      {/* Interactive 3D Frame with Ambient Float */}
+      <motion.div
+        className="portrait-frame"
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        animate={
+          reduceMotion || isHovered
+            ? undefined
+            : {
+                y: [0, -7, 0],
+                transition: {
+                  repeat: Infinity,
+                  duration: 6,
+                  ease: "easeInOut",
+                },
+              }
+        }
+        style={
+          reduceMotion
+            ? undefined
+            : {
+                rotateX,
+                rotateY,
+                transformPerspective: 1000,
+                transformStyle: "preserve-3d",
+              }
+        }
+        whileHover={reduceMotion ? undefined : { scale: 1.025 }}
+        whileTap={reduceMotion ? undefined : { scale: 0.985 }}
+        transition={{ type: "spring", stiffness: 300, damping: 24 }}
+      >
+        {/* Shutter Reveal Wipe */}
+        <motion.span
+          className="portrait-shutter"
+          aria-hidden="true"
+          initial={false}
+          animate={{ x: "108%" }}
+          whileInView={reduceMotion || isBooting ? undefined : { x: ["0%", "108%"] }}
+          viewport={{ once: false, amount: 0.28, margin: "-4% 0px -4% 0px" }}
+          transition={{ type: "spring", stiffness: 120, damping: 19, mass: 0.9 }}
+        />
+
+        {/* Photo Container with Parallax & Hover Zoom */}
+        <motion.div
+          className="relative w-full h-full overflow-hidden"
+          style={
+            reduceMotion
+              ? undefined
+              : {
+                  x: photoParallaxX,
+                  y: photoParallaxY,
+                  scale: isHovered ? 1.06 : 1.02,
+                }
+          }
+          transition={{ type: "spring", stiffness: 160, damping: 22 }}
+        >
+          <Image
+            src="/nadeem-alam.jpg"
+            alt="Portrait of Nadeem Alam"
+            fill
+            priority
+            sizes="(max-width: 760px) 82vw, 36vw"
+            className="hero-portrait"
+            style={{
+              filter: isHovered
+                ? "grayscale(0) contrast(1.08) brightness(1.02)"
+                : "grayscale(0.55) contrast(1.04)",
+              transition: "filter 450ms cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
+          />
+        </motion.div>
+
+        {/* Dynamic Specular Light Glare Sheen */}
+        {!reduceMotion && (
+          <motion.div
+            className="pointer-events-none absolute inset-0 z-10 mix-blend-overlay"
+            style={{
+              opacity: glareOpacity,
+              background: glareBackground,
+            }}
+          />
+        )}
+      </motion.div>
+
+      {/* Caption */}
+      <div className="portrait-caption">
+        <span>NADEEM ALAM</span>
+        <span>BASED IN PATNA, INDIA</span>
+      </div>
+
+      {/* Interactive Floating Stamp with Spring Hover */}
+      <motion.div
+        className="portrait-stamp hero-enter-stamp"
+        whileHover={reduceMotion ? undefined : { rotate: 20, scale: 1.12 }}
+        animate={
+          reduceMotion
+            ? undefined
+            : {
+                rotate: [8, 12, 8],
+                transition: {
+                  repeat: Infinity,
+                  duration: 6.5,
+                  ease: "easeInOut",
+                },
+              }
+        }
+        transition={{ type: "spring", stiffness: 280, damping: 18 }}
+      >
+        <span>DATA</span>
+        <span>×</span>
+        <span>SYSTEMS</span>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export default function PortfolioHome() {
   const siteRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion() ?? false;
@@ -252,21 +436,12 @@ export default function PortfolioHome() {
               <div className="hero-actions hero-enter hero-enter-4"><a className="button-primary" href="#work">Explore selected work <ArrowDown size={15} /></a><button className="button-text" onClick={() => setIsCvOpen(true)}><FileText size={15} /> View my CV</button></div>
               <div className="hero-meta hero-enter hero-enter-5"><span><MapPin size={14} /> {profile.location}</span><a href={`mailto:${profile.email}`}>{profile.email} <ArrowUpRight size={13} /></a></div>
             </motion.div>
-            <motion.div
-              className="hero-portrait-wrap"
-              style={reduceMotion ? undefined : { y: heroPortraitY, scale: heroPortraitScale }}
-              initial={false}
-              animate={reduceMotion || !isBooting ? { opacity: 1, x: 0, rotate: 0 } : { opacity: 0, x: 96, rotate: 3 }}
-              transition={{ type: "spring", stiffness: 100, damping: 27, mass: 0.9, delay: isBooting ? 0 : 0.12 }}
-            ><div className="portrait-frame"><motion.span
-              className="portrait-shutter"
-              aria-hidden="true"
-              initial={false}
-              animate={{ x: "108%" }}
-              whileInView={reduceMotion || isBooting ? undefined : { x: ["0%", "108%"] }}
-              viewport={{ once: false, amount: 0.28, margin: "-4% 0px -4% 0px" }}
-              transition={{ type: "spring", stiffness: 120, damping: 19, mass: 0.9 }}
-            /><Image src="/nadeem-alam.jpg" alt="Portrait of Nadeem Alam" fill priority sizes="(max-width: 760px) 82vw, 36vw" className="hero-portrait" /></div><div className="portrait-caption"><span>NADEEM ALAM</span><span>BASED IN PATNA, INDIA</span></div><div className="portrait-stamp hero-enter-stamp"><span>DATA</span><span>×</span><span>SYSTEMS</span></div></motion.div>
+            <HeroPortrait
+              reduceMotion={reduceMotion}
+              isBooting={isBooting}
+              heroPortraitY={heroPortraitY}
+              heroPortraitScale={heroPortraitScale}
+            />
             <div className="hero-index"><span>01</span><span>SCROLL TO EXPLORE</span><i /></div>
           </div>
         </section>

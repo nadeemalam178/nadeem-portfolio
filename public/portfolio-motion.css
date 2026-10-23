@@ -83,7 +83,7 @@
 .hero-portrait-wrap { width: min(100%, 410px); padding: 12px 18px 34px; }
 .hero-portrait-wrap::before { position: absolute; z-index: 0; top: 28px; right: 2px; bottom: 53px; left: 36px; transform: rotate(5deg); border: 1px solid rgba(215,255,94,.78); border-radius: 210px 210px 10px 10px; content: ""; }
 .hero-portrait-wrap::after { position: absolute; z-index: 0; top: -12px; right: -16px; width: calc(100% - 12px); aspect-ratio: 1; border: 1px dashed rgba(215,255,94,.28); border-radius: 50%; content: ""; animation: hero-orbit 34s linear infinite reverse; }
-.portrait-frame { z-index: 1; height: 450px; border: 1px solid rgba(255,255,255,.16); border-radius: 210px 210px 10px 10px; background: #303b31; box-shadow: 13px 13px 0 var(--acid); animation: portrait-float 7s ease-in-out 1.2s infinite; }
+.portrait-frame { z-index: 1; height: 450px; border: 1px solid rgba(255,255,255,.16); border-radius: 210px 210px 10px 10px; background: #303b31; box-shadow: 13px 13px 0 var(--acid); }
 .hero-portrait { filter: grayscale(.55) contrast(1.08); }
 .portrait-caption { position: relative; z-index: 2; margin-top: 20px; color: #b4c0b4; }
 .portrait-stamp { z-index: 3; top: 28px; right: -28px; width: 86px; height: 86px; border: 0; background: var(--acid); color: #182019; font-weight: 650; box-shadow: 0 12px 34px rgba(0,0,0,.28); }
@@ -591,9 +591,9 @@
 .hero-portrait-wrap::after { animation-duration: 23s; }
 .hero-portrait { object-position: center top; transform-origin: center top; }
 .contact-section::after { animation-duration: 32s; }
-@supports (animation-timeline: scroll()) {
+/* @supports (animation-timeline: scroll()) {
   .hero-portrait { animation: hero-image-drift linear both; animation-timeline: scroll(root); animation-range: 0 55vh; }
-}
+} */
 @media (hover: hover) and (pointer: fine) {
   .work-card:hover .land-dashboard,.work-card:hover .alqalam-phone,.work-card:hover .mock-window { animation-play-state: paused; transform: translateY(-5px) rotate(-1deg); }
   .button-primary:hover,.header-contact:hover { transform: translateY(-3px); }
