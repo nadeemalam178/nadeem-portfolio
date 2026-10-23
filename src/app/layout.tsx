@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://nadeem-portfolio.vercel.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://nadeemalamportfolio.netlify.app"),
   title: "Nadeem Alam — Data Analyst, Automation Developer & Software Builder",
   description:
     "Nadeem Alam builds operational data pipelines, reporting automation, and web applications for teams working with complex operational data.",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     title: "Nadeem Alam — Data Analyst, Automation Developer & Software Builder",
     description: "Operational analytics, workflow automation, and useful software built around real working problems.",
     type: "website",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://nadeem-portfolio.vercel.app",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://nadeemalamportfolio.netlify.app",
     siteName: "Nadeem Alam Portfolio",
     locale: "en_US",
   },
@@ -70,9 +70,9 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "Person",
-      "@id": "https://nadeem-portfolio.vercel.app/#person",
+      "@id": "https://nadeemalamportfolio.netlify.app/#person",
       "name": "Nadeem Alam",
-      "url": "https://nadeem-portfolio.vercel.app",
+      "url": "https://nadeemalamportfolio.netlify.app",
       "jobTitle": "Data Analyst & Full-Stack Application Builder",
       "worksFor": {
         "@type": "Organization",
@@ -112,13 +112,13 @@ const jsonLd = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://nadeem-portfolio.vercel.app/#website",
-      "url": "https://nadeem-portfolio.vercel.app",
+      "@id": "https://nadeemalamportfolio.netlify.app/#website",
+      "url": "https://nadeemalamportfolio.netlify.app",
       "name": "Nadeem Alam Portfolio",
       "description":
         "Operational analytics, workflow automation, and useful software built around real working problems.",
       "publisher": {
-        "@id": "https://nadeem-portfolio.vercel.app/#person",
+        "@id": "https://nadeemalamportfolio.netlify.app/#person",
       },
     },
   ],

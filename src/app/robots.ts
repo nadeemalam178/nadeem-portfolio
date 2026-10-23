@@ -18,12 +18,14 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
   }
 
   if (!baseUrl) {
-    if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    if (process.env.URL) {
+      baseUrl = process.env.URL;
+    } else if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
       baseUrl = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
     } else if (process.env.VERCEL_URL) {
       baseUrl = `https://${process.env.VERCEL_URL}`;
     } else {
-      baseUrl = "https://nadeem-portfolio.vercel.app";
+      baseUrl = "https://nadeemalamportfolio.netlify.app";
     }
   }
 
